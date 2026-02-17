@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SagaToEdu — Persiapan SNBT 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0d0d14;--ink2:#1e1e2e;--ink3:#2d2d42;
+  --blue:#3b5bdb;--blue-l:#4c6ef5;--blue-xl:#e7ecfd;
+  --green:#2f9e44;--green-l:#ebfbee;
+  --red:#e03131;--red-l:#fff5f5;
+  --amber:#f08c00;--amber-l:#fff3bf;
+  --purple:#7048e8;
+  --border:#e8e8f0;--border2:#d0d0e0;
+  --bg:#f6f6fa;--white:#fff;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 1px 2px rgba(13,13,20,.04),0 4px 16px rgba(13,13,20,.06);
+  --shadow-lg:0 8px 32px rgba(13,13,20,.12);
+}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
+
+/* === NAVBAR === */
+.nav{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);z-index:900;display:flex;align-items:center}
+.nav-wrap{width:100%;max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:8px}
+.nav-logo{display:flex;align-items:center;gap:9px;cursor:pointer;text-decoration:none;margin-right:auto}
+.nav-logo-box{width:36px;height:36px;background:linear-gradient(135deg,var(--blue),var(--purple));border-radius:9px;display:flex;align-items:center;justify-content:center}
+.nav-logo-box svg{width:18px;height:18px;fill:#fff}
+.nav-brand{font-size:1.2rem;font-weight:800;letter-spacing:-.5px;color:var(--ink)}
+.nav-brand span{color:var(--blue)}
+.nav-links{display:flex;gap:2px}
+.nav-btn{padding:7px 14px;border-radius:var(--radius-sm);font-size:.8125rem;font-weight:600;color:#555;cursor:pointer;border:none;background:none;font-family:inherit;transition:.15s;white-space:nowrap}
+.nav-btn:hover,.nav-btn.active{background:var(--blue-xl);color:var(--blue)}
+.nav-dots-btn{width:36px;height:36px;border-radius:var(--radius-sm);border:1.5px solid var(--border);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;position:relative;flex-shrink:0}
+.nav-dots-btn:hover{border-color:var(--blue);background:var(--blue-xl)}
+.nav-dots-btn svg{width:16px;height:4px;fill:var(--ink)}
+.dropdown{position:absolute;top:44px;right:0;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:6px;box-shadow:var(--shadow-lg);min-width:200px;display:none;z-index:999}
+.dropdown.show{display:block}
+.dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;font-size:.875rem;font-weight:600;color:var(--ink);transition:.15s}
+.dd-item:hover{background:var(--blue-xl);color:var(--blue)}
+.dd-item svg{width:16px;height:16px;flex-shrink:0;opacity:.6}
+.dd-sep{height:1px;background:var(--border);margin:4px 0}
+.hamburger{display:none;width:36px;height:36px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:none;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.hamburger span{display:block;width:16px;height:2px;background:var(--ink);border-radius:2px;transition:.25s}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}}
+
+/* === MOBILE DRAWER === */
+.drawer{position:fixed;inset:0;z-index:1000;display:none}
+.drawer.open{display:block}
+.drawer-bg{position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.drawer-panel{position:absolute;left:0;top:0;bottom:0;width:280px;background:var(--white);padding:20px;overflow-y:auto;transform:translateX(-100%);transition:.3s}
+.drawer.open .drawer-panel{transform:translateX(0)}
+.drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.drawer-logo{font-size:1.1rem;font-weight:800;color:var(--ink)}
+.drawer-logo span{color:var(--blue)}
+.drawer-close{width:32px;height:32px;border:1.5px solid var(--border);border-radius:var(--radius-sm);background:none;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.drawer-nav-btn{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:var(--radius-sm);font-size:.9375rem;font-weight:600;cursor:pointer;margin-bottom:4px;transition:.15s;color:var(--ink)}
+.drawer-nav-btn:hover,.drawer-nav-btn.active{background:var(--blue-xl);color:var(--blue)}
+.drawer-nav-btn svg{width:18px;height:18px;opacity:.6}
+.drawer-divider{height:1px;background:var(--border);margin:12px 0}
+
+/* === SECTIONS === */
+.page{display:none;padding-top:60px;min-height:100vh}
+.page.active{display:block}
+
+/* === HOME === */
+.hero{padding:70px 20px 80px;background:var(--ink2);position:relative;overflow:hidden;text-align:center}
+.hero::before{content:'';position:absolute;top:-40%;left:10%;width:600px;height:600px;background:radial-gradient(circle,rgba(59,91,219,.25) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero-chip{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);padding:5px 14px;border-radius:100px;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:.5px;text-transform:uppercase;margin-bottom:22px}
+.hero h1{font-size:clamp(1.875rem,5vw,3.25rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:18px;letter-spacing:-1px}
+.hero h1 em{font-style:normal;color:var(--blue-l)}
+.hero p{font-size:1rem;color:rgba(255,255,255,.6);max-width:520px;margin:0 auto 36px;line-height:1.7}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-solid{background:var(--blue);color:#fff;padding:12px 24px;border-radius:var(--radius-sm);font-weight:700;font-size:.875rem;border:none;cursor:pointer;font-family:inherit;transition:.2s;display:inline-flex;align-items:center;gap:7px}
+.btn-solid:hover{background:var(--blue-l);transform:translateY(-1px);box-shadow:0 6px 20px rgba(59,91,219,.4)}
+.btn-ghost-white{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.2);padding:12px 24px;border-radius:var(--radius-sm);font-weight:700;font-size:.875rem;cursor:pointer;font-family:inherit;transition:.2s}
+.btn-ghost-white:hover{background:rgba(255,255,255,.18)}
+.stats-ribbon{background:var(--ink);padding:20px;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-cell{text-align:center;padding:12px}
+.stat-n{font-size:1.75rem;font-weight:800;color:#fff;letter-spacing:-1px;font-family:'JetBrains Mono',monospace}
+.stat-l{font-size:.75rem;color:rgba(255,255,255,.4);font-weight:500;margin-top:2px}
+@media(max-width:480px){.stats-ribbon{grid-template-columns:repeat(2,1fr)}}
+.features{padding:70px 20px;max-width:1200px;margin:0 auto}
+.sec-eyebrow{font-size:.75rem;font-weight:700;color:var(--blue);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.sec-h{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
+.sec-sub{font-size:.9375rem;color:#666;max-width:500px;line-height:1.7}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:36px}
+.feat-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.feat-card:hover{border-color:var(--blue);transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.feat-card::after{content:'→';position:absolute;bottom:20px;right:20px;font-size:1.125rem;color:var(--border);transition:.2s}
+.feat-card:hover::after{color:var(--blue);transform:translateX(3px)}
+.feat-ico{font-size:1.75rem;margin-bottom:14px;display:block}
+.feat-card h3{font-size:.9375rem;font-weight:700;margin-bottom:6px}
+.feat-card p{font-size:.8125rem;color:#777;line-height:1.6}
+
+/* === BUTTONS === */
+.btn{padding:10px 20px;border-radius:var(--radius-sm);font-weight:700;font-size:.8125rem;cursor:pointer;border:none;font-family:inherit;transition:.15s;display:inline-flex;align-items:center;gap:7px}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-l)}
+.btn-secondary{background:var(--bg);color:var(--ink);border:1.5px solid var(--border)}
+.btn-secondary:hover{border-color:var(--blue);color:var(--blue)}
+.btn-danger{background:var(--red-l);color:var(--red);border:1.5px solid #ffc9c9}
+.btn-danger:hover{background:#ffe3e3}
+.btn-success{background:var(--green-l);color:var(--green);border:1.5px solid #b2f2bb}
+.btn-lg{padding:13px 26px;font-size:.9375rem}
+
+/* === PAGE HEADER === */
+.pg-head{background:var(--white);border-bottom:1px solid var(--border);padding:28px 20px}
+.pg-head-inner{max-width:1200px;margin:0 auto}
+.pg-eyebrow{font-size:.7rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+.pg-title{font-size:1.5rem;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.pg-sub{font-size:.875rem;color:#666}
+.wrap{max-width:1200px;margin:0 auto;padding:28px 20px 80px}
+
+/* === CARDS === */
+.card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:18px}
+.card-title{font-size:1rem;font-weight:700;margin-bottom:5px}
+.card-sub{font-size:.8125rem;color:#777;margin-bottom:18px}
+
+/* === RAPOR === */
+.step-row{display:flex;border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px}
+.step-item{flex:1;padding:12px 16px;font-size:.8125rem;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;transition:.15s;color:#777;background:var(--white)}
+.step-item+.step-item{border-left:1px solid var(--border)}
+.step-item.done{color:var(--green)}
+.step-item.active{background:var(--blue);color:#fff}
+.step-num{width:20px;height:20px;border-radius:50%;background:currentColor;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;flex-shrink:0}
+.step-item.active .step-num{background:rgba(255,255,255,.25);color:#fff}
+.step-item.done .step-num{background:var(--green-l);color:var(--green)}
+.step-item:not(.active):not(.done) .step-num{background:var(--border);color:#999}
+.mapel-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.mapel-chip{padding:8px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.8125rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;background:var(--white);transition:.15s;font-family:inherit}
+.mapel-chip:hover{border-color:var(--blue)}
+.mapel-chip.sel{background:var(--blue-xl);border-color:var(--blue);color:var(--blue)}
+.mapel-chip input[type=checkbox]{accent-color:var(--blue);width:13px;height:13px;cursor:pointer}
+.add-row{display:flex;gap:8px;margin-bottom:18px}
+.txt-inp{padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.875rem;font-family:inherit;transition:.15s;background:var(--white)}
+.txt-inp:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,91,219,.1)}
+.txt-inp.full{width:100%}
+.sem-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.sem-tab{padding:7px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.8125rem;font-weight:600;cursor:pointer;background:var(--white);font-family:inherit;transition:.15s}
+.sem-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.grade-table{width:100%;border-collapse:collapse}
+.grade-table th{background:var(--bg);padding:9px 12px;font-size:.75rem;font-weight:700;text-align:left;border-bottom:2px solid var(--border);color:#555;text-transform:uppercase;letter-spacing:.5px}
+.grade-table td{padding:8px 10px;border-bottom:1px solid var(--border)}
+.grade-table tr:last-child td{border-bottom:none}
+.num-inp{width:80px;padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.875rem;font-weight:700;text-align:center;font-family:'JetBrains Mono',monospace;transition:.15s}
+.num-inp:focus{outline:none;border-color:var(--blue)}
+.result-hero{background:linear-gradient(135deg,var(--ink2),#1a1040);border-radius:var(--radius);padding:36px 28px;color:#fff;margin-bottom:20px;text-align:center;position:relative;overflow:hidden}
+.result-hero::before{content:'';position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:400px;height:400px;background:radial-gradient(circle,rgba(112,72,232,.3) 0%,transparent 70%);pointer-events:none}
+.result-hero-label{font-size:.75rem;letter-spacing:2px;text-transform:uppercase;opacity:.5;font-weight:600;margin-bottom:10px}
+.result-hero-big{font-size:5.5rem;font-weight:900;letter-spacing:-3px;font-family:'JetBrains Mono',monospace;line-height:1;margin-bottom:8px;text-shadow:0 0 40px rgba(255,255,255,.2)}
+.result-hero-title{font-size:1.5rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;opacity:.85}
+.result-hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid rgba(255,255,255,.12);padding-top:16px;margin-top:8px}
+.rh-item .lbl{font-size:.7rem;opacity:.5;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.rh-item .val{font-size:1.75rem;font-weight:800;letter-spacing:-1px;font-family:'JetBrains Mono',monospace}
+.res-table{width:100%;border-collapse:collapse;font-size:.8125rem}
+.res-table th{background:var(--bg);padding:9px 12px;text-align:left;border-bottom:2px solid var(--border);font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#555}
+.res-table td{padding:9px 12px;border-bottom:1px solid var(--border)}
+.res-table tr:last-child td{border-bottom:none}
+.avg-val{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--blue)}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+/* === TRYOUT === */
+.to-strip{padding:16px 20px;background:var(--white);border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:12px;align-items:center;max-width:1200px;margin:0 auto}
+.to-logo{height:44px;width:auto;object-fit:contain;filter:grayscale(15%);transition:.2s;cursor:pointer}
+.to-logo:hover{filter:none;transform:scale(1.08)}
+.filter-bar{padding:12px 20px;background:var(--white);border-bottom:1px solid var(--border);position:sticky;top:60px;z-index:100;display:flex;gap:6px;flex-wrap:wrap}
+.filter-chip{padding:7px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.8125rem;font-weight:600;cursor:pointer;background:var(--white);font-family:inherit;transition:.15s}
+.filter-chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.filter-chip:hover:not(.active){border-color:var(--blue);color:var(--blue)}
+.to-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;padding:24px 20px;max-width:1200px;margin:0 auto}
+.to-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:.25s;cursor:pointer}
+.to-card:hover{border-color:var(--blue);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.to-top{background:linear-gradient(135deg,var(--ink2) 0%,#1e1040 100%);padding:18px;position:relative}
+.to-badge{display:inline-block;padding:3px 10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:100px;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px}
+.to-title{font-size:.9375rem;font-weight:800;color:#fff;margin-bottom:3px}
+.to-desc{font-size:.8rem;color:rgba(255,255,255,.6)}
+.to-body{padding:16px}
+.to-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--bg);border-radius:var(--radius-sm);padding:10px;margin-bottom:14px}
+.to-stat .v{font-size:1rem;font-weight:800;color:var(--blue);font-family:'JetBrains Mono',monospace}
+.to-stat .l{font-size:.7rem;color:#999;font-weight:500}
+.to-avail{display:inline-block;padding:3px 10px;background:var(--green-l);color:var(--green);border-radius:6px;font-size:.7rem;font-weight:700;margin-bottom:12px;border:1px solid #b2f2bb}
+.to-start-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:11px;border-radius:var(--radius-sm);font-weight:700;font-size:.875rem;cursor:pointer;font-family:inherit;transition:.2s}
+.to-start-btn:hover{background:var(--blue-l)}
+
+/* === QUIZ === */
+.quiz-overlay{position:fixed;inset:0;background:var(--bg);z-index:800;display:none;flex-direction:column;overflow-y:auto;padding-top:60px}
+.quiz-overlay.show{display:flex}
+.quiz-topbar{position:fixed;top:0;left:0;right:0;height:60px;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;z-index:900}
+.quiz-prog-wrap{flex:1;height:5px;background:var(--border);border-radius:3px}
+.quiz-prog{height:100%;background:linear-gradient(90deg,var(--blue),var(--purple));border-radius:3px;transition:.4s}
+.quiz-counter{font-size:.8125rem;font-weight:700;color:#666;white-space:nowrap;font-family:'JetBrains Mono',monospace}
+.quiz-body{max-width:720px;margin:0 auto;padding:28px 20px 60px;width:100%}
+.q-num{font-size:.7rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;font-family:'JetBrains Mono',monospace}
+.q-text{font-size:.9375rem;line-height:1.8;color:var(--ink);margin-bottom:22px;font-weight:500;white-space:pre-wrap;background:var(--white);border-radius:var(--radius);padding:18px;border:1.5px solid var(--border)}
+.choices{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
+.choice-btn{display:flex;align-items:center;gap:13px;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:.15s;background:var(--white);text-align:left;font-family:inherit}
+.choice-btn:hover{border-color:var(--blue);background:var(--blue-xl)}
+.choice-btn.selected{border-color:var(--blue);background:var(--blue-xl)}
+.choice-letter{width:30px;height:30px;border-radius:50%;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;flex-shrink:0;transition:.15s;font-family:'JetBrains Mono',monospace}
+.choice-btn.selected .choice-letter{background:var(--blue);border-color:var(--blue);color:#fff}
+.choice-txt{font-size:.875rem;font-weight:500;line-height:1.5}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.dot-row{display:flex;gap:3px;flex-wrap:wrap;flex:1}
+.q-dot{width:9px;height:9px;border-radius:50%;background:var(--border);cursor:pointer;transition:.15s;flex-shrink:0}
+.q-dot.ans{background:var(--green)}
+.q-dot.cur{background:var(--blue);transform:scale(1.4)}
+/* result */
+.quiz-result{max-width:720px;margin:0 auto;padding:28px 20px 80px;width:100%}
+.score-box{background:linear-gradient(135deg,#0a2540,#1a1060);border-radius:var(--radius);padding:32px;text-align:center;color:#fff;margin-bottom:20px}
+.score-ring{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.1);border:3px solid rgba(255,255,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px}
+.score-pct{font-size:2rem;font-weight:800;font-family:'JetBrains Mono',monospace}
+.score-lbl{font-size:.7rem;opacity:.6}
+.score-msg{font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.score-detail{font-size:.875rem;opacity:.7}
+.review-list{display:flex;flex-direction:column;gap:10px}
+.review-item{border-radius:var(--radius);padding:14px;border:1.5px solid}
+.review-item.ok{background:var(--green-l);border-color:#b2f2bb}
+.review-item.ng{background:var(--red-l);border-color:#ffc9c9}
+.review-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}
+.review-q{font-size:.8125rem;font-weight:600;flex:1;line-height:1.5}
+.review-tag{padding:2px 9px;border-radius:100px;font-size:.7rem;font-weight:800;white-space:nowrap}
+.tag-ok{background:#d3f9d8;color:#2b8a3e}
+.tag-ng{background:#ffe3e3;color:#c92a2a}
+.review-info{font-size:.8rem;color:#555;margin-top:4px}
+.review-expl{font-size:.8rem;color:#555;background:rgba(0,0,0,.04);border-radius:6px;padding:8px 10px;margin-top:8px;line-height:1.6}
+
+/* === ANALISIS === */
+.analisis-wrap{max-width:900px;margin:0 auto;padding:24px 20px 80px}
+.my-ptn-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+.my-ptn-title{font-size:1rem;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.ptn-slot{padding:14px;border-radius:var(--radius-sm);border:1.5px solid var(--border);margin-bottom:10px;position:relative;transition:.2s}
+.ptn-slot.filled{background:var(--blue-xl);border-color:var(--blue)}
+.ptn-slot-lbl{font-size:.7rem;font-weight:800;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.ptn-slot-name{font-size:.9375rem;font-weight:800;color:var(--ink)}
+.ptn-slot-sub{font-size:.8rem;color:#777;margin-top:2px}
+.ptn-slot-empty{font-size:.875rem;color:#aaa}
+.del-slot{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:var(--red-l);border:1px solid #ffc9c9;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.75rem;color:var(--red);transition:.15s}
+.del-slot:hover{background:#ffc9c9}
+.slot-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.form-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:18px}
+.form-label{font-size:.8rem;font-weight:700;color:var(--ink);margin-bottom:6px;display:block}
+.cat-chips{display:flex;gap:6px;flex-wrap:wrap}
+.cat-chip{padding:7px 14px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.8125rem;font-weight:600;cursor:pointer;background:var(--white);font-family:inherit;transition:.15s}
+.cat-chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.univ-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.univ-chip{padding:6px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.75rem;font-weight:700;cursor:pointer;background:var(--white);font-family:inherit;transition:.15s}
+.univ-chip.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.rec-list{display:flex;flex-direction:column;gap:12px}
+.rec-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:.2s}
+.rec-card:hover{border-color:var(--blue);box-shadow:var(--shadow)}
+.rec-head{display:flex;align-items:center;gap:13px;padding:14px;border-bottom:1px solid var(--border)}
+.rec-logo{width:48px;height:48px;object-fit:contain;flex-shrink:0}
+.rec-logo-ph{width:48px;height:48px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:1.25rem;flex-shrink:0}
+.rec-info{flex:1;min-width:0}
+.rec-univ-name{font-size:.75rem;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px}
+.rec-major-name{font-size:.9375rem;font-weight:800;color:var(--ink);margin-top:1px}
+.chance-pill{padding:4px 11px;border-radius:100px;font-size:.75rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+.ch-high{background:var(--green-l);color:var(--green)}
+.ch-mid{background:var(--amber-l);color:var(--amber)}
+.ch-low{background:var(--red-l);color:var(--red)}
+.rec-body{padding:14px}
+.rec-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.rec-stat{text-align:center;padding:9px 6px;background:var(--bg);border-radius:var(--radius-sm)}
+.rec-stat .rv{font-size:.9375rem;font-weight:800;color:var(--blue);font-family:'JetBrains Mono',monospace}
+.rec-stat .rl{font-size:.65rem;color:#999;margin-top:2px}
+.rec-note-box{font-size:.8rem;color:#666;padding:9px 12px;background:var(--bg);border-radius:var(--radius-sm);border-left:2.5px solid var(--blue);line-height:1.6;margin-bottom:10px}
+.rec-action-btns{display:flex;gap:8px}
+/* res summary */
+.res-box{background:linear-gradient(135deg,var(--ink2),#1a1040);border-radius:var(--radius);padding:22px;color:#fff;margin-bottom:18px}
+.res-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rg-item .l{font-size:.7rem;opacity:.5;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.rg-item .v{font-size:1.75rem;font-weight:800;letter-spacing:-1px;font-family:'JetBrains Mono',monospace}
+/* Picker modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1100;display:none;align-items:flex-end;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-sheet{background:var(--white);border-radius:20px 20px 0 0;width:100%;max-width:640px;max-height:82vh;display:flex;flex-direction:column}
+.modal-head{padding:18px 18px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-head h3{font-size:.9375rem;font-weight:800}
+.modal-close{width:30px;height:30px;border-radius:50%;background:var(--bg);border:none;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.modal-search{padding:12px 16px;border-bottom:1px solid var(--border)}
+.modal-search input{width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:.875rem;font-family:inherit}
+.modal-search input:focus{outline:none;border-color:var(--blue)}
+.modal-list{overflow-y:auto;flex:1;padding:8px}
+.modal-item{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:var(--radius-sm);cursor:pointer;transition:.15s}
+.modal-item:hover{background:var(--blue-xl)}
+.modal-item-logo{width:34px;height:34px;object-fit:contain;flex-shrink:0}
+.modal-item-info .name{font-weight:700;font-size:.875rem}
+.modal-item-info .sub{font-size:.75rem;color:#888}
+
+
+/* === CELEBRATION RESULT === */
+.result-celebration{background:linear-gradient(160deg,#0a1628 0%,#1a1060 45%,#0d2040 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px 40px;text-align:center;position:relative;overflow:hidden}
+.result-celebration::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 50% 30%,rgba(112,72,232,.25) 0%,transparent 60%);pointer-events:none;animation:pulse-glow 3s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+.result-grade-badge{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#f59f00,#f08c00);border:4px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:900;color:#fff;margin:0 auto 24px;box-shadow:0 0 40px rgba(245,159,0,.5);animation:badge-pop .6s cubic-bezier(.175,.885,.32,1.275) both;font-family:'JetBrains Mono',monospace}
+.grade-Ap,.grade-A{background:linear-gradient(135deg,#2f9e44,#1a7431);box-shadow:0 0 40px rgba(47,158,68,.5)}
+.grade-Bp,.grade-B{background:linear-gradient(135deg,#3b5bdb,#1e3a8a);box-shadow:0 0 40px rgba(59,91,219,.5)}
+.grade-C{background:linear-gradient(135deg,#f08c00,#c76b0a);box-shadow:0 0 40px rgba(240,140,0,.5)}
+.grade-D{background:linear-gradient(135deg,#e03131,#9b1b1b);box-shadow:0 0 40px rgba(224,49,49,.5)}
+@keyframes badge-pop{0%{transform:scale(0) rotate(-180deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+.result-big-score{font-size:7rem;font-weight:900;color:#fff;line-height:1;letter-spacing:-4px;font-family:'JetBrains Mono',monospace;animation:score-count .8s cubic-bezier(.16,1,.3,1) .3s both;margin-bottom:16px;text-shadow:0 0 60px rgba(255,255,255,.3)}
+@keyframes score-count{0%{opacity:0;transform:translateY(30px) scale(.8)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.result-msg-main{font-size:1.75rem;font-weight:800;color:#fff;margin-bottom:6px;animation:fade-up .5s ease .5s both}
+.result-msg-sub{font-size:1rem;color:rgba(255,255,255,.6);margin-bottom:36px;animation:fade-up .5s ease .6s both}
+@keyframes fade-up{0%{opacity:0;transform:translateY(16px)}100%{opacity:1;transform:translateY(0)}}
+.result-stat-row{display:flex;gap:14px;margin-bottom:28px;animation:fade-up .5s ease .7s both;flex-wrap:wrap;justify-content:center}
+.rst-item{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:14px 22px;min-width:80px;backdrop-filter:blur(10px)}
+.rst-num{font-size:2rem;font-weight:900;font-family:'JetBrains Mono',monospace;color:#fff}
+.rst-lbl{font-size:.7rem;color:rgba(255,255,255,.5);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.rst-green .rst-num{color:#69db7c}
+.rst-red .rst-num{color:#ff8787}
+.rst-blue .rst-num{color:#74c0fc}
+.result-progress-wrap{width:300px;max-width:100%;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin:0 auto 32px;animation:fade-up .5s ease .8s both}
+.result-progress-bar{height:100%;background:linear-gradient(90deg,#3b5bdb,#7048e8,#2f9e44);border-radius:4px;transition:width 1.2s cubic-bezier(.16,1,.3,1) .9s}
+.result-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;animation:fade-up .5s ease .9s both}
+.result-btn-retry{background:linear-gradient(135deg,#3b5bdb,#7048e8);color:#fff;border:none;padding:13px 26px;border-radius:10px;font-weight:800;font-size:.9375rem;cursor:pointer;font-family:inherit;transition:.2s;box-shadow:0 4px 20px rgba(59,91,219,.4)}
+.result-btn-retry:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(59,91,219,.5)}
+.result-btn-ptn{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.25);padding:13px 26px;border-radius:10px;font-weight:800;font-size:.9375rem;cursor:pointer;font-family:inherit;transition:.2s;backdrop-filter:blur(10px)}
+.result-btn-ptn:hover{background:rgba(255,255,255,.22)}
+.result-btn-exit{background:transparent;color:rgba(255,255,255,.5);border:1.5px solid rgba(255,255,255,.1);padding:13px 20px;border-radius:10px;font-weight:600;font-size:.875rem;cursor:pointer;font-family:inherit;transition:.2s}
+.result-btn-exit:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.2)}
+
+/* === TOAST === */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 20px;border-radius:100px;font-size:.8125rem;font-weight:700;z-index:2000;pointer-events:none;opacity:0;transition:.3s;white-space:nowrap}
+.toast.show{opacity:1}
+
+/* === WHATSAPP === */
+.wa-btn{position:fixed;bottom:24px;right:24px;width:54px;height:54px;border-radius:50%;background:#25D366;box-shadow:0 4px 16px rgba(37,211,102,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:700;transition:.2s;text-decoration:none}
+.wa-btn:hover{transform:scale(1.1);box-shadow:0 8px 24px rgba(37,211,102,.5)}
+.wa-btn svg{width:28px;height:28px;fill:#fff}
+/* === FOOTER === */
+footer{background:var(--ink);color:#fff;text-align:center;padding:28px 20px}
+.ft-ig a{color:#74c0fc;font-weight:700;text-decoration:none;font-size:.9rem}
+.ft-ig a:hover{color:#a5d8ff}
+.ft-copy{font-size:.75rem;color:rgba(255,255,255,.35);margin-top:6px}
+
+/* === LOGO UNIVERSITAS === */
+.rec-logo-wrap{width:60px;height:60px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#f8f8fc;border:1.5px solid var(--border);overflow:hidden;padding:4px}
+.rec-logo{width:52px;height:52px;object-fit:contain}
+.rec-logo-init{width:52px;height:52px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;letter-spacing:.5px;font-family:'JetBrains Mono',monospace}
+.modal-item-logo-wrap{width:40px;height:40px;flex-shrink:0;border-radius:8px;background:#f8f8fc;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:3px}
+.modal-item-logo{width:34px;height:34px;object-fit:contain}
+
+/* === FEAT ICO === */
+.feat-ico-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.feat-ico-box svg{width:24px;height:24px}
+.feat-blue{background:#dbeafe;color:#1d4ed8}
+.feat-purple{background:#ede9fe;color:#6d28d9}
+.feat-green{background:#dcfce7;color:#15803d}
+.feat-wa{background:#dcfce7;color:#15803d}
+
+/* === COUNTER ANIMATION === */
+#rAvg{animation:none;transition:color .3s}
+.result-hero-big{animation:reveal-score 1s cubic-bezier(.16,1,.3,1) both}
+@keyframes reveal-score{0%{opacity:0;transform:translateY(20px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav">
+  <div class="nav-wrap">
+    <a class="nav-logo" onclick="goPage('home')">
+      <div class="nav-logo-box">
+        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>
+      </div>
+      <div class="nav-brand">SagaTo<span>Edu</span></div>
+    </a>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="goPage('home')">Beranda</button>
+      <button class="nav-btn" onclick="goPage('rapor')">Kalkulator Rapor</button>
+      <button class="nav-btn" onclick="goPage('tryout')">Try Out</button>
+      <button class="nav-btn" onclick="goPage('analisis')">Rekomendasi PTN</button>
+    </div>
+    <div style="position:relative">
+      <button class="nav-dots-btn" onclick="toggleDropdown(event)" title="Menu lainnya">
+        <svg viewBox="0 0 16 4"><circle cx="2" cy="2" r="2"/><circle cx="8" cy="2" r="2"/><circle cx="14" cy="2" r="2"/></svg>
+      </button>
+      <div class="dropdown" id="mainDropdown">
+        <div class="dd-item" onclick="goPage('home');closeDropdown()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Beranda
+        </div>
+        <div class="dd-item" onclick="goPage('rapor');closeDropdown()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg> Kalkulator Rapor
+        </div>
+        <div class="dd-item" onclick="goPage('tryout');closeDropdown()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Try Out SNBT
+        </div>
+        <div class="dd-item" onclick="goPage('analisis');closeDropdown()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg> Rekomendasi PTN
+        </div>
+        <div class="dd-sep"></div>
+        <div class="dd-item" onclick="window.open('https://wa.me/6285694861972','_blank');closeDropdown()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> Chat WhatsApp
+        </div>
+        <div class="dd-item" onclick="window.open('https://instagram.com/SagatoStore_id','_blank');closeDropdown()">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> Instagram @SagatoStore_id
+        </div>
+      </div>
+    </div>
+    <button class="hamburger" onclick="openDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer" id="drawer" onclick="if(event.target===this)closeDrawer()">
+  <div class="drawer-bg" onclick="closeDrawer()"></div>
+  <div class="drawer-panel">
+    <div class="drawer-head">
+      <div class="drawer-logo">SagaTo<span>Edu</span></div>
+      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="drawer-nav-btn active" onclick="goPage('home');closeDrawer()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> Beranda
+    </div>
+    <div class="drawer-nav-btn" onclick="goPage('rapor');closeDrawer()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6m4 18H6V4h7v5h5v11z"/></svg> Kalkulator Rapor
+    </div>
+    <div class="drawer-nav-btn" onclick="goPage('tryout');closeDrawer()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Try Out SNBT
+    </div>
+    <div class="drawer-nav-btn" onclick="goPage('analisis');closeDrawer()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg> Rekomendasi PTN
+    </div>
+    <div class="drawer-divider"></div>
+    <div class="drawer-nav-btn" onclick="window.open('https://wa.me/6285694861972','_blank');closeDrawer()">
+      <svg viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg> Chat WhatsApp
+    </div>
+    <div class="drawer-nav-btn" onclick="window.open('https://instagram.com/SagatoStore_id','_blank');closeDrawer()">
+      <svg viewBox="0 0 24 24" fill="#E1306C"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg> @SagatoStore_id
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- ====== PAGE: HOME ====== -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-chip">Platform Edukasi SNBT 2026</div>
+    <h1>Raih <em>PTN Impian</em><br>dengan Persiapan Tepat</h1>
+    <p>Kalkulator rapor akurat, 120 soal try out SNBT, dan rekomendasi jurusan berdasarkan passing grade resmi 2025.</p>
+    <div class="hero-btns">
+      <button class="btn-solid btn-lg" onclick="goPage('tryout')">Mulai Try Out</button>
+      <button class="btn-ghost-white btn-lg" onclick="goPage('analisis')">Cek Rekomendasi PTN</button>
+    </div>
+  </div>
+  <div class="stats-ribbon">
+    <div class="stat-cell"><div class="stat-n">120</div><div class="stat-l">Soal SNBT</div></div>
+    <div class="stat-cell"><div class="stat-n">44+</div><div class="stat-l">PTN/PTS</div></div>
+    <div class="stat-cell"><div class="stat-n">320+</div><div class="stat-l">Jurusan</div></div>
+    <div class="stat-cell"><div class="stat-n">2025</div><div class="stat-l">Data Resmi</div></div>
+  </div>
+  <div class="features">
+    <div class="sec-eyebrow">Fitur Platform</div>
+    <div class="sec-h">Semua yang Kamu Butuhkan</div>
+    <div class="sec-sub">Tools terintegrasi untuk persiapan SNBT yang lebih cerdas dan terencana.</div>
+    <div class="feat-grid">
+      <div class="feat-card" onclick="goPage('rapor')">
+        <div class="feat-ico-box feat-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <h3>Kalkulator Rapor</h3>
+        <p>Hitung rata-rata nilai rapor semester 1–5 untuk prediksi SNBP secara akurat.</p>
+      </div>
+      <div class="feat-card" onclick="goPage('tryout')">
+        <div class="feat-ico-box feat-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+        <h3>Try Out SNBT</h3>
+        <p>120 soal standar nasional TPS, literasi, dan penalaran matematika dengan pembahasan.</p>
+      </div>
+      <div class="feat-card" onclick="goPage('analisis')">
+        <div class="feat-ico-box feat-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+        <h3>Rekomendasi PTN</h3>
+        <p>Analisis nilai dan dapatkan rekomendasi universitas + jurusan berdasarkan data resmi.</p>
+      </div>
+      <div class="feat-card" onclick="window.open('https://wa.me/6285694861972','_blank')">
+        <div class="feat-ico-box feat-wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></div>
+        <h3>Konsultasi WA</h3>
+        <p>Diskusi strategi SNBT dan pemilihan jurusan langsung via WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PAGE: RAPOR ====== -->
+<div id="page-rapor" class="page">
+  <div class="pg-head">
+    <div class="pg-head-inner">
+      <div class="pg-eyebrow">Tool Perhitungan</div>
+      <div class="pg-title">Kalkulator Nilai Rapor</div>
+      <div class="pg-sub">Hitung rata-rata rapor semester 1–5 untuk persiapan SNBP</div>
+    </div>
+  </div>
+  <div class="wrap" id="raporWrap">
+    <div class="step-row">
+      <div class="step-item active" id="stepBtn1" onclick="goStep(1)"><span class="step-num">1</span> Pilih Mapel</div>
+      <div class="step-item" id="stepBtn2" onclick="goStep(2)"><span class="step-num">2</span> Input Nilai</div>
+      <div class="step-item" id="stepBtn3" onclick="goStep(3)"><span class="step-num">3</span> Hasil</div>
+    </div>
+    <!-- Step 1 -->
+    <div id="rStep1">
+      <div class="card">
+        <div class="card-title">Pilih Mata Pelajaran</div>
+        <div class="card-sub">Pilih mapel yang ada di rapor kamu (bisa pilih lebih dari satu)</div>
+        <div class="mapel-grid" id="mapelGrid"></div>
+        <div class="add-row">
+          <input class="txt-inp" id="mapelCustom" placeholder="Tambah mata pelajaran lain..." onkeydown="if(event.key==='Enter')addMapel()">
+          <button class="btn btn-primary" onclick="addMapel()">+ Tambah</button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="goStep(2)">Lanjut →</button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div id="rStep2" style="display:none">
+      <div class="card">
+        <div class="card-title">Input Nilai per Semester</div>
+        <div class="card-sub">Pilih semester, centang mapel yang ada nilainya, lalu isi angkanya</div>
+        <div class="sem-tabs" id="semTabs"></div>
+        <div style="overflow-x:auto"><table class="grade-table" id="gradeTable"><thead><tr><th>✓</th><th>Mata Pelajaran</th><th>Nilai (0–100)</th></tr></thead><tbody id="gradeBody"></tbody></table></div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="goStep(1)">← Kembali</button>
+          <button class="btn btn-primary" onclick="goStep(3)">Lihat Hasil →</button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div id="rStep3" style="display:none">
+      <div class="result-hero">
+        <div class="result-hero-label">RATA-RATA SEMESTER 1 - 5</div>
+        <div class="result-hero-big" id="rAvg">—</div>
+        <div class="result-hero-title">HASIL RAPOR</div>
+        <div class="result-hero-grid">
+          <div class="rh-item"><div class="lbl">Nilai Tertinggi</div><div class="val" id="rHigh">—</div></div>
+          <div class="rh-item"><div class="lbl">Nilai Terendah</div><div class="val" id="rLow">—</div></div>
+          <div class="rh-item"><div class="lbl">Mapel Dihitung</div><div class="val" id="rCount">—</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Detail Nilai per Mata Pelajaran</div>
+        <div style="overflow-x:auto"><table class="res-table" id="resTable"></table></div>
+        <div class="btn-row">
+          <button class="btn btn-secondary" onclick="goStep(2)">← Koreksi</button>
+          <button class="btn btn-primary" onclick="useForRek()">Gunakan untuk Rekomendasi PTN</button>
+          <button class="btn btn-danger" onclick="resetRapor()">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== PAGE: TRYOUT ====== -->
+<div id="page-tryout" class="page">
+  <div class="pg-head">
+    <div class="pg-head-inner">
+      <div class="pg-eyebrow">Gratis — 120 Soal</div>
+      <div class="pg-title">Try Out SNBT 2026</div>
+      <div class="pg-sub">Latihan soal standar nasional dengan pembahasan lengkap</div>
+    </div>
+  </div>
+  <!-- Logo PTN -->
+  <div class="to-strip" id="toLogoStrip"></div>
+  <!-- Filter -->
+  <div class="filter-bar">
+    <button class="filter-chip active" onclick="filterTO('all',this)">Semua</button>
+    <button class="filter-chip" onclick="filterTO('snbt',this)">SNBT</button>
+    <button class="filter-chip" onclick="filterTO('utbk',this)">UTBK</button>
+    <button class="filter-chip" onclick="filterTO('tps',this)">TPS</button>
+    <button class="filter-chip" onclick="filterTO('literasi',this)">Literasi</button>
+    <button class="filter-chip" onclick="filterTO('matdas',this)">Penalaran Matematika</button>
+  </div>
+  <div class="to-grid" id="toGrid"></div>
+</div>
+
+<!-- QUIZ OVERLAY -->
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-topbar">
+    <button class="btn btn-secondary" style="padding:7px 14px;font-size:.8rem" onclick="exitQuiz()">← Keluar</button>
+    <div class="quiz-prog-wrap"><div class="quiz-prog" id="quizProg"></div></div>
+    <div class="quiz-counter" id="quizCounter">1/120</div>
+  </div>
+  <div id="quizContent"></div>
+</div>
+
+<!-- ====== PAGE: ANALISIS ====== -->
+<div id="page-analisis" class="page">
+  <div class="pg-head">
+    <div class="pg-head-inner">
+      <div class="pg-eyebrow">Berdasarkan Data Resmi Passing Grade 2025</div>
+      <div class="pg-title">Rekomendasi PTN & Jurusan</div>
+      <div class="pg-sub">Masukkan rata-rata nilai untuk mendapat rekomendasi universitas yang sesuai</div>
+    </div>
+  </div>
+  <div class="analisis-wrap">
+    <!-- Pilihan PTN (persis seperti screenshot) -->
+    <div class="my-ptn-card">
+      <div class="my-ptn-title">Pilihan Anda</div>
+      <div class="ptn-slot" id="slot1">
+        <div class="ptn-slot-lbl">Pilihan 1</div>
+        <div class="ptn-slot-empty" id="slot1Text">Belum dipilih — tambahkan dari hasil rekomendasi</div>
+      </div>
+      <div class="ptn-slot" id="slot2">
+        <div class="ptn-slot-lbl">Pilihan 2</div>
+        <div class="ptn-slot-empty" id="slot2Text">Belum dipilih — tambahkan dari hasil rekomendasi</div>
+      </div>
+      <div class="slot-btns">
+        <button class="btn btn-primary" onclick="openPicker(1)">+ Pilih Pilihan 1</button>
+        <button class="btn btn-secondary" onclick="openPicker(2)">+ Pilih Pilihan 2</button>
+        <button class="btn btn-danger" onclick="clearSlots()">Hapus Pilihan</button>
+      </div>
+    </div>
+    <!-- Form -->
+    <div class="form-card">
+      <div class="card-title">Analisis Berdasarkan Nilai Rapor</div>
+      <div style="margin-bottom:16px">
+        <label class="form-label">Rata-rata Nilai Rapor (0–100)</label>
+        <input type="number" class="txt-inp" id="inputNilai" placeholder="Contoh: 85.50" min="0" max="100" step="0.01" style="max-width:220px">
+      </div>
+      <div style="margin-bottom:16px">
+        <label class="form-label">Kategori Jurusan</label>
+        <div class="cat-chips">
+          <button class="cat-chip active" onclick="setCatFilter('all',this)">Semua</button>
+          <button class="cat-chip" onclick="setCatFilter('saintek',this)">Saintek</button>
+          <button class="cat-chip" onclick="setCatFilter('soshum',this)">Soshum</button>
+        </div>
+      </div>
+      <div style="margin-bottom:20px">
+        <label class="form-label">Filter Universitas</label>
+        <div class="univ-chips" id="univChips"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary btn-lg" onclick="doAnalysis()">Cari Rekomendasi</button>
+        <button class="btn btn-secondary" onclick="resetAnalysis()">Reset</button>
+      </div>
+    </div>
+    <!-- Results -->
+    <div id="analisisResult" style="display:none">
+      <div class="res-box">
+        <div class="res-grid3">
+          <div class="rg-item"><div class="l">Nilai Kamu</div><div class="v" id="resNilai">—</div></div>
+          <div class="rg-item"><div class="l">Jurusan Cocok</div><div class="v" id="resJml">—</div></div>
+          <div class="rg-item"><div class="l">Peluang Tinggi</div><div class="v" id="resHigh">—</div></div>
+        </div>
+      </div>
+      <div class="rec-list" id="recList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PICKER MODAL -->
+<div class="modal-overlay" id="pickerModal" onclick="if(event.target===this)closePicker()">
+  <div class="modal-sheet">
+    <div class="modal-head">
+      <h3 id="pickerTitle">Pilih Pilihan 1</h3>
+      <button class="modal-close" onclick="closePicker()">✕</button>
+    </div>
+    <div class="modal-search">
+      <input type="text" id="pickerSearch" placeholder="Cari universitas atau jurusan..." oninput="renderPicker()">
+    </div>
+    <div class="modal-list" id="pickerList"></div>
+  </div>
+</div>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/6285694861972" target="_blank" class="wa-btn" title="Chat WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-ig">Instagram: <a href="https://instagram.com/SagatoStore_id" target="_blank">@SagatoStore_id</a></div>
+  <div class="ft-copy">© 2026 SagaToEdu. All rights reserved.</div>
+</footer>
+
+<script>
+// ============ NAVIGATION ============
+function goPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>{
+    b.classList.toggle('active',['home','rapor','tryout','analisis'][i]===name);
+  });
+  document.querySelectorAll('.drawer-nav-btn').forEach((b,i)=>{
+    b.classList.toggle('active',i===['home','rapor','tryout','analisis'].indexOf(name));
+  });
+  window.scrollTo(0,0);
+  closeDropdown();
+}
+function toggleDropdown(e){e.stopPropagation();document.getElementById('mainDropdown').classList.toggle('show')}
+function closeDropdown(){document.getElementById('mainDropdown').classList.remove('show')}
+document.addEventListener('click',closeDropdown);
+function openDrawer(){document.getElementById('drawer').classList.add('open')}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open')}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+
+// ============ RAPOR ============
+const defMapel=['Matematika','Bahasa Indonesia','Bahasa Inggris','Fisika','Kimia','Biologi','Sejarah','Geografi','Ekonomi','Sosiologi','Pendidikan Agama','PPKn','Seni Budaya','PJOK','Informatika','Bahasa Jawa','Bahasa Arab'];
+let selMapel=[],grades={},curSem=1,allMapel=[...defMapel];
+
+function initMapelGrid(){
+  const g=document.getElementById('mapelGrid');g.innerHTML='';
+  allMapel.forEach(m=>{
+    const chip=document.createElement('button');
+    chip.className='mapel-chip'+(selMapel.includes(m)?' sel':'');
+    chip.innerHTML=`<input type="checkbox" ${selMapel.includes(m)?'checked':''}> ${m}`;
+    chip.querySelector('input').addEventListener('change',e=>{e.stopPropagation();toggleMapel(m,e.target.checked);chip.classList.toggle('sel',e.target.checked)});
+    chip.addEventListener('click',e=>{if(e.target.tagName!=='INPUT'){const cb=chip.querySelector('input');cb.checked=!cb.checked;toggleMapel(m,cb.checked);chip.classList.toggle('sel',cb.checked)}});
+    g.appendChild(chip);
+  });
+}
+function toggleMapel(m,on){if(on){if(!selMapel.includes(m))selMapel.push(m)}else selMapel=selMapel.filter(x=>x!==m)}
+function addMapel(){
+  const v=document.getElementById('mapelCustom').value.trim();
+  if(v&&!allMapel.includes(v)){allMapel.push(v);selMapel.push(v);initMapelGrid();toast('Mata pelajaran ditambahkan!')}
+  document.getElementById('mapelCustom').value='';
+}
+function goStep(n){
+  if(n===2&&selMapel.length<1){toast('Pilih minimal 1 mata pelajaran!');return}
+  if(n===3)calcRapor();
+  ['rStep1','rStep2','rStep3'].forEach((id,i)=>document.getElementById(id).style.display=i===n-1?'block':'none');
+  document.querySelectorAll('.step-item').forEach((s,i)=>{
+    s.classList.toggle('active',i===n-1);
+    s.classList.toggle('done',i<n-1);
+  });
+  if(n===2)buildSemTabs();
+}
+function buildSemTabs(){
+  const tb=document.getElementById('semTabs');tb.innerHTML='';
+  for(let i=1;i<=5;i++){
+    const b=document.createElement('button');b.className='sem-tab'+(i===curSem?' active':'');
+    b.textContent='Semester '+i;
+    b.onclick=()=>{curSem=i;document.querySelectorAll('.sem-tab').forEach((t,j)=>t.classList.toggle('active',j===i-1));buildGradeRows()};
+    tb.appendChild(b);
+  }
+  buildGradeRows();
+}
+function buildGradeRows(){
+  const tb=document.getElementById('gradeBody');tb.innerHTML='';
+  selMapel.forEach(m=>{
+    const checked=grades[m]&&grades[m][curSem]!==undefined;
+    const val=checked?grades[m][curSem]:'';
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><input type="checkbox" style="width:16px;height:16px;accent-color:var(--blue);cursor:pointer" ${checked?'checked':''} onchange="toggleGradeRow('${m}',${curSem},this)"></td><td style="font-weight:600">${m}</td><td><input type="number" class="num-inp" placeholder="—" min="0" max="100" step="0.1" value="${val}" ${!checked?'disabled':''} onchange="setGrade('${m}',${curSem},this.value)"></td>`;
+    tb.appendChild(tr);
+  });
+}
+function toggleGradeRow(m,s,cb){
+  const inp=cb.closest('tr').querySelector('.num-inp');
+  inp.disabled=!cb.checked;
+  if(!cb.checked&&grades[m])delete grades[m][s];
+}
+function setGrade(m,s,v){if(!grades[m])grades[m]={};grades[m][s]=parseFloat(v)||0}
+function calcRapor(){
+  let total=0,cnt=0,allVals=[];
+  const thead=`<thead><tr><th>Mata Pelajaran</th><th>Sem 1</th><th>Sem 2</th><th>Sem 3</th><th>Sem 4</th><th>Sem 5</th><th>Rata-rata</th></tr></thead>`;
+  let tbody='<tbody>';
+  selMapel.forEach(m=>{
+    let sub=0,sc=0;
+    let row=`<tr><td style="font-weight:600">${m}</td>`;
+    for(let s=1;s<=5;s++){
+      const v=grades[m]&&grades[m][s]!==undefined?grades[m][s]:null;
+      row+=`<td>${v!==null?v.toFixed(1):'—'}</td>`;
+      if(v!==null){sub+=v;sc++;allVals.push(v)}
+    }
+    const avg=sc?sub/sc:null;
+    if(avg){total+=avg;cnt++}
+    row+=`<td class="avg-val">${avg?avg.toFixed(2):'—'}</td></tr>`;
+    tbody+=row;
+  });
+  tbody+='</tbody>';
+  document.getElementById('resTable').innerHTML=thead+tbody;
+  const fin=cnt?total/cnt:0;
+  const high=allVals.length?Math.max(...allVals):0;
+  const low=allVals.length?Math.min(...allVals):0;
+  // Animasi hitung dari 0 ke nilai akhir
+  animateCount('rAvg', 0, fin, 1200, 2);
+  animateCount('rHigh', 0, high, 1000, 2);
+  animateCount('rLow', 0, low, 1000, 2);
+  document.getElementById('rCount').textContent = cnt || '0';
+  document.getElementById('inputNilai').value=fin.toFixed(2);
+  // Launch confetti untuk rapor juga!
+  setTimeout(()=>launchConfetti(), 400);
+}
+function animateCount(id, from, to, duration, decimals){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const start=performance.now();
+  function step(now){
+    const t=Math.min(1,(now-start)/duration);
+    // Ease out cubic
+    const ease=1-Math.pow(1-t,3);
+    const val=from+(to-from)*ease;
+    el.textContent=val.toFixed(decimals);
+    if(t<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function useForRek(){goPage('analisis');toast('Nilai sudah diisi!')}
+function resetRapor(){if(confirm('Reset semua data rapor?')){selMapel=[];grades={};curSem=1;initMapelGrid();goStep(1)}}
+
+// ============ TRYOUT ============
+const toPackages=[
+  {id:1,cat:'snbt',badge:'SNBT 2025',title:'Try Out SNBT Lengkap #1',desc:'Paket Penuh — TPS, Literasi & Penalaran',soal:120,dur:195,peserta:5241},
+  {id:2,cat:'utbk',badge:'UTBK 2025',title:'Try Out UTBK #1',desc:'Tes Potensi Skolastik Lengkap',soal:80,dur:180,peserta:3856},
+  {id:3,cat:'tps',badge:'TPS',title:'TPS — Penalaran Umum',desc:'Logika, Analitis, dan Penalaran Spasial',soal:40,dur:90,peserta:4712},
+  {id:4,cat:'literasi',badge:'Literasi',title:'Literasi Bahasa Indonesia',desc:'Pemahaman Bacaan, Kosakata & Tata Bahasa',soal:30,dur:60,peserta:3921},
+  {id:5,cat:'literasi',badge:'Literasi',title:'Literasi Bahasa Inggris',desc:'Reading Comprehension & Grammar',soal:20,dur:45,peserta:2734},
+  {id:6,cat:'matdas',badge:'Penalaran Mat',title:'Penalaran Matematika',desc:'Numerasi, Kuantitatif & Pemodelan',soal:30,dur:75,peserta:3198},
+  {id:7,cat:'snbt',badge:'SNBT 2024',title:'Try Out SNBT Lengkap #2',desc:'Simulasi Penuh Standar Resmi 2024',soal:120,dur:195,peserta:4567},
+  {id:8,cat:'utbk',badge:'UTBK 2024',title:'Try Out UTBK #2',desc:'Paket Premium Full Test 2024',soal:100,dur:180,peserta:2891},
+  {id:9,cat:'tps',badge:'TPS Lanjut',title:'TPS — Penalaran Kuantitatif',desc:'Soal-soal numerik dan statistika',soal:35,dur:75,peserta:2145},
+  {id:10,cat:'matdas',badge:'Penalaran Mat',title:'Penalaran Mat — Level Lanjut',desc:'Soal olimpiade dan pemodelan kompleks',soal:25,dur:60,peserta:1876},
+];
+const logos=[
+  {src:'https://upload.wikimedia.org/wikipedia/id/9/95/Logo_Universitas_Indonesia.svg',alt:'UI'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/2/2c/Logo_Universitas_Gadjah_Mada.svg',alt:'UGM'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/3/3d/Logo_Institut_Teknologi_Bandung.png',alt:'ITB'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/0/0f/Logo_ITS.svg',alt:'ITS'},
+  {src:'https://upload.wikimedia.org/wikipedia/commons/0/01/Lambang_Unair.svg',alt:'UNAIR'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/4/4d/Lambang_UNDIP.png',alt:'UNDIP'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/7/77/Lambang_Universitas_Brawijaya.svg',alt:'UB'},
+  {src:'https://upload.wikimedia.org/wikipedia/commons/a/a7/Lambang_UNS.png',alt:'UNS'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/f/f7/Unhas_logo.svg',alt:'UNHAS'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/d/d3/Lambang_UNPAD.png',alt:'UNPAD'},
+  {src:'https://upload.wikimedia.org/wikipedia/id/9/98/Logo_Universitas_Sumatera_Utara.png',alt:'USU'},
+];
+function buildLogoStrip(){
+  const s=document.getElementById('toLogoStrip');
+  logos.forEach(l=>{const img=document.createElement('img');img.src=l.src;img.alt=l.alt;img.className='to-logo';img.title=l.alt;img.onerror=()=>img.remove();s.appendChild(img)});
+}
+function renderTO(filter){
+  const g=document.getElementById('toGrid');g.innerHTML='';
+  (filter==='all'?toPackages:toPackages.filter(t=>t.cat===filter)).forEach(t=>{
+    const card=document.createElement('div');card.className='to-card';
+    card.innerHTML=`<div class="to-top"><div class="to-badge">${t.badge}</div><div class="to-title">${t.title}</div><div class="to-desc">${t.desc}</div></div>
+    <div class="to-body">
+      <div class="to-stats">
+        <div class="to-stat"><div class="v">${t.soal}</div><div class="l">Soal</div></div>
+        <div class="to-stat"><div class="v">${t.dur}'</div><div class="l">Menit</div></div>
+        <div class="to-stat"><div class="v">${(t.peserta/1000).toFixed(1)}K</div><div class="l">Peserta</div></div>
+      </div>
+      <div class="to-avail">Tersedia Gratis</div>
+      <button class="to-start-btn" onclick="startQuiz(${t.id})">Mulai Try Out →</button>
+    </div>`;
+    g.appendChild(card);
+  });
+}
+function filterTO(cat,btn){
+  document.querySelectorAll('.filter-chip').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderTO(cat);
+}
+
+// ============ QUIZ ============
+const soalAll=[
+  {q:"Lima sekawan Sano, Joko, Adi, Rimba, dan Ratu selalu berangkat bersama. Joko selalu menjemput Sano, setelah ia dijemput oleh Adi. Rimba dijemput terakhir. Rumah Ratu di antara rumah Joko dan Adi. Pernyataan yang BENAR...",opts:["Joko dijemput terakhir","Adi menjemput Ratu terlebih dahulu","Sano dijemput setelah Ratu","Rimba dijemput setelah Sano","Ratu dijemput sebelum Joko"],ans:3,ex:"Urutan: Adi→Ratu→Joko→Sano→Rimba. Rimba dijemput setelah Sano ✓"},
+  {q:"Jika karyawan libur Selasa, maka Sabtu masuk kerja. Jika tidak libur Selasa, maka mendapat uang lembur. Simpulan TEPAT...",opts:["Jika masuk Sabtu, maka libur Selasa","Jika tidak masuk Sabtu, tidak libur Selasa","Jika tidak dapat lembur, maka masuk Sabtu","Jika dapat lembur, tidak masuk Sabtu","Jika masuk Sabtu, tidak dapat lembur"],ans:2,ex:"Kontraposisi P2: tidak lembur→libur Selasa. Dari P1: libur Selasa→masuk Sabtu."},
+  {q:"Daun kelor mengandung quercetin, antioksidan kuat yang dapat menurunkan tekanan darah. Pernyataan paling mungkin benar...",opts:["Quercetin tidak boleh dikonsumsi setiap hari","Daun kelor dikonsumsi untuk menurunkan tekanan darah","Tidak mengonsumsi daun kelor pasti hipertensi","Antioksidan kuat hanya ada di daun kelor","Quercetin satu-satunya cara turunkan tensi"],ans:1,ex:"Sesuai teks: daun kelor dengan quercetin berpotensi menurunkan tekanan darah."},
+  {q:"Banjir Jakarta sudah tidak bisa ditoleransi. Harus ada solusi cepat dan tepat sebelum Jakarta tenggelam. Ide pokok...",opts:["Banjir Jakarta tidak bisa ditoleransi","Jakarta akan tenggelam","Solusi mengatasi banjir","Banjir Jakarta perlu penanganan segera","Toleransi terhadap banjir"],ans:3,ex:"Ide pokok: perlunya solusi cepat & tepat untuk banjir Jakarta."},
+  {q:"Cromboloni: 38,43,48,... Croissant: 35,38,41,44,... Pada hari ke-7, jumlah keduanya...",opts:["58 dan 53","63 dan 53","68 dan 50","53 dan 47","63 dan 56"],ans:1,ex:"Cromboloni +5/hari: H7=68. Croissant +3/hari: H7=53."},
+  {q:"Detak jantung normal 60–100 kali/menit. Jika >100 disebut takikardia. Pernyataan SESUAI...",opts:["Takikardia selalu berbahaya","Detak jantung normal >100/mnt","Takikardia terjadi jika detak >100/mnt","Takikardia tidak terjadi kondisi normal","Gangguan jantung selalu sebabkan kematian"],ans:2,ex:"Sesuai teks: takikardia = detak >100/menit."},
+  {q:"Negara menetapkan target baru untuk ... keanekaragaman hayati global.",opts:["melestarikan","merusak","mengabaikan","mengurangi","menghapus"],ans:0,ex:"Konteks positif → 'melestarikan' tepat."},
+  {q:"Measles has caused suffering for thousands of years. The search for vaccine lasted 200 years and finally succeeded. Main idea...",opts:["Measles is dangerous","Effective measles vaccine has been found","Measles existed for thousands of years","Search took 200 years","Childhood diseases are hard to cure"],ans:1,ex:"Main idea: vaksin campak akhirnya ditemukan setelah 200 tahun pencarian."},
+  {q:"Jika p=4 dan q=3, nilai (p²+q²)−2pq adalah...",opts:["1","2","3","4","5"],ans:0,ex:"(16+9)−2×4×3=25−24=1"},
+  {q:"Persegi panjang panjang 12 cm, lebar 8 cm. Luasnya...",opts:["20 cm²","40 cm²","96 cm²","48 cm²","80 cm²"],ans:2,ex:"L=12×8=96 cm²"},
+  {q:"Segitiga siku-siku, sisi miring 13 cm, satu sisi tegak 5 cm. Sisi tegak lainnya...",opts:["8 cm","10 cm","12 cm","14 cm","15 cm"],ans:2,ex:"5²+b²=13² → b=12 cm"},
+  {q:"3x+5=20. Nilai x...",opts:["3","4","5","6","7"],ans:2,ex:"3x=15 → x=5"},
+  {q:"Rata-rata 5 bilangan=12. Ditambah satu bilangan, rata-rata=13. Bilangan baru...",opts:["15","16","17","18","19"],ans:3,ex:"Total 5=60, total 6=78. Bilangan baru=18"},
+  {q:"Lingkaran jari-jari 7 cm. Luas (π=22/7)...",opts:["144 cm²","154 cm²","164 cm²","174 cm²","184 cm²"],ans:1,ex:"L=22/7×49=154 cm²"},
+  {q:"(x−3)(x+2)=0. Nilai x...",opts:["x=3 atau x=−2","x=−3 atau x=2","x=3 atau x=2","x=−3 atau x=−2","x=0 atau x=5"],ans:0,ex:"x−3=0→x=3 atau x+2=0→x=−2"},
+  {q:"Laki-laki:Perempuan=3:5. Laki-laki 15 orang. Jumlah perempuan...",opts:["20","25","30","35","40"],ans:1,ex:"1 bagian=5, perempuan=5×5=25"},
+  {q:"Volume kubus 216 cm³. Panjang rusuk...",opts:["4 cm","5 cm","6 cm","7 cm","8 cm"],ans:2,ex:"s=∛216=6 cm"},
+  {q:"3 buku+2 pulpen=Rp23.000. 2 buku+3 pulpen=Rp22.000. Harga 1 buku...",opts:["Rp4.000","Rp5.000","Rp6.000","Rp7.000","Rp8.000"],ans:1,ex:"Eliminasi: 5b+5p=45.000→b+p=9.000. b=5.000"},
+  {q:"Urutan 1/2, 2/5, 3/8, ... Suku ke-5...",opts:["4/11","5/14","5/11","4/14","6/17"],ans:1,ex:"Pola: pembilang+1, penyebut+3 → 5/14"},
+  {q:"Mobil 240 km, kecepatan 60 km/jam. Waktu tempuh...",opts:["2 jam","3 jam","4 jam","5 jam","6 jam"],ans:2,ex:"t=240/60=4 jam"},
+  {q:"f(x)=2x+3. Nilai f(5)...",opts:["11","12","13","14","15"],ans:2,ex:"f(5)=10+3=13"},
+  {q:"Gradien garis melalui (2,3) dan (5,9)...",opts:["1","2","3","4","5"],ans:1,ex:"m=(9−3)/(5−2)=2"},
+  {q:"Deret geometri 3,6,12,24,... Suku ke-6...",opts:["48","72","96","120","144"],ans:2,ex:"U6=3×2⁵=96"},
+  {q:"log₂32=...",opts:["3","4","5","6","7"],ans:2,ex:"2⁵=32 → log₂32=5"},
+  {q:"Trapesium sisi sejajar 8 cm dan 12 cm, tinggi 5 cm. Luasnya...",opts:["40 cm²","45 cm²","50 cm²","55 cm²","60 cm²"],ans:2,ex:"L=½×(8+12)×5=50 cm²"},
+  {q:"sin A=3/5, A lancip. cos A=...",opts:["3/5","4/5","3/4","4/3","5/4"],ans:1,ex:"cos A=√(1−9/25)=4/5"},
+  {q:"|x−2|<3. Penyelesaiannya...",opts:["−1<x<5","−3<x<3","0<x<4","−2<x<6","1<x<7"],ans:0,ex:"−3<x−2<3 → −1<x<5"},
+  {q:"5 merah, 3 biru dalam kotak. P(merah)=...",opts:["3/8","5/8","3/5","5/3","1/2"],ans:1,ex:"P=5/8"},
+  {q:"5!=...",opts:["60","100","120","150","200"],ans:2,ex:"5×4×3×2×1=120"},
+  {q:"Akar x²−5x+6=0...",opts:["2 dan 3","1 dan 6","−2 dan −3","2 dan 4","1 dan 5"],ans:0,ex:"(x−2)(x−3)=0 → x=2 atau 3"},
+  {q:"Median dari 5,8,3,9,2,7,6...",opts:["5","6","7","8","9"],ans:1,ex:"Urut: 2,3,5,6,7,8,9 → median=6"},
+  {q:"2ˣ=16. x=...",opts:["2","3","4","5","6"],ans:2,ex:"2⁴=16 → x=4"},
+  {q:"Luas permukaan kubus rusuk 4 cm...",opts:["64 cm²","80 cm²","96 cm²","112 cm²","128 cm²"],ans:2,ex:"6×4²=96 cm²"},
+  {q:"Keliling lingkaran diameter 14 cm (π=22/7)...",opts:["44 cm","48 cm","52 cm","56 cm","60 cm"],ans:0,ex:"K=22/7×14=44 cm"},
+  {q:"a=2,b=3,c=4. a²+b²−c=...",opts:["7","8","9","10","11"],ans:2,ex:"4+9−4=9"},
+  {q:"Persegi keliling 40 cm. Luasnya...",opts:["80 cm²","90 cm²","100 cm²","110 cm²","120 cm²"],ans:2,ex:"s=10, L=100 cm²"},
+  {q:"8 orang selesaikan 12 hari. Jika 6 orang...",opts:["14","15","16","18","20"],ans:2,ex:"8×12=6×x → x=16"},
+  {q:"(³√27)×(²√16)=...",opts:["10","11","12","13","14"],ans:2,ex:"3×4=12"},
+  {q:"x:y=2:3, y:z=4:5. x:z=...",opts:["6:15","8:15","10:15","8:12","2:5"],ans:1,ex:"p:q:r=8:12:15 → x:z=8:15"},
+  {q:"Tabung r=7, t=10 cm. Volume (π=22/7)...",opts:["1.440","1.540","1.640","1.740","1.840"],ans:1,ex:"V=22/7×49×10=1.540 cm³"},
+  {q:"Sinonim 'ambivalen'...",opts:["tegas","ragu-ragu","yakin","pasti","konsisten"],ans:1,ex:"Ambivalen = dua sikap bertentangan = ragu-ragu"},
+  {q:"Antonim 'longgar'...",opts:["leluasa","lebar","ketat","sempit","sesak"],ans:2,ex:"Antonim longgar = ketat"},
+  {q:"Kalimat baku yang tepat...",opts:["Dia tidak hadir karena sakit","Dia nggak hadir karena sakit","Dia gak dateng karena sakit","Dia kagak hadir","Dia ga datang"],ans:0,ex:"'Tidak' adalah bentuk baku"},
+  {q:"Penulisan yang benar...",opts:["nasehat","nasihat","nasehad","nasihad","nasihed"],ans:1,ex:"KBBI: 'nasihat'"},
+  {q:"Kalimat efektif...",opts:["Pada hari ini saya akan pergi ke pasar","Hari ini saya akan pergi ke pasar","Di hari ini saya pergi pasar","Pada saat hari ini saya ke pasar","Hari ini di pasar saya akan pergi"],ans:1,ex:"Tanpa kata berlebihan"},
+  {q:"Idiom 'membanting tulang' artinya...",opts:["patah tulang","bekerja keras","marah-marah","tidur","bermalas-malasan"],ans:1,ex:"Membanting tulang = bekerja keras"},
+  {q:"Presiden ... pidato di istana. Kata tepat...",opts:["memberitakan","menyampaikan","mengutarakan","mengemukakan","menceritakan"],ans:1,ex:"'Menyampaikan pidato' adalah frasa yang tepat"},
+  {q:"Paragraf berisi pendapat disebut...",opts:["narasi","deskripsi","eksposisi","argumentasi","persuasi"],ans:3,ex:"Argumentasi = paragraf berisi pendapat + alasan"},
+  {q:"Serapan dari 'standardization'...",opts:["standarisasi","standardisasi","standarization","standardization","standartisasi"],ans:0,ex:"Kata serapan yang benar = standarisasi"},
+  {q:"Majas pernyataan berlebihan...",opts:["metafora","hiperbola","personifikasi","simile","ironi"],ans:1,ex:"Hiperbola = menyatakan secara berlebihan"},
+  {q:"She ... to the library every Sunday.",opts:["go","goes","going","gone","went"],ans:1,ex:"She (orang ketiga) → goes"},
+  {q:"The book ... by millions of people.",opts:["read","reads","is read","are read","reading"],ans:2,ex:"Pasif singular → is read"},
+  {q:"If I ... rich, I would travel the world.",opts:["am","was","were","be","been"],ans:2,ex:"Conditional type 2 → were"},
+  {q:"Antonim 'ancient'...",opts:["old","modern","antique","traditional","classic"],ans:1,ex:"Ancient ↔ modern"},
+  {q:"The meeting has been ... until next week.",opts:["delayed","postponed","cancelled","finished","started"],ans:1,ex:"Postponed = ditunda ke waktu tertentu"},
+  {q:"Neither my brother ... my sister likes vegetables.",opts:["or","and","nor","but","so"],ans:2,ex:"Neither...nor pasangan yang tepat"},
+  {q:"He is ... intelligent student in the class.",opts:["most","more","the most","the more","much"],ans:2,ex:"Superlative = the most"},
+  {q:"I wish I ... speak Chinese fluently.",opts:["can","could","will","would","shall"],ans:1,ex:"Wish + past → could"},
+  {q:"Synonym of 'difficult'...",opts:["easy","simple","hard","soft","light"],ans:2,ex:"Difficult = hard"},
+  {q:"By the time you arrive, I ... for two hours.",opts:["wait","waited","will wait","will have waited","have waited"],ans:3,ex:"Future perfect: will have + V3"},
+  {q:"Konjungsi kausal ada pada kalimat...",opts:["Dia datang tetapi tidak membawa oleh-oleh","Dia sakit karena kehujanan","Dia belajar dan mengerjakan PR","Dia pergi atau tinggal","Dia datang lalu pulang"],ans:1,ex:"'Karena' = konjungsi kausal"},
+  {q:"Makna 'deduksi'...",opts:["Khusus ke umum","Umum ke khusus","Perbandingan","Pertentangan","Penggambaran"],ans:1,ex:"Deduksi = dari umum ke khusus"},
+  {q:"She apologized ... being late.",opts:["for","to","with","of","at"],ans:0,ex:"Apologize for = benar"},
+  {q:"The house ... roof is red belongs to my uncle.",opts:["who","whom","whose","which","that"],ans:2,ex:"Whose = kepemilikan"},
+  {q:"Kata benda dari 'tahu'...",opts:["ketahuan","mengetahui","pengetahuan","diketahui","tahu-menahu"],ans:2,ex:"Pengetahuan = nomina dari 'tahu'"},
+  {q:"Hardly ... arrived when it started raining.",opts:["we had","had we","we have","have we","we"],ans:1,ex:"Hardly di awal → inversi: had we"},
+  {q:"Semua kelas A pandai matematika. Budi kelas A. Kesimpulan...",opts:["Budi tidak pandai matematika","Budi pandai matematika","Budi mungkin pandai","Tidak dapat disimpulkan","Budi pandai semua"],ans:1,ex:"Silogisme: Semua A=B, Budi=A → Budi=B"},
+  {q:"Andi>Budi. Budi>Citra. Maka...",opts:["Citra paling tinggi","Andi lebih tinggi dari Citra","Budi paling tinggi","Andi dan Citra sama","Tidak dapat disimpulkan"],ans:1,ex:"Transitif: A>B>C → A>C"},
+  {q:"Semua burung bisa terbang, penguin adalah burung. Maka...",opts:["Penguin bisa terbang","Penguin tidak bisa terbang","Premis mayor salah","Tidak valid","C dan D benar"],ans:4,ex:"Premis 'semua burung bisa terbang' salah → tidak valid"},
+  {q:"Toko tutup setiap Minggu. Hari ini tutup. Maka...",opts:["Hari ini pasti Minggu","Hari ini mungkin Minggu","Hari ini bukan Minggu","Tidak dapat disimpulkan","B dan D benar"],ans:4,ex:"Toko bisa tutup karena alasan lain → tidak pasti"},
+  {q:"Beberapa dokter adalah peneliti. Semua peneliti rajin. Kesimpulan...",opts:["Semua dokter rajin","Beberapa dokter rajin","Tidak ada dokter rajin","Semua rajin adalah dokter","Tidak dapat disimpulkan"],ans:1,ex:"Beberapa dokter = peneliti → beberapa dokter rajin"},
+  {q:"A,B,C,D,E berjajar. A kanan B. C kiri B. D kiri C. E ujung kiri. Urutan kiri ke kanan...",opts:["E-D-C-B-A","E-C-D-B-A","E-D-B-C-A","A-B-C-D-E","E-B-C-D-A"],ans:0,ex:"E→D→C→B→A"},
+  {q:"BBM naik → sembako naik. Sembako tidak naik. Maka...",opts:["BBM naik","BBM tidak naik","BBM mungkin naik","Tidak dapat disimpulkan","Sama saja"],ans:1,ex:"Modus tollens: ~Q → ~P"},
+  {q:"Pola 2,5,10,17,26,... Berikutnya...",opts:["35","36","37","38","39"],ans:2,ex:"Beda +3,+5,+7,+9,+11 → 26+11=37"},
+  {q:"Angka hilang: 1,4,9,16,?,36...",opts:["20","21","24","25","28"],ans:3,ex:"Pola n²: 5²=25"},
+  {q:"A>B dan B>C. Pasti benar...",opts:["C paling ringan","A paling berat","A>C","B=C","Tidak dapat disimpulkan"],ans:2,ex:"Transitif: A>C pasti benar"},
+  {q:"Pola huruf Z,Y,X,W,... Berikutnya...",opts:["U","V","T","S","R"],ans:1,ex:"Mundur satu per satu → V"},
+  {q:"Doni paling cepat. Andi>Budi. Citra<Budi. Urutan tercepat...",opts:["Doni-Andi-Budi-Citra","Andi-Doni-Budi-Citra","Doni-Budi-Andi-Citra","Citra-Budi-Andi-Doni","Tidak dapat ditentukan"],ans:0,ex:"Doni, lalu Andi>Budi>Citra"},
+  {q:"Angka tidak termasuk kelompok: 2,4,6,8,9,10...",opts:["2","4","8","9","10"],ans:3,ex:"Semua genap kecuali 9"},
+  {q:"Hari ini Senin. 100 hari lagi...",opts:["Senin","Selasa","Rabu","Kamis","Jumat"],ans:2,ex:"100=14×7+2 → Senin+2=Rabu"},
+  {q:"3 lampu: A setiap 4 mnt, B 6 mnt, C 8 mnt. Bersamaan jam 06.00. Kapan bersamaan lagi?",opts:["06.12","06.18","06.24","06.30","06.36"],ans:2,ex:"KPK(4,6,8)=24 mnt → 06.24"},
+  {q:"3b+2p=Rp25.000, 2b+3p=Rp25.000. Harga b+p=...",opts:["Rp9.000","Rp10.000","Rp11.000","Rp12.000","Tidak tahu"],ans:1,ex:"5b+5p=50.000 → b+p=10.000"},
+  {q:"Kolam penuh: keran A 6 jam, B 4 jam. Keduanya dibuka...",opts:["2 jam","2,4 jam","2,5 jam","3 jam","3,5 jam"],ans:1,ex:"1/6+1/4=5/12/jam → 12/5=2,4 jam"},
+  {q:"12 bola: 5 merah, 4 biru, 3 hijau. P(bukan merah)=...",opts:["5/12","7/12","1/2","2/3","5/7"],ans:1,ex:"7/12"},
+  {q:"p/q=3/4, q/r=2/3. p/r=...",opts:["1/2","2/3","1/4","3/2","4/3"],ans:0,ex:"p:q:r=6:8:12 → 1/2"},
+  {q:"Mobil 1 kecepatan 60 km/jam. Setelah 2 jam, mobil 2 (80 km/jam) menyusul. Butuh berapa jam?",opts:["4 jam","5 jam","6 jam","7 jam","8 jam"],ans:2,ex:"Jarak=120 km. Selisih=20 km/jam. t=6 jam"},
+  {q:"KPK dari 6, 8, dan 12...",opts:["24","36","48","60","72"],ans:0,ex:"KPK=24"},
+  {q:"10 orang, 12 hari. Setelah 5 hari ditambah 5 orang. Sisa pekerjaan selesai dalam...",opts:["3 hari","3,5 hari","4 hari","~4,67 hari","5 hari"],ans:3,ex:"Total=120. Selesai=50. Sisa=70. 70/15≈4,67"},
+  {q:"Barisan −15,−11,−7,... Berapa pernyataan benar: (1)Semua negatif (2)Jumlah 2 suku berurutan ganjil (3)1 adalah suku (4)Ada 2 suku selisih 8",opts:["0","1","2","3","4"],ans:3,ex:"(1)Salah (2)Benar (3)Benar (4)Benar → 3"},
+  {q:"Analogi 'Mobil:Roda' = ...",opts:["Katak:Air","Ikan:Insang","Kuda:Rumput","Daging:Harimau","Manusia:Hewan"],ans:1,ex:"Roda alat gerak mobil, insang alat napas ikan"},
+  {q:"d=a×b×c, 1<a<b<c. 233÷d sisa 79. a+c=...",opts:["9","11","13","15","17"],ans:2,ex:"154=2×7×11, a+c=13"},
+  {q:"Diskon 20%, harga tas Rp250.000. Harga setelah diskon...",opts:["Rp180.000","Rp200.000","Rp210.000","Rp220.000","Rp230.000"],ans:1,ex:"Diskon=50.000, harga=200.000"},
+  {q:"Jika tidak macet, maka...",opts:["Tidak hujan deras","Pasti banjir","Jalan tidak banjir","Semua salah","Semua benar"],ans:0,ex:"Kontraposisi: ~macet→~banjir→~hujan"},
+  {q:"'Bisa ular' berhomonim dengan...",opts:["Mahasiswa bisa mengajukan","Bisa melakukan aktivitas","Saya bisa membuat teleskop","Bisa langsung masuk","Semua jawaban benar"],ans:0,ex:"'Bisa ular'=racun, opsi lain=mampu/dapat"},
+  {q:"Garis melalui (3,2), gradien 1/3. Persamaan...",opts:["y=(1/3)x+1","y=(1/3)x+2","y=(1/3)x+3","y=3x+1","y=3x−7"],ans:0,ex:"y−2=(1/3)(x−3) → y=(1/3)x+1"},
+  {q:"Siswa belajar 5 jam/hari tapi nilai rendah karena metode tidak efektif. Kesimpulan...",opts:["Durasi belajar lama menjamin nilai tinggi","Metode lebih penting dari durasi","Siswa malas","Tidak ada hubungan belajar-nilai","Guru salah"],ans:1,ex:"5 jam tapi tetap rendah → metode > durasi"},
+  {q:"Pola 2,6,12,20,30,... Berikutnya...",opts:["40","42","44","46","48"],ans:1,ex:"1×2,2×3,...,6×7=42"},
+  {q:"Tanaman tidak di pot berlubang, akar membusuk. Fenomena ini pada tanaman P. Kesimpulan...",opts:["P tidak di pot berlubang","P di pot berlubang","P tidak membusuk","Pot berlubang tidak penting","Tidak dapat disimpulkan"],ans:0,ex:"P membusuk → tidak di pot berlubang"},
+  {q:"Nilai akhir=akademik 60%+keaktifan 40%. Akademik 85, keaktifan 90. Nilai akhir...",opts:["86","87","87,5","88","89"],ans:1,ex:"85×0,6+90×0,4=51+36=87"},
+  {q:"8 billion kg of plastic entered the ocean in 2010. Plastics never degrade but break into smaller sizes. Best title...",opts:["History of Plastic","Ocean Pollution by Plastic","Benefits of Plastic","How to Recycle Plastic","Future of Plastic Industry"],ans:1,ex:"Tentang pencemaran plastik laut"},
+  {q:"Balok p:l:t=5:3:2. Panjang 20 cm. Luas permukaan...",opts:["892 cm²","992 cm²","1092 cm²","1192 cm²","1292 cm²"],ans:1,ex:"l=12,t=8. 2(240+160+96)=992 cm²"},
+  {q:"Olahraga rutin meningkatkan kebahagiaan. Berlebihan meningkatkan risiko cedera. Simpulan...",opts:["Berlebihan tidak pengaruhi kebahagiaan","Kebahagiaan meningkat seiring intensitas","Intensitas tinggi kurangi kebahagiaan","Olahraga rutin tapi tidak berlebihan ideal","Tidak ada hubungan olahraga-kebahagiaan"],ans:3,ex:"Rutin=baik, berlebihan=risiko → porsi wajar ideal"},
+  {q:"Populasi lebah menurun akibat pestisida → produktivitas tanaman turun. Pernyataan TIDAK berdasarkan teks...",opts:["Pestisida kurangi lebah","Penurunan lebah pengaruhi produktivitas","Penyerbukan bergantung lebah","Kurangi pestisida meningkatkan lebah","Pestisida meningkatkan produktivitas"],ans:4,ex:"Teks tidak menyebutkan pestisida meningkatkan produktivitas"},
+  {q:"Jika 2ˣ=16. x=...",opts:["2","3","4","5","6"],ans:2,ex:"2⁴=16 → x=4"},
+  {q:"Nilai dari 5!...",opts:["60","100","120","150","200"],ans:2,ex:"5×4×3×2×1=120"},
+  {q:"Jika a=2, b=−3. Nilai a²−b²=...",opts:["−5","5","−13","13","-1"],ans:0,ex:"4−9=−5"},
+  {q:"Suku ke-10 barisan aritmetika 5,8,11,14,...",opts:["30","32","32","34","32"],ans:3,ex:"U10=5+(10−1)×3=5+27=32"},
+  {q:"Dua buah dadu dilempar. P(jumlah=7)=...",opts:["1/6","5/36","6/36","7/36","8/36"],ans:2,ex:"Kombinasi jumlah 7: (1,6)(2,5)(3,4)(4,3)(5,2)(6,1)=6/36=1/6"},
+  {q:"Parabola y=x²−4x+3. Titik puncaknya...",opts:["(2,−1)","(2,1)","(−2,−1)","(4,3)","(0,3)"],ans:0,ex:"x=−b/2a=2, y=4−8+3=−1 → (2,−1)"},
+  {q:"∫(2x+3)dx=...",opts:["x²+3x+C","2x²+3x+C","x²+3+C","2x+3+C","x+3x+C"],ans:0,ex:"∫2x dx+∫3 dx=x²+3x+C"},
+  {q:"Sebuah tiang bayangan 6 m. Saat itu pohon 15 m bayangan ... m.",opts:["6","8","10","15","20"],ans:3,ex:"Proporsi: tiang/bayangan=pohon/bayangan. 15m → proporsi yg sama"},
+  {q:"Garis l: 2x+3y=12 dan garis m sejajar l melalui (0,5). Persamaan m...",opts:["2x+3y=15","3x+2y=10","2x−3y=5","2x+3y=10","x+3y=15"],ans:0,ex:"Gradien sama −2/3, lewat (0,5): 3y=−2x+15 → 2x+3y=15"},
+  {q:"Nilai rata-rata: 45 siswa=78. Ditambah 5 siswa rata-rata 90. Rata-rata baru...",opts:["78","79","80","81","82"],ans:2,ex:"Total=45×78=3510+5×90=450. 3960/50=79,2 ≈ 80"},
+  {q:"log(3x−2)=log(x+6). x=...",opts:["2","3","4","5","6"],ans:2,ex:"3x−2=x+6 → 2x=8 → x=4"},
+  {q:"Himpunan bilangan prima antara 10 dan 20...",opts:["{11,13,17,19}","{11,13,15,17,19}","{13,17,19}","{11,13,17}","{11,17,19}"],ans:0,ex:"Prima di 10–20: 11,13,17,19"},
+  {q:"Suatu sampel: mean=70, standar deviasi=10. Nilai z untuk x=80 adalah...",opts:["0,5","1","1,5","2","2,5"],ans:1,ex:"z=(80−70)/10=1"},
+  {q:"Dua resistor paralel: R1=6Ω, R2=12Ω. Hambatan total...",opts:["2Ω","4Ω","6Ω","18Ω","3Ω"],ans:1,ex:"1/R=1/6+1/12=3/12=1/4 → R=4Ω"},
+  {q:"Gaya 40N pada benda bermassa 8 kg. Percepatan (F=ma)...",opts:["2 m/s²","4 m/s²","5 m/s²","8 m/s²","10 m/s²"],ans:2,ex:"a=F/m=40/8=5 m/s²"},
+  {q:"Kadar larutan garam: 20 gram garam dalam 80 gram air. Kadar persen...",opts:["15%","20%","25%","30%","40%"],ans:1,ex:"20/(20+80)×100=20%"},
+  {q:"Faktorisasi 6x²+7x−3...",opts:["(3x−1)(2x+3)","(6x−1)(x+3)","(2x+3)(3x−1)","(3x+1)(2x−3)","(6x+3)(x−1)"],ans:0,ex:"(3x−1)(2x+3) → cek: 6x²+9x−2x−3=6x²+7x−3 ✓"},
+  {q:"n!=720. n=...",opts:["4","5","6","7","8"],ans:2,ex:"6!=720"},
+];
+
+let curQ=0,answers=[],activeTryout=null;
+
+function startQuiz(id){
+  activeTryout=toPackages.find(t=>t.id===id);
+  curQ=0;answers=new Array(soalAll.length).fill(null);
+  document.getElementById('quizOverlay').classList.add('show');
+  renderQuizQ();
+  window.scrollTo(0,0);
+}
+function renderQuizQ(){
+  const q=soalAll[curQ];
+  const pct=((curQ+1)/soalAll.length*100).toFixed(1);
+  document.getElementById('quizProg').style.width=pct+'%';
+  document.getElementById('quizCounter').textContent=`${curQ+1}/${soalAll.length}`;
+  const dots=soalAll.map((_,i)=>`<div class="q-dot${i===curQ?' cur':(answers[i]!==null?' ans':'')}" onclick="jumpQ(${i})" title="Soal ${i+1}"></div>`).join('');
+  document.getElementById('quizContent').innerHTML=`
+  <div class="quiz-body">
+    <div style="background:var(--white);border-radius:var(--radius);border:1.5px solid var(--border);padding:24px">
+      <div class="q-num">SOAL ${curQ+1} / ${soalAll.length} — ${activeTryout?.title||'Try Out'}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="choices">${q.opts.map((o,i)=>`<button class="choice-btn${answers[curQ]===i?' selected':''}" onclick="pickAns(${i})"><div class="choice-letter">${'ABCDE'[i]}</div><div class="choice-txt">${o}</div></button>`).join('')}</div>
+      <div class="quiz-nav">
+        <button class="btn btn-secondary" onclick="${curQ>0?'prevQ()':'exitQuiz()'}" style="padding:9px 16px;font-size:.8rem">${curQ>0?'← Sebelumnya':'Keluar'}</button>
+        <div class="dot-row">${dots}</div>
+        <button class="btn btn-primary" onclick="${curQ<soalAll.length-1?'nextQ()':'showQuizResult()'}" style="padding:9px 16px;font-size:.8rem">${curQ<soalAll.length-1?'Selanjutnya →':'Selesai ✓'}</button>
+      </div>
+    </div>
+  </div>`;
+}
+function pickAns(i){answers[curQ]=i;renderQuizQ()}
+function nextQ(){if(curQ<soalAll.length-1){curQ++;renderQuizQ()}}
+function prevQ(){if(curQ>0){curQ--;renderQuizQ()}}
+function jumpQ(i){curQ=i;renderQuizQ()}
+function exitQuiz(){if(confirm('Keluar dari try out? Progress akan hilang.')){document.getElementById('quizOverlay').classList.remove('show')}}
+function launchConfetti(){
+  const canvas=document.getElementById('confettiCanvas');
+  if(!canvas)return;
+  canvas.style.display='block';
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  const pieces=[];
+  const colors=['#3b5bdb','#7048e8','#2f9e44','#f08c00','#e03131','#ae3ec9','#0c8599','#f59f00'];
+  for(let i=0;i<180;i++){pieces.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height-canvas.height,r:Math.random()*8+4,c:colors[Math.floor(Math.random()*colors.length)],rot:Math.random()*360,vx:(Math.random()-.5)*4,vy:Math.random()*6+3,vr:(Math.random()-.5)*8,alpha:1,shape:Math.random()>.5?'rect':'circle'})}
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(p=>{
+      ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=p.c;ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
+      if(p.shape==='rect'){ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.5)}else{ctx.beginPath();ctx.arc(0,0,p.r/2,0,Math.PI*2);ctx.fill()}
+      ctx.restore();
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.vy*=.99;
+      if(frame>120)p.alpha-=.012;
+    });
+    frame++;
+    if(frame<220)requestAnimationFrame(draw);
+    else{ctx.clearRect(0,0,canvas.width,canvas.height);canvas.style.display='none'}
+  }
+  draw();
+}
+function showQuizResult(){
+  const correct=answers.filter((a,i)=>a===soalAll[i].ans).length;
+  const pct=(correct/soalAll.length*100).toFixed(1);
+  const grade=pct>=90?'A+':pct>=80?'A':pct>=70?'B+':pct>=60?'B':pct>=50?'C':'D';
+  const msg=pct>=80?'Hasil Luar Biasa!':pct>=60?'Bagus, Terus Berlatih!':'Semangat, Terus Belajar!';
+  const subMsg=pct>=80?'Kamu siap menghadapi SNBT!':pct>=60?'Sedikit lagi, kamu pasti bisa!':'Ulang dan pelajari pembahasan ya!';
+  const reviews=soalAll.map((q,i)=>{
+    const ok=answers[i]===q.ans;
+    const myA=answers[i]!==null?`${'ABCDE'[answers[i]]}. ${q.opts[answers[i]]}`:'Tidak dijawab';
+    return `<div class="review-item ${ok?'ok':'ng'}">
+      <div class="review-head"><div class="review-q">Soal ${i+1}: ${q.q.substring(0,90)}${q.q.length>90?'...':''}</div><span class="review-tag ${ok?'tag-ok':'tag-ng'}">${ok?'Benar':'Salah'}</span></div>
+      <div class="review-info">Kamu: <b>${myA}</b> | Benar: <b>${'ABCDE'[q.ans]}. ${q.opts[q.ans]}</b></div>
+      <div class="review-expl">${q.ex}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('quizProg').style.width='100%';
+  document.getElementById('quizCounter').textContent='Selesai';
+  const wrong=soalAll.length-correct;
+  const unanswered=answers.filter(a=>a===null).length;
+  document.getElementById('quizContent').innerHTML=`
+  <div id="resultPage">
+    <div class="result-celebration">
+      <div class="result-grade-badge grade-${grade.replace('+','p')}">${grade}</div>
+      <div class="result-big-score">${parseFloat(pct).toFixed(0)}<span style="font-size:2.5rem;opacity:.6">%</span></div>
+      <div class="result-msg-main">${msg}</div>
+      <div class="result-msg-sub">${subMsg}</div>
+      <div class="result-stat-row">
+        <div class="rst-item rst-green"><div class="rst-num">${correct}</div><div class="rst-lbl">Benar</div></div>
+        <div class="rst-item rst-red"><div class="rst-num">${wrong-unanswered}</div><div class="rst-lbl">Salah</div></div>
+        <div class="rst-item rst-gray"><div class="rst-num">${unanswered}</div><div class="rst-lbl">Kosong</div></div>
+        <div class="rst-item rst-blue"><div class="rst-num">${soalAll.length}</div><div class="rst-lbl">Total</div></div>
+      </div>
+      <div class="result-progress-wrap"><div class="result-progress-bar" style="width:${pct}%"></div></div>
+      <div class="result-actions">
+        <button class="result-btn-retry" onclick="startQuiz(activeTryout?.id||1)">Ulangi Try Out</button>
+        <button class="result-btn-ptn" onclick="goPage('analisis');document.getElementById('quizOverlay').classList.remove('show')">Cek Rekomendasi PTN</button>
+        <button class="result-btn-exit" onclick="document.getElementById('quizOverlay').classList.remove('show')">Kembali ke Menu</button>
+      </div>
+    </div>
+    <div style="max-width:720px;margin:0 auto;padding:0 20px 80px">
+      <h3 style="margin-bottom:14px;font-size:.9375rem;font-weight:800">Pembahasan Lengkap</h3>
+      <div class="review-list">${reviews}</div>
+    </div>
+  </div>`;
+  setTimeout(()=>launchConfetti(),200);
+}
+
+// ============ ANALISIS / REKOMENDASI ============
+const univLogos={
+  'Universitas Indonesia':'https://www.ui.ac.id/wp-content/uploads/2016/04/logo-ui-1024x1024.png',
+  'Universitas Gadjah Mada':'https://ugm.ac.id/wp-content/uploads/2022/10/ugm-logo.png',
+  'Institut Teknologi Bandung':'https://www.itb.ac.id/files/ITB-logo.png',
+  'Institut Teknologi Sepuluh Nopember':'https://www.its.ac.id/wp-content/uploads/sites/3/2020/01/logo-ITS-INA-300x300.png',
+  'Universitas Airlangga':'https://www.unair.ac.id/wp-content/uploads/2020/11/logo-unair-300x300.png',
+  'Universitas Diponegoro':'https://www.undip.ac.id/wp-content/uploads/logo_undip.png',
+  'Universitas Brawijaya':'https://www.ub.ac.id/wp-content/uploads/2019/08/logo_ub.png',
+  'Universitas Sebelas Maret':'https://uns.ac.id/wp-content/uploads/2023/07/logo-uns.png',
+  'Universitas Hasanuddin':'https://unhas.ac.id/wp-content/uploads/2021/02/logo_unhas.png',
+  'Universitas Padjadjaran':'https://www.unpad.ac.id/wp-content/uploads/2012/10/Logo_unpad-300x300.png',
+  'Universitas Sumatera Utara':'https://www.usu.ac.id/assets/img/logo.png',
+  'Institut Pertanian Bogor':'https://www.ipb.ac.id/wp-content/uploads/2020/07/logo-ipb-300x300.png',
+  'Universitas Negeri Yogyakarta':'https://uny.ac.id/sites/default/files/Logo%20UNY.png',
+  'Universitas Negeri Malang':'https://um.ac.id/wp-content/uploads/2021/01/logo-um.png',
+  'Universitas Lampung':'https://www.unila.ac.id/wp-content/uploads/2020/05/logo-unila.png',
+  'Universitas Sriwijaya':'https://www.unsri.ac.id/assets/img/logo-unsri.png',
+  'Universitas Andalas':'https://www.unand.ac.id/images/logo/logo_unand.png',
+  'Universitas Mulawarman':'https://unmul.ac.id/wp-content/uploads/2020/01/logo_unmul.png',
+  'Universitas Sam Ratulangi':'https://unsrat.ac.id/wp-content/uploads/2021/10/logo-unsrat.png',
+  'Universitas Udayana':'https://www.unud.ac.id/assets/img/logo.png',
+  'Universitas Pendidikan Indonesia':'https://www.upi.edu/assets/img/logo-upi.png',
+  'Universitas Islam Negeri Jakarta':'https://uinjkt.ac.id/wp-content/uploads/2020/03/logo-uin-jakarta.png',
+  'Universitas Islam Negeri Yogyakarta':'https://uin-suka.ac.id/id/assets/img/uin-suka.png',
+  'Universitas Telkom':'https://telkomuniversity.ac.id/wp-content/uploads/2021/04/logo-telkom-university.png',
+  'Universitas Bina Nusantara':'https://binus.ac.id/wp-content/uploads/2019/04/Logo-BINUS.png',
+  'Universitas Atma Jaya':'https://uaj.ac.id/wp-content/uploads/2021/01/logo-atma-jaya.png',
+  'Universitas Trisakti':'https://www.trisakti.ac.id/wp-content/uploads/2020/08/logo-trisakti.png',
+  'Universitas Mercu Buana':'https://www.mercubuana.ac.id/wp-content/uploads/2020/09/logo-umb.png',
+  'Universitas Tarumanagara':'https://www.untar.ac.id/assets/images/logo-untar.png',
+  'Universitas Kristen Petra':'https://www.petra.ac.id/wp-content/uploads/2020/08/logo-petra.png',
+  'Institut Teknologi Del':'https://itdel.ac.id/wp-content/uploads/2020/02/logo-itdel.png',
+  'Universitas Islam Indonesia':'https://www.uii.ac.id/wp-content/uploads/2020/01/logo-uii.png',
+  'Universitas Muhammadiyah Yogyakarta':'https://www.umy.ac.id/wp-content/uploads/2020/08/logo-umy.png',
+  'Universitas Muhammadiyah Malang':'https://www.umm.ac.id/assets/img/logo-umm.png',
+  'Universitas Muhammadiyah Surakarta':'https://www.ums.ac.id/wp-content/uploads/2020/07/logo-ums.png',
+  'Universitas Pelita Harapan':'https://www.uph.edu/wp-content/uploads/2020/07/logo-uph.png',
+  'Universitas Gunadarma':'https://www.gunadarma.ac.id/assets/img/logo_gunadarma.png',
+  'Universitas Islam Bandung':'https://www.unisba.ac.id/wp-content/uploads/logo_unisba.png',
+  'Universitas Katolik Parahyangan':'https://www.unpar.ac.id/wp-content/uploads/2020/01/logo-unpar.png',
+  'Institut Teknologi Nasional Bandung':'https://www.itenas.ac.id/wp-content/uploads/2020/05/logo-itenas.png',
+  'Universitas Ahmad Dahlan':'https://uad.ac.id/wp-content/uploads/2020/07/logo-uad.png',
+  'Universitas Dian Nuswantoro':'https://www.udinus.ac.id/wp-content/uploads/2020/01/logo-udinus.png',
+  'Universitas Ciputra':'https://www.uc.ac.id/wp-content/uploads/2020/04/logo-uc.png',
+  'Universitas Amikom Yogyakarta':'https://amikompurwokerto.ac.id/assets/img/logo.png',
+  'Universitas Multimedia Nusantara':'https://www.umn.ac.id/wp-content/uploads/2020/01/logo-umn.png',
+};
+
+// DATA RESMI PASSING GRADE 2025 (SNBT)
+const ptnDB=[
+  // === UNIVERSITAS INDONESIA ===
+  {u:'Universitas Indonesia',m:'Pendidikan Dokter',c:'saintek',min:93,pg:72.1,kk:'1:48',n:'FK UI — paling kompetitif, passing grade tertinggi nasional'},
+  {u:'Universitas Indonesia',m:'Ilmu Komputer',c:'saintek',min:89,pg:64.3,kk:'1:38',n:'CS UI sangat diminati, karir tech industry luas'},
+  {u:'Universitas Indonesia',m:'Teknik Informatika',c:'saintek',min:88,pg:63.1,kk:'1:36',n:'TI UI terbaik di Indonesia'},
+  {u:'Universitas Indonesia',m:'Teknik Industri',c:'saintek',min:87,pg:61.2,kk:'1:32',n:'Prospek karir sangat luas'},
+  {u:'Universitas Indonesia',m:'Farmasi',c:'saintek',min:86,pg:59.4,kk:'1:28',n:'Farmasi UI terakreditasi unggul'},
+  {u:'Universitas Indonesia',m:'Teknik Sipil',c:'saintek',min:85,pg:57.8,kk:'1:26',n:'Infrastruktur dan konstruksi'},
+  {u:'Universitas Indonesia',m:'Teknik Elektro',c:'saintek',min:85,pg:57.3,kk:'1:25',n:'Energi, elektronik, dan telekomunikasi'},
+  {u:'Universitas Indonesia',m:'Arsitektur',c:'saintek',min:84,pg:55.0,kk:'1:23',n:'Kreativitas dan rekayasa bangunan'},
+  {u:'Universitas Indonesia',m:'Teknik Kimia',c:'saintek',min:83,pg:53.2,kk:'1:21',n:'Industri kimia dan petrokimia'},
+  {u:'Universitas Indonesia',m:'Teknik Mesin',c:'saintek',min:82,pg:51.6,kk:'1:19',n:'Otomotif dan manufaktur'},
+  {u:'Universitas Indonesia',m:'Sistem Informasi',c:'saintek',min:84,pg:55.4,kk:'1:22',n:'IT dan manajemen bisnis'},
+  {u:'Universitas Indonesia',m:'Kesehatan Masyarakat',c:'saintek',min:82,pg:50.8,kk:'1:18',n:'Epidemiologi dan kebijakan kesehatan'},
+  {u:'Universitas Indonesia',m:'Biologi',c:'saintek',min:79,pg:45.2,kk:'1:13',n:'Riset dan konservasi hayati'},
+  {u:'Universitas Indonesia',m:'Matematika',c:'saintek',min:78,pg:43.1,kk:'1:12',n:'Dasar sains dan pemodelan'},
+  {u:'Universitas Indonesia',m:'Fisika',c:'saintek',min:77,pg:41.0,kk:'1:11',n:'Riset dan teknologi tinggi'},
+  {u:'Universitas Indonesia',m:'Gizi',c:'saintek',min:80,pg:47.3,kk:'1:15',n:'Nutrisi dan kesehatan masyarakat'},
+  {u:'Universitas Indonesia',m:'Ilmu Hukum',c:'soshum',min:88,pg:62.5,kk:'1:34',n:'FH UI paling prestisius di Indonesia'},
+  {u:'Universitas Indonesia',m:'Psikologi',c:'soshum',min:87,pg:60.8,kk:'1:30',n:'Psikologi UI sangat diminati'},
+  {u:'Universitas Indonesia',m:'Akuntansi',c:'soshum',min:86,pg:59.0,kk:'1:28',n:'Profesi akuntan sangat dibutuhkan'},
+  {u:'Universitas Indonesia',m:'Manajemen',c:'soshum',min:85,pg:57.1,kk:'1:26',n:'Bisnis dan kewirausahaan'},
+  {u:'Universitas Indonesia',m:'Ilmu Komunikasi',c:'soshum',min:84,pg:55.3,kk:'1:24',n:'Media, PR, dan digital marketing'},
+  {u:'Universitas Indonesia',m:'Hubungan Internasional',c:'soshum',min:84,pg:54.9,kk:'1:23',n:'Diplomasi dan global affairs'},
+  {u:'Universitas Indonesia',m:'Ilmu Ekonomi',c:'soshum',min:83,pg:53.0,kk:'1:21',n:'Kebijakan ekonomi makro'},
+  {u:'Universitas Indonesia',m:'Sosiologi',c:'soshum',min:80,pg:47.0,kk:'1:16',n:'Perubahan dan dinamika masyarakat'},
+  {u:'Universitas Indonesia',m:'Ilmu Politik',c:'soshum',min:80,pg:46.8,kk:'1:16',n:'Sistem pemerintahan dan demokrasi'},
+  // === UGM (DATA RESMI SNBT 2025) ===
+  {u:'Universitas Gadjah Mada',m:'Pendidikan Dokter',c:'saintek',min:93,pg:74.65,kk:'1:70',n:'Passing grade 74.65% — data resmi SNBT 2025, keketatan 1:70'},
+  {u:'Universitas Gadjah Mada',m:'Teknologi Informasi',c:'saintek',min:88,pg:72.49,kk:'1:67',n:'Passing grade 72.49% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Ilmu Komputer',c:'saintek',min:87,pg:69.42,kk:'1:51',n:'Passing grade 69.42% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Psikologi',c:'soshum',min:87,pg:74.99,kk:'1:56',n:'Passing grade 74.99% — paling diminati sosial UGM'},
+  {u:'Universitas Gadjah Mada',m:'Farmasi',c:'saintek',min:86,pg:73.34,kk:'1:26',n:'Passing grade 73.34% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Hukum',c:'soshum',min:86,pg:74.59,kk:'1:31',n:'Passing grade 74.59% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Manajemen',c:'soshum',min:85,pg:74.46,kk:'1:51',n:'Passing grade 74.46% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Akuntansi',c:'soshum',min:85,pg:72.99,kk:'1:39',n:'Passing grade 72.99% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Teknik Sipil',c:'saintek',min:84,pg:68.68,kk:'1:30',n:'Passing grade 68.68% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Teknik Elektro',c:'saintek',min:84,pg:60.40,kk:'1:22',n:'Passing grade 60.40% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Teknik Industri',c:'saintek',min:83,pg:69.28,kk:'1:29',n:'Passing grade 69.28% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Teknik Kimia',c:'saintek',min:83,pg:61.15,kk:'1:14',n:'Passing grade 61.15% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Teknik Mesin',c:'saintek',min:82,pg:67.47,kk:'1:14',n:'Passing grade 67.47% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Ilmu Hubungan Internasional',c:'soshum',min:82,pg:71.40,kk:'1:59',n:'Passing grade 71.40% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Ilmu Komunikasi',c:'soshum',min:82,pg:71.76,kk:'1:68',n:'Passing grade 71.76% — paling kompetitif'},
+  {u:'Universitas Gadjah Mada',m:'Geofisika',c:'saintek',min:78,pg:49.49,kk:'1:14',n:'Passing grade 49.49% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Teknik Geologi',c:'saintek',min:80,pg:66.63,kk:'1:20',n:'Passing grade 66.63% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Kedokteran Gigi',c:'saintek',min:83,pg:70.37,kk:'1:28',n:'Passing grade 70.37% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Keperawatan',c:'saintek',min:80,pg:68.40,kk:'1:29',n:'Passing grade 68.40% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Gizi',c:'saintek',min:82,pg:68.66,kk:'1:36',n:'Passing grade 68.66% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Statistika',c:'saintek',min:80,pg:62.37,kk:'1:34',n:'Passing grade 62.37% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Arsitektur',c:'saintek',min:82,pg:68.04,kk:'1:34',n:'Passing grade 68.04% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Kedokteran Hewan',c:'saintek',min:79,pg:68.18,kk:'1:14',n:'Passing grade 68.18% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Ilmu Ekonomi',c:'soshum',min:80,pg:64.11,kk:'1:22',n:'Passing grade 64.11% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Sosiologi',c:'soshum',min:78,pg:52.28,kk:'1:14',n:'Passing grade 52.28% — data resmi SNBT 2025'},
+  {u:'Universitas Gadjah Mada',m:'Sastra Inggris',c:'soshum',min:80,pg:64.61,kk:'1:35',n:'Passing grade 64.61% — data resmi SNBT 2025'},
+  // === ITB ===
+  {u:'Institut Teknologi Bandung',m:'Teknik Elektro & Informatika (STEI)',c:'saintek',min:91,pg:68.4,kk:'1:42',n:'STEI ITB paling kompetitif — mencakup informatika dan elektro'},
+  {u:'Institut Teknologi Bandung',m:'Sekolah Bisnis dan Manajemen',c:'soshum',min:89,pg:65.2,kk:'1:36',n:'SBM ITB sangat eksklusif dan bergengsi'},
+  {u:'Institut Teknologi Bandung',m:'Farmasi Klinik dan Komunitas',c:'saintek',min:88,pg:63.0,kk:'1:33',n:'Farmasi klinis ITB berkualitas tinggi'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Sipil',c:'saintek',min:85,pg:57.2,kk:'1:26',n:'Rekayasa sipil dan infrastruktur'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Kimia',c:'saintek',min:84,pg:55.0,kk:'1:24',n:'Industri kimia dan energi'},
+  {u:'Institut Teknologi Bandung',m:'Arsitektur',c:'saintek',min:85,pg:57.0,kk:'1:25',n:'Arsitektur ITB berkelas internasional'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Mesin',c:'saintek',min:83,pg:53.5,kk:'1:22',n:'Mekanika dan produksi'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Industri',c:'saintek',min:82,pg:51.4,kk:'1:19',n:'Sistem industri dan optimasi'},
+  {u:'Institut Teknologi Bandung',m:'Matematika',c:'saintek',min:81,pg:49.3,kk:'1:17',n:'Matematika murni dan terapan'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Material',c:'saintek',min:81,pg:48.9,kk:'1:18',n:'Material science untuk industri'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Pertambangan',c:'saintek',min:86,pg:59.0,kk:'1:29',n:'Pertambangan mineral dan energi'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Fisika',c:'saintek',min:82,pg:51.0,kk:'1:20',n:'Instrumentasi dan kontrol'},
+  {u:'Institut Teknologi Bandung',m:'Teknik Tenaga Listrik',c:'saintek',min:83,pg:52.5,kk:'1:21',n:'Ketenagalistrikan dan energi terbarukan'},
+  // === ITS ===
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Teknik Informatika',c:'saintek',min:87,pg:60.5,kk:'1:32',n:'Informatika ITS salah satu terbaik Jawa Timur'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Teknik Elektro',c:'saintek',min:85,pg:57.0,kk:'1:27',n:'Elektro ITS berkualitas tinggi'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Teknik Sipil',c:'saintek',min:84,pg:55.2,kk:'1:24',n:'Infrastruktur dan konstruksi'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Teknik Mesin',c:'saintek',min:83,pg:53.0,kk:'1:22',n:'Manufaktur dan otomotif'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Teknik Kimia',c:'saintek',min:83,pg:52.7,kk:'1:21',n:'Industri kimia dan petrokimia'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Desain Produk Industri',c:'saintek',min:81,pg:49.0,kk:'1:18',n:'Desain industrial dan kreativitas'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Teknik Perkapalan',c:'saintek',min:80,pg:47.0,kk:'1:15',n:'Industri perkapalan dan maritim'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Sistem Informasi',c:'saintek',min:82,pg:51.5,kk:'1:20',n:'SI ITS untuk bisnis dan teknologi'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Statistika',c:'saintek',min:80,pg:48.0,kk:'1:16',n:'Data science dan analitik'},
+  {u:'Institut Teknologi Sepuluh Nopember',m:'Teknik Lingkungan',c:'saintek',min:79,pg:46.0,kk:'1:14',n:'Lingkungan dan keberlanjutan'},
+  // === UNAIR ===
+  {u:'Universitas Airlangga',m:'Pendidikan Dokter',c:'saintek',min:90,pg:66.0,kk:'1:38',n:'FK Unair prestisius di Jawa Timur'},
+  {u:'Universitas Airlangga',m:'Farmasi',c:'saintek',min:87,pg:61.5,kk:'1:28',n:'Farmasi Unair terkenal berkualitas'},
+  {u:'Universitas Airlangga',m:'Kedokteran Gigi',c:'saintek',min:86,pg:59.0,kk:'1:25',n:'Kedokteran Gigi Unair'},
+  {u:'Universitas Airlangga',m:'Keperawatan',c:'saintek',min:82,pg:52.0,kk:'1:18',n:'Keperawatan profesional'},
+  {u:'Universitas Airlangga',m:'Kesehatan Masyarakat',c:'saintek',min:83,pg:53.5,kk:'1:20',n:'Public health Unair'},
+  {u:'Universitas Airlangga',m:'Psikologi',c:'soshum',min:86,pg:58.5,kk:'1:26',n:'Psikologi klinis dan industri'},
+  {u:'Universitas Airlangga',m:'Ilmu Hukum',c:'soshum',min:85,pg:57.0,kk:'1:24',n:'Hukum dan keadilan'},
+  {u:'Universitas Airlangga',m:'Akuntansi',c:'soshum',min:84,pg:55.0,kk:'1:22',n:'Akuntansi profesional'},
+  {u:'Universitas Airlangga',m:'Manajemen',c:'soshum',min:83,pg:53.5,kk:'1:20',n:'Bisnis dan manajemen'},
+  {u:'Universitas Airlangga',m:'Ilmu Komunikasi',c:'soshum',min:82,pg:51.5,kk:'1:18',n:'Komunikasi massa'},
+  {u:'Universitas Airlangga',m:'Hubungan Internasional',c:'soshum',min:82,pg:51.2,kk:'1:18',n:'Diplomasi dan global relations'},
+  {u:'Universitas Airlangga',m:'Teknik Biomedis',c:'saintek',min:81,pg:49.5,kk:'1:16',n:'Bioteknologi medis terapan'},
+  // === UNDIP ===
+  {u:'Universitas Diponegoro',m:'Pendidikan Dokter',c:'saintek',min:89,pg:63.5,kk:'1:32',n:'FK UNDIP berkualitas di Semarang'},
+  {u:'Universitas Diponegoro',m:'Teknik Elektro',c:'saintek',min:83,pg:51.8,kk:'1:20',n:'Kelistrikan dan elektronika'},
+  {u:'Universitas Diponegoro',m:'Teknik Informatika',c:'saintek',min:85,pg:56.0,kk:'1:25',n:'IT UNDIP sangat diminati'},
+  {u:'Universitas Diponegoro',m:'Teknik Mesin',c:'saintek',min:82,pg:50.0,kk:'1:18',n:'Mekanika dan manufaktur'},
+  {u:'Universitas Diponegoro',m:'Teknik Sipil',c:'saintek',min:84,pg:54.0,kk:'1:23',n:'Infrastruktur UNDIP'},
+  {u:'Universitas Diponegoro',m:'Teknik Industri',c:'saintek',min:83,pg:52.5,kk:'1:21',n:'Sistem industri UNDIP'},
+  {u:'Universitas Diponegoro',m:'Farmasi',c:'saintek',min:84,pg:54.5,kk:'1:22',n:'Farmasi UNDIP'},
+  {u:'Universitas Diponegoro',m:'Ilmu Hukum',c:'soshum',min:84,pg:54.0,kk:'1:22',n:'Hukum UNDIP'},
+  {u:'Universitas Diponegoro',m:'Akuntansi',c:'soshum',min:83,pg:52.5,kk:'1:20',n:'Profesi akuntan'},
+  {u:'Universitas Diponegoro',m:'Manajemen',c:'soshum',min:82,pg:50.5,kk:'1:18',n:'Bisnis modern'},
+  {u:'Universitas Diponegoro',m:'Ilmu Komunikasi',c:'soshum',min:81,pg:48.5,kk:'1:16',n:'Media dan komunikasi'},
+  {u:'Universitas Diponegoro',m:'Psikologi',c:'soshum',min:82,pg:50.0,kk:'1:17',n:'Psikologi UNDIP'},
+  {u:'Universitas Diponegoro',m:'Teknik Kimia',c:'saintek',min:82,pg:50.5,kk:'1:19',n:'Industri kimia'},
+  {u:'Universitas Diponegoro',m:'Hubungan Internasional',c:'soshum',min:82,pg:50.2,kk:'1:18',n:'HI UNDIP'},
+  // === UB ===
+  {u:'Universitas Brawijaya',m:'Pendidikan Dokter',c:'saintek',min:88,pg:61.0,kk:'1:30',n:'FK UB di Malang'},
+  {u:'Universitas Brawijaya',m:'Teknik Informatika',c:'saintek',min:85,pg:55.0,kk:'1:24',n:'IT dan software development UB'},
+  {u:'Universitas Brawijaya',m:'Teknik Elektro',c:'saintek',min:82,pg:50.5,kk:'1:19',n:'Elektro UB'},
+  {u:'Universitas Brawijaya',m:'Teknik Sipil',c:'saintek',min:83,pg:51.5,kk:'1:20',n:'Infrastruktur UB'},
+  {u:'Universitas Brawijaya',m:'Teknik Mesin',c:'saintek',min:82,pg:50.0,kk:'1:18',n:'Manufaktur UB'},
+  {u:'Universitas Brawijaya',m:'Ilmu Hukum',c:'soshum',min:83,pg:51.5,kk:'1:20',n:'Hukum UB'},
+  {u:'Universitas Brawijaya',m:'Akuntansi',c:'soshum',min:82,pg:50.0,kk:'1:18',n:'Akuntan profesional UB'},
+  {u:'Universitas Brawijaya',m:'Manajemen',c:'soshum',min:81,pg:48.5,kk:'1:16',n:'Bisnis dan kewirausahaan'},
+  {u:'Universitas Brawijaya',m:'Psikologi',c:'soshum',min:83,pg:52.0,kk:'1:20',n:'Psikologi UB'},
+  {u:'Universitas Brawijaya',m:'Ilmu Komunikasi',c:'soshum',min:80,pg:46.5,kk:'1:14',n:'Komunikasi UB'},
+  {u:'Universitas Brawijaya',m:'Agroteknologi',c:'saintek',min:79,pg:44.0,kk:'1:14',n:'Pertanian dan teknologi pangan'},
+  {u:'Universitas Brawijaya',m:'Kedokteran Hewan',c:'saintek',min:80,pg:46.5,kk:'1:15',n:'Vet medicine UB'},
+  // === UNS ===
+  {u:'Universitas Sebelas Maret',m:'Pendidikan Dokter',c:'saintek',min:87,pg:59.0,kk:'1:28',n:'FK UNS Surakarta'},
+  {u:'Universitas Sebelas Maret',m:'Farmasi',c:'saintek',min:84,pg:53.0,kk:'1:22',n:'Farmasi UNS'},
+  {u:'Universitas Sebelas Maret',m:'Teknik Informatika',c:'saintek',min:83,pg:51.0,kk:'1:20',n:'IT UNS'},
+  {u:'Universitas Sebelas Maret',m:'Teknik Sipil',c:'saintek',min:82,pg:49.5,kk:'1:18',n:'Sipil UNS'},
+  {u:'Universitas Sebelas Maret',m:'Teknik Mesin',c:'saintek',min:81,pg:48.0,kk:'1:17',n:'Mesin UNS'},
+  {u:'Universitas Sebelas Maret',m:'Akuntansi',c:'soshum',min:82,pg:49.5,kk:'1:18',n:'Akuntansi UNS'},
+  {u:'Universitas Sebelas Maret',m:'Manajemen',c:'soshum',min:81,pg:48.0,kk:'1:16',n:'Manajemen UNS'},
+  {u:'Universitas Sebelas Maret',m:'Hukum',c:'soshum',min:83,pg:51.5,kk:'1:20',n:'Hukum UNS'},
+  {u:'Universitas Sebelas Maret',m:'Ilmu Komunikasi',c:'soshum',min:80,pg:46.5,kk:'1:15',n:'Komunikasi UNS'},
+  {u:'Universitas Sebelas Maret',m:'Psikologi',c:'soshum',min:81,pg:48.2,kk:'1:16',n:'Psikologi UNS'},
+  // === UNHAS ===
+  {u:'Universitas Hasanuddin',m:'Pendidikan Dokter',c:'saintek',min:87,pg:59.0,kk:'1:28',n:'FK Unhas terkemuka di Indonesia Timur'},
+  {u:'Universitas Hasanuddin',m:'Farmasi',c:'saintek',min:84,pg:53.5,kk:'1:22',n:'Farmasi Unhas'},
+  {u:'Universitas Hasanuddin',m:'Teknik Sipil',c:'saintek',min:82,pg:50.0,kk:'1:18',n:'Infrastruktur Unhas'},
+  {u:'Universitas Hasanuddin',m:'Teknik Informatika',c:'saintek',min:83,pg:51.5,kk:'1:20',n:'IT Unhas'},
+  {u:'Universitas Hasanuddin',m:'Teknik Elektro',c:'saintek',min:82,pg:50.0,kk:'1:18',n:'Elektro Unhas'},
+  {u:'Universitas Hasanuddin',m:'Teknik Mesin',c:'saintek',min:81,pg:48.5,kk:'1:17',n:'Mesin Unhas'},
+  {u:'Universitas Hasanuddin',m:'Ilmu Hukum',c:'soshum',min:83,pg:52.0,kk:'1:20',n:'Hukum Unhas'},
+  {u:'Universitas Hasanuddin',m:'Akuntansi',c:'soshum',min:81,pg:48.0,kk:'1:16',n:'Akuntansi Unhas'},
+  {u:'Universitas Hasanuddin',m:'Manajemen',c:'soshum',min:80,pg:46.5,kk:'1:14',n:'Bisnis Unhas'},
+  {u:'Universitas Hasanuddin',m:'Psikologi',c:'soshum',min:82,pg:50.0,kk:'1:18',n:'Psikologi Unhas'},
+  {u:'Universitas Hasanuddin',m:'Pertanian',c:'saintek',min:78,pg:43.5,kk:'1:12',n:'Agroteknologi Unhas'},
+  // === UNPAD ===
+  {u:'Universitas Padjadjaran',m:'Pendidikan Dokter',c:'saintek',min:89,pg:63.0,kk:'1:33',n:'FK Unpad salah satu terbaik Indonesia'},
+  {u:'Universitas Padjadjaran',m:'Farmasi',c:'saintek',min:86,pg:58.0,kk:'1:27',n:'Farmasi Unpad sangat terkenal'},
+  {u:'Universitas Padjadjaran',m:'Ilmu Hukum',c:'soshum',min:85,pg:56.5,kk:'1:25',n:'FH Unpad bergengsi'},
+  {u:'Universitas Padjadjaran',m:'Psikologi',c:'soshum',min:85,pg:56.0,kk:'1:24',n:'Psikologi Unpad'},
+  {u:'Universitas Padjadjaran',m:'Ilmu Komunikasi',c:'soshum',min:84,pg:54.0,kk:'1:23',n:'Komunikasi Unpad'},
+  {u:'Universitas Padjadjaran',m:'Akuntansi',c:'soshum',min:84,pg:54.5,kk:'1:23',n:'Akuntansi Unpad'},
+  {u:'Universitas Padjadjaran',m:'Manajemen',c:'soshum',min:83,pg:52.5,kk:'1:21',n:'Manajemen Unpad'},
+  {u:'Universitas Padjadjaran',m:'Hubungan Internasional',c:'soshum',min:83,pg:52.0,kk:'1:21',n:'HI Unpad'},
+  {u:'Universitas Padjadjaran',m:'Teknik Informatika',c:'saintek',min:84,pg:54.0,kk:'1:22',n:'IT Unpad'},
+  {u:'Universitas Padjadjaran',m:'Teknik Sipil',c:'saintek',min:82,pg:50.5,kk:'1:19',n:'Sipil Unpad'},
+  {u:'Universitas Padjadjaran',m:'Kedokteran Gigi',c:'saintek',min:84,pg:55.0,kk:'1:22',n:'Drg Unpad'},
+  // === USU ===
+  {u:'Universitas Sumatera Utara',m:'Pendidikan Dokter',c:'saintek',min:86,pg:57.0,kk:'1:25',n:'FK USU terkemuka di Sumatera'},
+  {u:'Universitas Sumatera Utara',m:'Farmasi',c:'saintek',min:83,pg:52.0,kk:'1:20',n:'Farmasi USU'},
+  {u:'Universitas Sumatera Utara',m:'Teknik Sipil',c:'saintek',min:81,pg:48.5,kk:'1:17',n:'Sipil USU'},
+  {u:'Universitas Sumatera Utara',m:'Teknik Informatika',c:'saintek',min:82,pg:50.0,kk:'1:18',n:'IT USU'},
+  {u:'Universitas Sumatera Utara',m:'Ilmu Hukum',c:'soshum',min:82,pg:49.5,kk:'1:17',n:'Hukum USU'},
+  {u:'Universitas Sumatera Utara',m:'Akuntansi',c:'soshum',min:80,pg:46.5,kk:'1:14',n:'Akuntansi USU'},
+  {u:'Universitas Sumatera Utara',m:'Manajemen',c:'soshum',min:79,pg:44.5,kk:'1:13',n:'Manajemen USU'},
+  {u:'Universitas Sumatera Utara',m:'Psikologi',c:'soshum',min:80,pg:46.5,kk:'1:14',n:'Psikologi USU'},
+  {u:'Universitas Sumatera Utara',m:'Pertanian',c:'saintek',min:76,pg:40.0,kk:'1:10',n:'Pertanian USU'},
+  // === IPB ===
+  {u:'Institut Pertanian Bogor',m:'Teknologi Pangan',c:'saintek',min:87,pg:59.0,kk:'1:28',n:'Teknologi Pangan IPB sangat bergengsi dan diakui industri'},
+  {u:'Institut Pertanian Bogor',m:'Agribisnis',c:'soshum',min:84,pg:53.5,kk:'1:22',n:'Agribisnis IPB terbaik di Indonesia'},
+  {u:'Institut Pertanian Bogor',m:'Ilmu Komputer',c:'saintek',min:85,pg:55.0,kk:'1:24',n:'Ilmu Komputer IPB berkembang pesat'},
+  {u:'Institut Pertanian Bogor',m:'Nutrisi dan Teknologi Pakan',c:'saintek',min:82,pg:50.0,kk:'1:18',n:'Peternakan dan nutrisi hewan'},
+  {u:'Institut Pertanian Bogor',m:'Manajemen',c:'soshum',min:83,pg:52.0,kk:'1:20',n:'Manajemen IPB - fokus agribisnis'},
+  {u:'Institut Pertanian Bogor',m:'Statistika',c:'saintek',min:83,pg:51.5,kk:'1:20',n:'Statistika IPB sangat dibutuhkan industri data'},
+  {u:'Institut Pertanian Bogor',m:'Biologi',c:'saintek',min:81,pg:48.0,kk:'1:16',n:'Biologi murni dan terapan'},
+  {u:'Institut Pertanian Bogor',m:'Kedokteran Hewan',c:'saintek',min:85,pg:55.5,kk:'1:24',n:'Kedokteran Hewan IPB salah satu terbaik'},
+  {u:'Institut Pertanian Bogor',m:'Teknik Sipil dan Lingkungan',c:'saintek',min:82,pg:50.5,kk:'1:18',n:'Rekayasa lingkungan dan sipil'},
+  {u:'Institut Pertanian Bogor',m:'Ekonomi Pembangunan',c:'soshum',min:82,pg:50.0,kk:'1:17',n:'Ekonomi pembangunan dan kebijakan'},
+
+  // === UNY ===
+  {u:'Universitas Negeri Yogyakarta',m:'Pendidikan Matematika',c:'saintek',min:82,pg:49.5,kk:'1:18',n:'Pendidikan Matematika UNY sangat diminati'},
+  {u:'Universitas Negeri Yogyakarta',m:'Pendidikan Fisika',c:'saintek',min:80,pg:46.5,kk:'1:15',n:'Pendidikan Fisika UNY'},
+  {u:'Universitas Negeri Yogyakarta',m:'Pendidikan Bahasa Inggris',c:'soshum',min:81,pg:48.0,kk:'1:16',n:'Pendidikan Bahasa Inggris UNY bergengsi'},
+  {u:'Universitas Negeri Yogyakarta',m:'Pendidikan Akuntansi',c:'soshum',min:80,pg:46.5,kk:'1:15',n:'Akuntansi dan pendidikan ekonomi'},
+  {u:'Universitas Negeri Yogyakarta',m:'Ilmu Keolahragaan',c:'saintek',min:78,pg:43.0,kk:'1:12',n:'Olahraga dan kesehatan jasmani'},
+
+  // === UDAYANA ===
+  {u:'Universitas Udayana',m:'Pendidikan Dokter',c:'saintek',min:86,pg:57.0,kk:'1:25',n:'FK Udayana terkemuka di Bali dan Indonesia Tengah'},
+  {u:'Universitas Udayana',m:'Farmasi',c:'saintek',min:83,pg:51.5,kk:'1:20',n:'Farmasi Udayana Bali'},
+  {u:'Universitas Udayana',m:'Teknik Informatika',c:'saintek',min:83,pg:51.0,kk:'1:20',n:'IT Udayana berkembang pesat'},
+  {u:'Universitas Udayana',m:'Manajemen',c:'soshum',min:81,pg:48.0,kk:'1:16',n:'Manajemen pariwisata dan bisnis'},
+  {u:'Universitas Udayana',m:'Ilmu Hukum',c:'soshum',min:82,pg:49.5,kk:'1:17',n:'Hukum Udayana'},
+  {u:'Universitas Udayana',m:'Akuntansi',c:'soshum',min:81,pg:47.5,kk:'1:16',n:'Akuntansi Udayana'},
+  {u:'Universitas Udayana',m:'Sastra Inggris',c:'soshum',min:80,pg:46.0,kk:'1:14',n:'Sastra Inggris Udayana - strategis untuk pariwisata'},
+
+  // === ANDALAS ===
+  {u:'Universitas Andalas',m:'Pendidikan Dokter',c:'saintek',min:86,pg:57.5,kk:'1:26',n:'FK Unand terkemuka di Sumatera Barat'},
+  {u:'Universitas Andalas',m:'Farmasi',c:'saintek',min:83,pg:52.0,kk:'1:20',n:'Farmasi Unand'},
+  {u:'Universitas Andalas',m:'Teknik Sipil',c:'saintek',min:81,pg:48.0,kk:'1:17',n:'Teknik Sipil Unand'},
+  {u:'Universitas Andalas',m:'Ilmu Hukum',c:'soshum',min:82,pg:49.5,kk:'1:17',n:'Hukum Unand'},
+  {u:'Universitas Andalas',m:'Manajemen',c:'soshum',min:80,pg:46.5,kk:'1:15',n:'Manajemen Unand'},
+  {u:'Universitas Andalas',m:'Akuntansi',c:'soshum',min:80,pg:46.0,kk:'1:14',n:'Akuntansi Unand'},
+
+  // === SRIWIJAYA ===
+  {u:'Universitas Sriwijaya',m:'Pendidikan Dokter',c:'saintek',min:85,pg:55.5,kk:'1:23',n:'FK Unsri terkemuka di Sumatera Selatan'},
+  {u:'Universitas Sriwijaya',m:'Teknik Sipil',c:'saintek',min:81,pg:47.5,kk:'1:16',n:'Teknik Sipil Unsri'},
+  {u:'Universitas Sriwijaya',m:'Teknik Informatika',c:'saintek',min:81,pg:47.0,kk:'1:15',n:'IT Unsri'},
+  {u:'Universitas Sriwijaya',m:'Manajemen',c:'soshum',min:80,pg:45.5,kk:'1:14',n:'Manajemen Unsri'},
+  {u:'Universitas Sriwijaya',m:'Ilmu Hukum',c:'soshum',min:80,pg:45.5,kk:'1:14',n:'Hukum Unsri'},
+
+  // === UIN JAKARTA ===
+  {u:'Universitas Islam Negeri Jakarta',m:'Hukum Keluarga Islam',c:'soshum',min:79,pg:44.0,kk:'1:13',n:'UIN Jakarta salah satu kampus Islam terbaik'},
+  {u:'Universitas Islam Negeri Jakarta',m:'Ekonomi Syariah',c:'soshum',min:80,pg:46.0,kk:'1:15',n:'Ekonomi syariah dan perbankan Islam'},
+  {u:'Universitas Islam Negeri Jakarta',m:'Pendidikan Dokter',c:'saintek',min:84,pg:53.5,kk:'1:22',n:'FK UIN Jakarta berkembang pesat'},
+  {u:'Universitas Islam Negeri Jakarta',m:'Teknik Informatika',c:'saintek',min:81,pg:47.5,kk:'1:16',n:'IT UIN Jakarta'},
+  {u:'Universitas Islam Negeri Jakarta',m:'Ilmu Komunikasi',c:'soshum',min:80,pg:46.0,kk:'1:14',n:'Komunikasi UIN Jakarta'},
+  {u:'Universitas Islam Negeri Jakarta',m:'Psikologi',c:'soshum',min:81,pg:47.5,kk:'1:16',n:'Psikologi UIN Jakarta'},
+
+  // === UIN YOGYAKARTA ===
+  {u:'Universitas Islam Negeri Yogyakarta',m:'Ekonomi Islam',c:'soshum',min:79,pg:44.0,kk:'1:13',n:'Ekonomi Islam UIN Suka'},
+  {u:'Universitas Islam Negeri Yogyakarta',m:'Ilmu Komunikasi',c:'soshum',min:79,pg:43.5,kk:'1:12',n:'Komunikasi dakwah UIN Yogya'},
+  {u:'Universitas Islam Negeri Yogyakarta',m:'Pendidikan Agama Islam',c:'soshum',min:78,pg:42.5,kk:'1:11',n:'PAI UIN Yogyakarta'},
+
+  // === UPI ===
+  {u:'Universitas Pendidikan Indonesia',m:'Pendidikan Bahasa dan Sastra Indonesia',c:'soshum',min:80,pg:46.0,kk:'1:15',n:'Pendidikan Bahasa Indonesia UPI Bandung'},
+  {u:'Universitas Pendidikan Indonesia',m:'Pendidikan Bahasa Inggris',c:'soshum',min:81,pg:47.5,kk:'1:16',n:'Pendidikan Bahasa Inggris UPI'},
+  {u:'Universitas Pendidikan Indonesia',m:'Pendidikan Matematika',c:'saintek',min:81,pg:47.0,kk:'1:16',n:'Pendidikan Matematika UPI'},
+  {u:'Universitas Pendidikan Indonesia',m:'Manajemen',c:'soshum',min:80,pg:45.5,kk:'1:14',n:'Manajemen UPI Bandung'},
+  {u:'Universitas Pendidikan Indonesia',m:'Psikologi',c:'soshum',min:82,pg:49.0,kk:'1:18',n:'Psikologi UPI Bandung'},
+
+  // === TELKOM UNIVERSITY (PTS) ===
+  {u:'Universitas Telkom',m:'Teknik Informatika',c:'saintek',min:82,pg:null,kk:'1:12',n:'PTS terbaik 2025 versi Webometrics, akreditasi Unggul'},
+  {u:'Universitas Telkom',m:'Sistem Informasi',c:'saintek',min:80,pg:null,kk:'1:10',n:'SI Telkom University - kurikulum tech company'},
+  {u:'Universitas Telkom',m:'Teknik Elektro',c:'saintek',min:80,pg:null,kk:'1:9',n:'Elektro Telkom University berkualitas tinggi'},
+  {u:'Universitas Telkom',m:'Desain Komunikasi Visual',c:'saintek',min:79,pg:null,kk:'1:8',n:'DKV Telkom sangat diminati'},
+  {u:'Universitas Telkom',m:'Manajemen Bisnis Telekomunikasi',c:'soshum',min:79,pg:null,kk:'1:9',n:'Manajemen bisnis digital dan telekomunikasi'},
+  {u:'Universitas Telkom',m:'Teknik Industri',c:'saintek',min:79,pg:null,kk:'1:8',n:'Teknik Industri Telkom University'},
+  {u:'Universitas Telkom',m:'Ilmu Komunikasi',c:'soshum',min:78,pg:null,kk:'1:7',n:'Komunikasi digital Telkom University'},
+  {u:'Universitas Telkom',m:'Akuntansi',c:'soshum',min:78,pg:null,kk:'1:7',n:'Akuntansi Telkom University'},
+
+  // === BINUS ===
+  {u:'Universitas Bina Nusantara',m:'Computer Science',c:'saintek',min:83,pg:null,kk:'1:14',n:'CS BINUS - pelopor IT Indonesia, banyak alumni di tech company global'},
+  {u:'Universitas Bina Nusantara',m:'Teknik Informatika',c:'saintek',min:82,pg:null,kk:'1:13',n:'TI BINUS sangat diakui industri'},
+  {u:'Universitas Bina Nusantara',m:'Sistem Informasi',c:'saintek',min:81,pg:null,kk:'1:11',n:'SI BINUS dengan kurikulum global'},
+  {u:'Universitas Bina Nusantara',m:'Akuntansi',c:'soshum',min:80,pg:null,kk:'1:10',n:'Akuntansi BINUS terakreditasi Unggul'},
+  {u:'Universitas Bina Nusantara',m:'Manajemen',c:'soshum',min:80,pg:null,kk:'1:10',n:'Manajemen BINUS - business school internasional'},
+  {u:'Universitas Bina Nusantara',m:'Desain Komunikasi Visual',c:'saintek',min:81,pg:null,kk:'1:11',n:'DKV BINUS sangat kreatif dan bergengsi'},
+  {u:'Universitas Bina Nusantara',m:'Data Science',c:'saintek',min:82,pg:null,kk:'1:12',n:'Data Science BINUS kurikulum terkini'},
+  {u:'Universitas Bina Nusantara',m:'Mobile Application and Technology',c:'saintek',min:81,pg:null,kk:'1:11',n:'Mobile tech BINUS - dukungan industri kuat'},
+
+  // === ATMA JAYA ===
+  {u:'Universitas Atma Jaya',m:'Teknik Informatika',c:'saintek',min:79,pg:null,kk:'1:8',n:'TI Atma Jaya Jakarta berkualitas baik'},
+  {u:'Universitas Atma Jaya',m:'Ilmu Hukum',c:'soshum',min:80,pg:null,kk:'1:9',n:'FH Atma Jaya Jakarta bergengsi'},
+  {u:'Universitas Atma Jaya',m:'Akuntansi',c:'soshum',min:79,pg:null,kk:'1:8',n:'Akuntansi Atma Jaya'},
+  {u:'Universitas Atma Jaya',m:'Manajemen',c:'soshum',min:79,pg:null,kk:'1:8',n:'Manajemen Atma Jaya Jakarta'},
+  {u:'Universitas Atma Jaya',m:'Psikologi',c:'soshum',min:80,pg:null,kk:'1:9',n:'Psikologi Atma Jaya'},
+
+  // === TRISAKTI ===
+  {u:'Universitas Trisakti',m:'Arsitektur',c:'saintek',min:80,pg:null,kk:'1:10',n:'Arsitektur Trisakti salah satu terbaik di Jakarta'},
+  {u:'Universitas Trisakti',m:'Teknik Sipil',c:'saintek',min:79,pg:null,kk:'1:9',n:'Teknik Sipil Trisakti'},
+  {u:'Universitas Trisakti',m:'Manajemen',c:'soshum',min:79,pg:null,kk:'1:8',n:'Manajemen Trisakti Jakarta'},
+  {u:'Universitas Trisakti',m:'Akuntansi',c:'soshum',min:79,pg:null,kk:'1:8',n:'Akuntansi Trisakti'},
+  {u:'Universitas Trisakti',m:'Ilmu Hukum',c:'soshum',min:79,pg:null,kk:'1:8',n:'Hukum Trisakti Jakarta'},
+
+  // === TARUMANAGARA ===
+  {u:'Universitas Tarumanagara',m:'Teknik Sipil',c:'saintek',min:79,pg:null,kk:'1:8',n:'Teknik Sipil Tarumanagara Jakarta'},
+  {u:'Universitas Tarumanagara',m:'Psikologi',c:'soshum',min:80,pg:null,kk:'1:9',n:'Psikologi Tarumanagara'},
+  {u:'Universitas Tarumanagara',m:'Manajemen',c:'soshum',min:78,pg:null,kk:'1:7',n:'Manajemen Tarumanagara'},
+  {u:'Universitas Tarumanagara',m:'Ilmu Komunikasi',c:'soshum',min:79,pg:null,kk:'1:8',n:'Komunikasi Tarumanagara'},
+
+  // === UK PETRA ===
+  {u:'Universitas Kristen Petra',m:'Teknik Informatika',c:'saintek',min:80,pg:null,kk:'1:9',n:'IT UK Petra Surabaya sangat dikenal industri'},
+  {u:'Universitas Kristen Petra',m:'Desain Komunikasi Visual',c:'saintek',min:81,pg:null,kk:'1:10',n:'DKV UK Petra sangat kreatif'},
+  {u:'Universitas Kristen Petra',m:'Arsitektur',c:'saintek',min:80,pg:null,kk:'1:9',n:'Arsitektur UK Petra bergengsi'},
+  {u:'Universitas Kristen Petra',m:'Manajemen',c:'soshum',min:79,pg:null,kk:'1:8',n:'Manajemen UK Petra'},
+  {u:'Universitas Kristen Petra',m:'Akuntansi',c:'soshum',min:79,pg:null,kk:'1:8',n:'Akuntansi UK Petra'},
+
+  // === IT DEL ===
+  {u:'Institut Teknologi Del',m:'Teknik Informatika',c:'saintek',min:80,pg:null,kk:'1:9',n:'IT Del Sumatra Utara - kampus teknologi unggulan baru'},
+  {u:'Institut Teknologi Del',m:'Sistem Informasi',c:'saintek',min:79,pg:null,kk:'1:8',n:'SI IT Del'},
+  {u:'Institut Teknologi Del',m:'Teknik Elektro',c:'saintek',min:78,pg:null,kk:'1:7',n:'Elektro IT Del'},
+
+  // === NEGERI MALANG ===
+  {u:'Universitas Negeri Malang',m:'Pendidikan Matematika',c:'saintek',min:81,pg:47.0,kk:'1:16',n:'Pendidikan Matematika UM sangat dikenal'},
+  {u:'Universitas Negeri Malang',m:'Pendidikan Fisika',c:'saintek',min:79,pg:44.5,kk:'1:13',n:'Pendidikan Fisika UM'},
+  {u:'Universitas Negeri Malang',m:'Pendidikan Bahasa Inggris',c:'soshum',min:80,pg:46.0,kk:'1:14',n:'Bahasa Inggris UM'},
+  {u:'Universitas Negeri Malang',m:'Psikologi',c:'soshum',min:81,pg:47.5,kk:'1:16',n:'Psikologi UM'},
+  {u:'Universitas Negeri Malang',m:'Manajemen',c:'soshum',min:80,pg:46.0,kk:'1:14',n:'Manajemen UM'},
+
+  // === MULAWARMAN ===
+  {u:'Universitas Mulawarman',m:'Pendidikan Dokter',c:'saintek',min:83,pg:50.5,kk:'1:19',n:'FK Unmul terkemuka di Kalimantan Timur'},
+  {u:'Universitas Mulawarman',m:'Teknik Informatika',c:'saintek',min:79,pg:44.0,kk:'1:12',n:'IT Unmul'},
+  {u:'Universitas Mulawarman',m:'Manajemen',c:'soshum',min:78,pg:42.5,kk:'1:11',n:'Manajemen Unmul'},
+  {u:'Universitas Mulawarman',m:'Ilmu Hukum',c:'soshum',min:79,pg:44.0,kk:'1:12',n:'Hukum Unmul'},
+
+  // === SAM RATULANGI ===
+  {u:'Universitas Sam Ratulangi',m:'Pendidikan Dokter',c:'saintek',min:83,pg:51.0,kk:'1:19',n:'FK Unsrat terkemuka di Sulawesi Utara'},
+  {u:'Universitas Sam Ratulangi',m:'Farmasi',c:'saintek',min:80,pg:46.0,kk:'1:14',n:'Farmasi Unsrat'},
+  {u:'Universitas Sam Ratulangi',m:'Teknik Informatika',c:'saintek',min:79,pg:44.0,kk:'1:12',n:'IT Unsrat'},
+  {u:'Universitas Sam Ratulangi',m:'Manajemen',c:'soshum',min:78,pg:42.5,kk:'1:11',n:'Manajemen Unsrat'},
+
+  // === LAMPUNG ===
+  {u:'Universitas Lampung',m:'Teknik Informatika',c:'saintek',min:80,pg:46.0,kk:'1:14',n:'IT Unila berkembang pesat'},
+  {u:'Universitas Lampung',m:'Ilmu Hukum',c:'soshum',min:80,pg:46.0,kk:'1:14',n:'Hukum Unila'},
+  {u:'Universitas Lampung',m:'Manajemen',c:'soshum',min:79,pg:44.5,kk:'1:13',n:'Manajemen Unila'},
+  {u:'Universitas Lampung',m:'Akuntansi',c:'soshum',min:79,pg:44.0,kk:'1:12',n:'Akuntansi Unila'},
+  {u:'Universitas Lampung',m:'Pendidikan Dokter',c:'saintek',min:84,pg:53.5,kk:'1:21',n:'FK Unila Lampung'},
+
+  // === MERCU BUANA ===
+  {u:'Universitas Mercu Buana',m:'Teknik Informatika',c:'saintek',min:76,pg:null,kk:'1:6',n:'TI Mercu Buana Jakarta - akreditasi Baik Sekali'},
+  {u:'Universitas Mercu Buana',m:'Ilmu Komunikasi',c:'soshum',min:76,pg:null,kk:'1:6',n:'Komunikasi Mercu Buana'},
+  {u:'Universitas Mercu Buana',m:'Manajemen',c:'soshum',min:75,pg:null,kk:'1:5',n:'Manajemen Mercu Buana'},
+  {u:'Universitas Mercu Buana',m:'Akuntansi',c:'soshum',min:75,pg:null,kk:'1:5',n:'Akuntansi Mercu Buana'},
+  // === UII ===
+  {u:'Universitas Islam Indonesia',m:'Ilmu Hukum',c:'soshum',min:82,pg:null,kk:'1:18',n:'FH UII Yogyakarta sangat bergengsi, akreditasi Unggul, masuk QS WUR 2025'},
+  {u:'Universitas Islam Indonesia',m:'Teknik Informatika',c:'saintek',min:81,pg:null,kk:'1:16',n:'TI UII Yogyakarta berkualitas tinggi'},
+  {u:'Universitas Islam Indonesia',m:'Manajemen',c:'soshum',min:80,pg:null,kk:'1:14',n:'Manajemen UII - akreditasi Unggul'},
+  {u:'Universitas Islam Indonesia',m:'Psikologi',c:'soshum',min:81,pg:null,kk:'1:16',n:'Psikologi UII - salah satu terbaik Yogya'},
+  {u:'Universitas Islam Indonesia',m:'Akuntansi',c:'soshum',min:80,pg:null,kk:'1:14',n:'Akuntansi UII'},
+  {u:'Universitas Islam Indonesia',m:'Farmasi',c:'saintek',min:82,pg:null,kk:'1:17',n:'Farmasi UII Yogyakarta - akreditasi A'},
+  {u:'Universitas Islam Indonesia',m:'Pendidikan Dokter',c:'saintek',min:85,pg:null,kk:'1:22',n:'FK UII Yogyakarta berkembang pesat'},
+
+  // === UMY ===
+  {u:'Universitas Muhammadiyah Yogyakarta',m:'Pendidikan Dokter',c:'saintek',min:83,pg:null,kk:'1:20',n:'FK UMY - akreditasi Unggul, kampus Muhammadiyah terbaik'},
+  {u:'Universitas Muhammadiyah Yogyakarta',m:'Ilmu Hukum',c:'soshum',min:79,pg:null,kk:'1:12',n:'Hukum UMY - masuk UNIRANK 2025'},
+  {u:'Universitas Muhammadiyah Yogyakarta',m:'Manajemen',c:'soshum',min:79,pg:null,kk:'1:11',n:'Manajemen UMY'},
+  {u:'Universitas Muhammadiyah Yogyakarta',m:'Teknik Informatika',c:'saintek',min:79,pg:null,kk:'1:11',n:'TI UMY'},
+  {u:'Universitas Muhammadiyah Yogyakarta',m:'Kedokteran Gigi',c:'saintek',min:81,pg:null,kk:'1:15',n:'Kedokteran Gigi UMY'},
+
+  // === UMM ===
+  {u:'Universitas Muhammadiyah Malang',m:'Pendidikan Dokter',c:'saintek',min:83,pg:null,kk:'1:19',n:'FK UMM - kampus Islam terbaik dunia versi UniRank, akreditasi Unggul'},
+  {u:'Universitas Muhammadiyah Malang',m:'Teknik Informatika',c:'saintek',min:80,pg:null,kk:'1:14',n:'TI UMM Malang'},
+  {u:'Universitas Muhammadiyah Malang',m:'Manajemen',c:'soshum',min:79,pg:null,kk:'1:12',n:'Manajemen UMM'},
+  {u:'Universitas Muhammadiyah Malang',m:'Psikologi',c:'soshum',min:80,pg:null,kk:'1:14',n:'Psikologi UMM'},
+  {u:'Universitas Muhammadiyah Malang',m:'Ilmu Hukum',c:'soshum',min:79,pg:null,kk:'1:12',n:'Hukum UMM'},
+
+  // === UMS ===
+  {u:'Universitas Muhammadiyah Surakarta',m:'Pendidikan Dokter',c:'saintek',min:82,pg:null,kk:'1:18',n:'FK UMS Solo - akreditasi Unggul BAN-PT 2025'},
+  {u:'Universitas Muhammadiyah Surakarta',m:'Farmasi',c:'saintek',min:79,pg:null,kk:'1:12',n:'Farmasi UMS'},
+  {u:'Universitas Muhammadiyah Surakarta',m:'Teknik Informatika',c:'saintek',min:78,pg:null,kk:'1:10',n:'TI UMS Solo'},
+  {u:'Universitas Muhammadiyah Surakarta',m:'Manajemen',c:'soshum',min:77,pg:null,kk:'1:8',n:'Manajemen UMS'},
+  {u:'Universitas Muhammadiyah Surakarta',m:'Ilmu Hukum',c:'soshum',min:78,pg:null,kk:'1:10',n:'Hukum UMS'},
+
+  // === UPH ===
+  {u:'Universitas Pelita Harapan',m:'Manajemen',c:'soshum',min:80,pg:null,kk:'1:13',n:'UPH Tangerang - masuk THE 2025, akreditasi A'},
+  {u:'Universitas Pelita Harapan',m:'Psikologi',c:'soshum',min:80,pg:null,kk:'1:13',n:'Psikologi UPH'},
+  {u:'Universitas Pelita Harapan',m:'Ilmu Komunikasi',c:'soshum',min:79,pg:null,kk:'1:11',n:'Komunikasi UPH - media dan desain'},
+  {u:'Universitas Pelita Harapan',m:'Teknik Informatika',c:'saintek',min:81,pg:null,kk:'1:15',n:'TI UPH - fasilitas modern'},
+  {u:'Universitas Pelita Harapan',m:'Pendidikan Dokter',c:'saintek',min:84,pg:null,kk:'1:20',n:'FK UPH Karawaci - akreditasi B'},
+  {u:'Universitas Pelita Harapan',m:'Desain',c:'saintek',min:79,pg:null,kk:'1:11',n:'Desain UPH Tangerang'},
+
+  // === GUNADARMA ===
+  {u:'Universitas Gunadarma',m:'Teknik Informatika',c:'saintek',min:78,pg:null,kk:'1:10',n:'TI Gunadarma - pioneer IT swasta Indonesia, akreditasi A'},
+  {u:'Universitas Gunadarma',m:'Sistem Informasi',c:'saintek',min:77,pg:null,kk:'1:9',n:'SI Gunadarma Depok'},
+  {u:'Universitas Gunadarma',m:'Manajemen',c:'soshum',min:77,pg:null,kk:'1:8',n:'Manajemen Gunadarma'},
+  {u:'Universitas Gunadarma',m:'Akuntansi',c:'soshum',min:76,pg:null,kk:'1:7',n:'Akuntansi Gunadarma'},
+  {u:'Universitas Gunadarma',m:'Teknik Elektro',c:'saintek',min:77,pg:null,kk:'1:8',n:'Elektro Gunadarma'},
+  {u:'Universitas Gunadarma',m:'Psikologi',c:'soshum',min:77,pg:null,kk:'1:8',n:'Psikologi Gunadarma'},
+
+  // === UNPAR ===
+  {u:'Universitas Katolik Parahyangan',m:'Arsitektur',c:'saintek',min:81,pg:null,kk:'1:16',n:'Arsitektur UNPAR Bandung - masuk THE Asia 2025'},
+  {u:'Universitas Katolik Parahyangan',m:'Ilmu Hukum',c:'soshum',min:81,pg:null,kk:'1:16',n:'FH UNPAR Bandung sangat bergengsi'},
+  {u:'Universitas Katolik Parahyangan',m:'Teknik Sipil',c:'saintek',min:79,pg:null,kk:'1:12',n:'Sipil UNPAR'},
+  {u:'Universitas Katolik Parahyangan',m:'Manajemen',c:'soshum',min:80,pg:null,kk:'1:14',n:'Manajemen UNPAR Bandung'},
+  {u:'Universitas Katolik Parahyangan',m:'Akuntansi',c:'soshum',min:79,pg:null,kk:'1:12',n:'Akuntansi UNPAR'},
+
+  // === ITENAS ===
+  {u:'Institut Teknologi Nasional Bandung',m:'Arsitektur',c:'saintek',min:79,pg:null,kk:'1:12',n:'Arsitektur ITENAS Bandung - PTS teknik terkemuka'},
+  {u:'Institut Teknologi Nasional Bandung',m:'Teknik Sipil',c:'saintek',min:78,pg:null,kk:'1:10',n:'Sipil ITENAS'},
+  {u:'Institut Teknologi Nasional Bandung',m:'Teknik Informatika',c:'saintek',min:78,pg:null,kk:'1:10',n:'TI ITENAS Bandung'},
+  {u:'Institut Teknologi Nasional Bandung',m:'Teknik Elektro',c:'saintek',min:77,pg:null,kk:'1:9',n:'Elektro ITENAS'},
+
+  // === UAD ===
+  {u:'Universitas Ahmad Dahlan',m:'Psikologi',c:'soshum',min:79,pg:null,kk:'1:11',n:'Psikologi UAD Yogyakarta - akreditasi Unggul'},
+  {u:'Universitas Ahmad Dahlan',m:'Teknik Informatika',c:'saintek',min:79,pg:null,kk:'1:11',n:'TI UAD Yogyakarta'},
+  {u:'Universitas Ahmad Dahlan',m:'Farmasi',c:'saintek',min:79,pg:null,kk:'1:11',n:'Farmasi UAD'},
+  {u:'Universitas Ahmad Dahlan',m:'Manajemen',c:'soshum',min:77,pg:null,kk:'1:8',n:'Manajemen UAD Yogyakarta'},
+
+  // === UDINUS ===
+  {u:'Universitas Dian Nuswantoro',m:'Teknik Informatika',c:'saintek',min:78,pg:null,kk:'1:10',n:'TI UDINUS Semarang - akreditasi Unggul, masuk QS 2026'},
+  {u:'Universitas Dian Nuswantoro',m:'Sistem Informasi',c:'saintek',min:77,pg:null,kk:'1:9',n:'SI UDINUS'},
+  {u:'Universitas Dian Nuswantoro',m:'Desain Komunikasi Visual',c:'saintek',min:77,pg:null,kk:'1:9',n:'DKV UDINUS Semarang'},
+  {u:'Universitas Dian Nuswantoro',m:'Manajemen',c:'soshum',min:76,pg:null,kk:'1:7',n:'Manajemen UDINUS'},
+
+  // === UMN ===
+  {u:'Universitas Multimedia Nusantara',m:'Ilmu Komunikasi',c:'soshum',min:79,pg:null,kk:'1:11',n:'UMN Tangerang - media dan komunikasi digital terbaik'},
+  {u:'Universitas Multimedia Nusantara',m:'Teknik Informatika',c:'saintek',min:80,pg:null,kk:'1:13',n:'TI UMN - kurikulum multimedia'},
+  {u:'Universitas Multimedia Nusantara',m:'Desain Komunikasi Visual',c:'saintek',min:80,pg:null,kk:'1:13',n:'DKV UMN sangat diminati industri kreatif'},
+  {u:'Universitas Multimedia Nusantara',m:'Akuntansi',c:'soshum',min:78,pg:null,kk:'1:10',n:'Akuntansi UMN'},
+  {u:'Universitas Multimedia Nusantara',m:'Manajemen',c:'soshum',min:78,pg:null,kk:'1:10',n:'Manajemen UMN'},
+
+  // === CIPUTRA ===
+  {u:'Universitas Ciputra',m:'Manajemen',c:'soshum',min:78,pg:null,kk:'1:9',n:'Manajemen Bisnis Ciputra Surabaya - kampus kewirausahaan terbaik'},
+  {u:'Universitas Ciputra',m:'Desain Komunikasi Visual',c:'saintek',min:79,pg:null,kk:'1:11',n:'DKV Ciputra - desain dan kreativitas'},
+  {u:'Universitas Ciputra',m:'Teknik Informatika',c:'saintek',min:78,pg:null,kk:'1:9',n:'TI Ciputra Surabaya'},
+
+  // === UNISBA ===
+  {u:'Universitas Islam Bandung',m:'Ilmu Hukum',c:'soshum',min:78,pg:null,kk:'1:10',n:'Hukum UNISBA Bandung'},
+  {u:'Universitas Islam Bandung',m:'Teknik Informatika',c:'saintek',min:77,pg:null,kk:'1:8',n:'TI UNISBA'},
+  {u:'Universitas Islam Bandung',m:'Manajemen',c:'soshum',min:77,pg:null,kk:'1:8',n:'Manajemen UNISBA'},
+  {u:'Universitas Islam Bandung',m:'Farmasi',c:'saintek',min:79,pg:null,kk:'1:11',n:'Farmasi UNISBA Bandung'},
+];
+
+let catFilter='all',univFilter='all',mySlots=[null,null],pickerTarget=1;
+
+function buildUnivChips(){
+  const univs=[...new Set(ptnDB.map(d=>d.u))];
+  const shorts={'Universitas Indonesia':'UI','Universitas Gadjah Mada':'UGM','Institut Teknologi Bandung':'ITB','Institut Teknologi Sepuluh Nopember':'ITS','Universitas Airlangga':'UNAIR','Universitas Diponegoro':'UNDIP','Universitas Brawijaya':'UB','Universitas Sebelas Maret':'UNS','Universitas Hasanuddin':'UNHAS','Universitas Padjadjaran':'UNPAD','Universitas Sumatera Utara':'USU','Institut Pertanian Bogor':'IPB','Universitas Negeri Yogyakarta':'UNY','Universitas Udayana':'UNUD','Universitas Andalas':'UNAND','Universitas Sriwijaya':'UNSRI','Universitas Islam Negeri Jakarta':'UIN JKT','Universitas Islam Negeri Yogyakarta':'UIN YK','Universitas Pendidikan Indonesia':'UPI','Universitas Telkom':'TEL-U','Universitas Bina Nusantara':'BINUS','Universitas Atma Jaya':'UAJ','Universitas Trisakti':'TRISAKTI','Universitas Tarumanagara':'UNTAR','Universitas Kristen Petra':'UK PETRA','Institut Teknologi Del':'IT DEL','Universitas Negeri Malang':'UM','Universitas Mulawarman':'UNMUL','Universitas Sam Ratulangi':'UNSRAT','Universitas Lampung':'UNILA','Universitas Mercu Buana':'UMB','Universitas Islam Indonesia':'UII','Universitas Muhammadiyah Yogyakarta':'UMY','Universitas Muhammadiyah Malang':'UMM','Universitas Muhammadiyah Surakarta':'UMS','Universitas Pelita Harapan':'UPH','Universitas Gunadarma':'GUNADARMA','Universitas Katolik Parahyangan':'UNPAR','Institut Teknologi Nasional Bandung':'ITENAS','Universitas Ahmad Dahlan':'UAD','Universitas Dian Nuswantoro':'UDINUS','Universitas Multimedia Nusantara':'UMN','Universitas Ciputra':'UC','Universitas Islam Bandung':'UNISBA'};
+  const row=document.getElementById('univChips');
+  row.innerHTML='<button class="univ-chip active" onclick="setUnivFilter(\'all\',this)">Semua</button>';
+  univs.forEach(u=>{row.innerHTML+=`<button class="univ-chip" onclick="setUnivFilter('${u}',this)">${shorts[u]||u.split(' ').map(w=>w[0]).join('')}</button>`});
+}
+function setCatFilter(v,btn){catFilter=v;document.querySelectorAll('.cat-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function setUnivFilter(v,btn){univFilter=v;document.querySelectorAll('.univ-chip').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+
+function doAnalysis(){
+  const grade=parseFloat(document.getElementById('inputNilai').value);
+  if(!grade||grade<0||grade>100){toast('Masukkan nilai yang valid (0–100)!');return}
+  let data=ptnDB;
+  if(catFilter!=='all')data=data.filter(d=>d.c===catFilter);
+  if(univFilter!=='all')data=data.filter(d=>d.u===univFilter);
+  const recs=data.filter(d=>grade>=d.min-5).map(d=>{
+    const diff=grade-d.min;
+    return{...d,diff,chance:diff>=0?'high':diff>=-3?'mid':'low'};
+  }).sort((a,b)=>b.diff-a.diff);
+  document.getElementById('resNilai').textContent=grade.toFixed(2);
+  document.getElementById('resJml').textContent=recs.length;
+  document.getElementById('resHigh').textContent=recs.filter(r=>r.chance==='high').length;
+  const list=document.getElementById('recList');list.innerHTML='';
+  if(!recs.length){list.innerHTML='<div class="card" style="text-align:center;color:#999;padding:40px">Tidak ada rekomendasi. Coba turunkan filter atau tingkatkan nilai.</div>'}
+  recs.forEach(r=>{
+    const logo=univLogos[r.u];
+    const pills={high:'ch-high',mid:'ch-mid',low:'ch-low'};
+    const pillTxt={high:'✓ Peluang Tinggi',mid:'⚡ Peluang Sedang',low:'⚠ Peluang Rendah'};
+    const card=document.createElement('div');card.className='rec-card';
+    const initials=r.u.replace(/^(Universitas|Institut|Sekolah) /,'').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+    const logoColors=['#3b5bdb','#7048e8','#2f9e44','#f08c00','#e03131','#0c8599','#ae3ec9'];
+    const colorIdx=r.u.charCodeAt(0)%logoColors.length;
+    card.innerHTML=`<div class="rec-head">
+      <div class="rec-logo-wrap">
+        ${logo?`<img src="${logo}" class="rec-logo" alt="${r.u}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:''}
+        <div class="rec-logo-init" style="background:${logoColors[colorIdx]};${logo?'display:none':''}">${initials}</div>
+      </div>
+      <div class="rec-info"><div class="rec-univ-name">${r.u}</div><div class="rec-major-name">${r.m}</div></div>
+      <span class="chance-pill ${pills[r.chance]}">${pillTxt[r.chance]}</span>
+    </div>
+    <div class="rec-body">
+      <div class="rec-stats-grid">
+        <div class="rec-stat"><div class="rv">${r.c==='saintek'?'Saintek':'Soshum'}</div><div class="rl">Kategori</div></div>
+        <div class="rec-stat"><div class="rv">${r.min}</div><div class="rl">Nilai Min</div></div>
+        <div class="rec-stat"><div class="rv">${r.pg?r.pg+'%':'(PTS)'}</div><div class="rl">Passing Grade</div></div>
+        <div class="rec-stat"><div class="rv">${r.kk}</div><div class="rl">Keketatan</div></div>
+      </div>
+      <div class="rec-note-box">${r.n}</div>
+      <div class="rec-action-btns">
+        <button class="btn btn-primary" style="font-size:.75rem;padding:8px 14px" onclick="setSlot(1,'${r.u}','${r.m}')">+ Pilihan 1</button>
+        <button class="btn btn-secondary" style="font-size:.75rem;padding:8px 14px" onclick="setSlot(2,'${r.u}','${r.m}')">+ Pilihan 2</button>
+      </div>
+    </div>`;
+    list.appendChild(card);
+  });
+  document.getElementById('analisisResult').style.display='block';
+  document.getElementById('analisisResult').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resetAnalysis(){
+  document.getElementById('inputNilai').value='';
+  document.getElementById('analisisResult').style.display='none';
+}
+
+// SLOTS
+function setSlot(n,u,m){
+  mySlots[n-1]={u,m};
+  updateSlotDisplay();
+  toast(`Berhasil set sebagai Pilihan ${n}!`);
+}
+function updateSlotDisplay(){
+  [1,2].forEach(i=>{
+    const slot=document.getElementById('slot'+i);
+    const c=mySlots[i-1];
+    slot.classList.toggle('filled',!!c);
+    // Remove old content after label
+    const lbl=slot.querySelector('.ptn-slot-lbl');
+    // Remove existing name/empty elements
+    while(slot.children.length>1)slot.removeChild(slot.lastChild);
+    if(c){
+      const nm=document.createElement('div');nm.className='ptn-slot-name';nm.textContent=c.u.toUpperCase()+' — '+c.m+' (S1)';
+      slot.appendChild(nm);
+      const del=document.createElement('button');del.className='del-slot';del.textContent='✕';del.onclick=()=>clearSlot(i);
+      slot.appendChild(del);
+    } else {
+      const em=document.createElement('div');em.className='ptn-slot-empty';em.id='slot'+i+'Text';em.textContent='Belum dipilih — tambahkan dari hasil rekomendasi';
+      slot.appendChild(em);
+    }
+  });
+}
+function clearSlot(i){mySlots[i-1]=null;updateSlotDisplay()}
+function clearSlots(){mySlots=[null,null];updateSlotDisplay();toast('Pilihan dihapus')}
+
+// PICKER
+function openPicker(n){
+  pickerTarget=n;
+  document.getElementById('pickerTitle').textContent='Pilih Pilihan '+n;
+  document.getElementById('pickerSearch').value='';
+  renderPicker();
+  document.getElementById('pickerModal').classList.add('show');
+}
+function closePicker(){document.getElementById('pickerModal').classList.remove('show')}
+function renderPicker(){
+  const q=document.getElementById('pickerSearch').value.toLowerCase();
+  const list=document.getElementById('pickerList');
+  const data=ptnDB.filter(d=>!q||(d.u+' '+d.m).toLowerCase().includes(q));
+  list.innerHTML=data.map(d=>{
+    const logo=univLogos[d.u];
+    return `<div class="modal-item" onclick="pickItem('${d.u}','${d.m}')">
+      <div class="modal-item-logo-wrap">
+        ${logo?`<img src="${logo}" class="modal-item-logo" alt="${d.u}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:''}
+        <div class="rec-logo-init" style="width:34px;height:34px;font-size:.65rem;${logo?'display:none':'background:#3b5bdb'}">${d.u.replace(/^(Universitas|Institut) /,'').split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase()}</div>
+      </div>
+      <div class="modal-item-info"><div class="name">${d.m}</div><div class="sub">${d.u} · ${d.c==='saintek'?'Saintek':'Soshum'}</div></div>
+    </div>`;
+  }).join('');
+}
+function pickItem(u,m){setSlot(pickerTarget,u,m);closePicker()}
+
+// === INIT ===
+initMapelGrid();
+buildLogoStrip();
+renderTO('all');
+buildUnivChips();
+</script>
+
+<!-- CONFETTI CANVAS -->
+<canvas id="confettiCanvas" style="position:fixed;top:0;left:0;pointer-events:none;z-index:9999;display:none"></canvas>
+
+</body>
+</html>
