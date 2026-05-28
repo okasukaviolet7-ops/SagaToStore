@@ -1,19 +1,625 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Heart Animation | @coding.stella</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SagatoStore - Premium Digital Shop</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="shortcut icon" href="1001035913.jpg" type="image/x-icon">
+
+    <style>
+        /* --- 1. CORE VARIABLES --- */
+        :root {
+            --primary: #3b82f6; /* Biru Profesional */
+            --accent: #f43f5e; /* Merah Aksen */
+            --bg-dark: #020617; /* Midnight Blue Gelap */
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; padding-bottom: 30px; overflow-x: hidden; position: relative; }
+
+        /* --- 2. BACKGROUND & HEADER --- */
+        .bg-fixed { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at top center, #1e293b 0%, #020617 80%); }
+        
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 20px; background: rgba(2, 6, 23, 0.95); 
+            backdrop-filter: blur(15px); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-text { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+        .logo-text span { color: var(--primary); }
+        .btn-login { 
+            background: linear-gradient(135deg, var(--primary), #2563eb); border: none; 
+            color: #fff; padding: 8px 20px; border-radius: 50px; 
+            font-size: 0.8rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        /* --- 3. POPUP PROMO (BESAR & BAGUS) --- */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 9999; display: flex;
+            align-items: center; justify-content: center; backdrop-filter: blur(8px);
+            animation: fadeIn 0.4s;
+        }
+        .popup-box {
+            background: linear-gradient(160deg, #1e293b, #020617);
+            width: 90%; max-width: 420px;
+            border-radius: 24px; padding: 0; 
+            text-align: center; border: 1px solid rgba(255,255,255,0.15); 
+            position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+            overflow: hidden;
+            animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .popup-img { 
+            width: 100%; height: 220px; object-fit: cover; 
+            mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        }
+        .popup-content { padding: 0 25px 25px 25px; margin-top: -40px; position: relative; z-index: 2; }
+        .popup-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .popup-desc { color: #cbd5e1; font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; }
+        .popup-btn { 
+            width: 100%; padding: 16px; border-radius: 16px; border: none; 
+            background: linear-gradient(to right, var(--primary), #60a5fa); 
+            color: #fff; font-weight: 800; font-size: 1rem; cursor: pointer; 
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            transition: 0.3s;
+        }
+        .popup-btn:hover { transform: scale(1.02); }
+        .popup-close {
+            position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6);
+            width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: #fff; z-index: 10; border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* --- 4. BANNER SLIDER --- */
+        .banner-wrapper { padding: 15px 20px; margin-bottom: 10px; }
+        .slider-container { 
+            width: 100%; height: 190px; border-radius: 20px; 
+            position: relative; overflow: hidden; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4); border: 1px solid var(--border);
+        }
+        .slide { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            opacity: 0; transition: opacity 0.8s ease-in-out;
+            background-size: cover; background-position: center;
+        }
+        .slide.active { opacity: 1; z-index: 1; }
+        .slide::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, #020617 10%, rgba(2,6,23,0.3) 70%, transparent 100%);
+        }
+        .slide-content { 
+            position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; 
+        }
+        .slide h2 { font-size: 1.5rem; line-height: 1.1; margin-bottom: 5px; font-weight: 800; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); text-transform: uppercase; }
+        .slide p { font-size: 0.85rem; color: #e2e8f0; font-weight: 500; text-shadow: 0 1px 5px rgba(0,0,0,0.8); }
+
+        /* --- 5. SEARCH & CATEGORY --- */
+        .search-box { padding: 0 20px; margin-bottom: 15px; position: sticky; top: 68px; z-index: 90; }
+        .search-input { 
+            width: 100%; background: rgba(30, 41, 59, 0.85); 
+            border: 1px solid var(--border); padding: 14px 20px; border-radius: 14px;
+            color: #fff; font-size: 0.9rem; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+        .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding: 0 20px 15px 20px; scrollbar-width: none; }
+        .cat-chip { 
+            background: var(--card-bg); border: 1px solid var(--border); 
+            padding: 10px 20px; border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+            color: var(--text-muted); white-space: nowrap; transition: 0.3s; cursor: pointer; 
+        }
+        .cat-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); }
+
+        /* --- 6. GRID PRODUK --- */
+        .grid-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 20px 60px 20px; }
+        .card { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; transition: 0.2s; opacity: 0; animation: fadeUp 0.5s forwards; }
+        .card:active { transform: scale(0.96); opacity: 0.8; }
+        .card.hidden { display: none; }
+        
+        .card-img-box { 
+            width: 62px; height: 62px; 
+            background: #fff; border-radius: 16px; 
+            border: 1px solid var(--border); overflow: hidden; margin-bottom: 8px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .card-img { width: 100%; height: 100%; object-fit: contain; } /* Contain agar logo full */
+        .card-name { font-size: 0.7rem; font-weight: 600; color: #cbd5e1; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 28px; }
+
+        /* --- 7. FOOTER RAME --- */
+        footer { background: #0b1120; padding: 40px 20px 30px 20px; border-top: 1px solid var(--border); margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        .footer-col h4 { font-size: 0.95rem; margin-bottom: 15px; color: #fff; font-weight: 700; }
+        .footer-link { display: block; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px; text-decoration: none; transition: 0.2s; cursor: pointer; }
+        .footer-link:hover { color: var(--primary); transform: translateX(5px); }
+        .copyright { text-align: center; border-top: 1px solid var(--border); padding-top: 25px; color: #64748b; font-size: 0.75rem; }
+        .footer-social { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
+        .footer-social a { color: #fff; font-size: 1.4rem; transition: 0.3s; }
+        .footer-social a:hover { color: #e1306c; transform: scale(1.1); }
+
+        /* --- 8. FLOAT WA --- */
+        .float-wa { position: fixed; bottom: 30px; right: 25px; background-color: #25d366; color: #fff; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); z-index: 9000; text-decoration: none; transition: 0.3s; }
+        .float-wa:active { transform: scale(0.9); }
+
+        /* --- 9. MODALS --- */
+        .bottom-sheet { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-radius: 20px 20px 0 0; padding: 25px; z-index: 5000; transform: translateY(100%); transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); border-top: 1px solid var(--border); box-shadow: 0 -10px 50px rgba(0,0,0,0.8); }
+        .bottom-sheet.active { transform: translateY(0); }
+        .sheet-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .sheet-title { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        
+        .payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .pay-card { background: #fff; border-radius: 10px; padding: 5px; height: 55px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 2px solid transparent; transition: 0.2s; }
+        .pay-card:active { border-color: var(--primary); transform: scale(0.95); }
+        .pay-img { max-width: 80%; max-height: 80%; object-fit: contain; }
+
+        .overlay-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3900; display: none; backdrop-filter: blur(5px); }
+        .sidebar { position: fixed; top: 0; left: -100%; width: 280px; height: 100%; background: #0f172a; z-index: 4000; transition: 0.3s; padding: 25px; border-right: 1px solid var(--border); }
+        .sidebar.active { left: 0; }
+        
+        /* Fullscreen Detail */
+        .fullscreen-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #020617; z-index: 4500; display: none; overflow-y: auto; }
+        .detail-header { padding: 15px 20px; background: rgba(2, 6, 23, 0.95); position: sticky; top: 0; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid var(--border); z-index: 10; }
+        .detail-content { padding: 20px; padding-bottom: 100px; }
+        .detail-hero { display: flex; gap: 20px; margin-bottom: 30px; align-items: center; }
+        .dh-img { width: 90px; height: 90px; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .variant-item { background: var(--card-bg); padding: 15px; border-radius: 16px; border: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .buy-btn { background: var(--primary); color: #fff; border: none; padding: 8px 20px; border-radius: 50px; font-weight: 700; font-size: 0.8rem; cursor: pointer; }
+
+        /* Reviews */
+        .review-card { background: var(--card-bg); border-radius: 16px; padding: 15px; margin-bottom: 12px; border: 1px solid var(--border); }
+        .r-head { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; }
+        .r-name { font-weight: 700; color: #fff; }
+        .r-star { color: #facc15; }
+        .r-body { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* Form */
+        .form-label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 500; }
+        .form-input { width: 100%; background: #020617; border: 1px solid var(--border); padding: 14px; border-radius: 12px; color: #fff; margin-bottom: 20px; outline: none; font-size: 0.95rem; }
+        .btn-submit { width: 100%; background: var(--primary); color: #fff; border: none; padding: 16px; border-radius: 14px; font-weight: 700; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4); }
+        
+        /* Utils */
+        .sb-header { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+        .sb-avatar { width: 50px; height: 50px; border-radius: 50%; }
+        .sb-menu .sb-link { padding: 14px; color: var(--text-muted); display: block; font-size: 0.95rem; cursor: pointer; transition: 0.2s; border-radius: 10px; }
+        .sb-menu .sb-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+        .login-wrapper { display: flex; flex-direction: column; gap: 10px; }
+        .divider { text-align: center; font-size: 0.75rem; color: #666; margin: 15px 0; }
+        .btn-google { background: #fff; color: #333; width: 100%; padding: 12px; border-radius: 12px; border: none; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.95rem; cursor: pointer; }
+        
+        /* Empty State */
+        .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); }
+        .empty-state i { font-size: 4rem; margin-bottom: 20px; opacity: 0.3; }
+        .info-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1e293b; padding: 30px; border-radius: 20px; z-index: 9999; border: 1px solid var(--border); width: 80%; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.8); display: none; }
+
+        @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+        @keyframes scaleUp { from{transform:scale(0.8);} to{transform:scale(1);} }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDcmNEgoN8e4G2Xi11LniQ8bsQ7VLK3sy0",
+            authDomain: "sagatostore-ab4f6.firebaseapp.com",
+            projectId: "sagatostore-ab4f6",
+            storageBucket: "sagatostore-ab4f6.firebasestorage.app",
+            messagingSenderId: "987744715052",
+            appId: "1:987744715052:web:3900277bd17879dfa1ec89",
+            measurementId: "G-043R91BB09"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        window.loginGoogle = () => {
+            signInWithPopup(auth, provider).then(res => {
+                alert("Berhasil Login: " + res.user.displayName);
+                document.getElementById('login-modal').classList.remove('active');
+            }).catch(err => alert("Error: " + err.message));
+        }
+
+        window.loginManual = () => {
+            const email = document.getElementById('email-input').value;
+            const pass = document.getElementById('pass-input').value;
+            if(!email || !pass) { alert("Lengkapi Email & Password!"); return; }
+            signInWithEmailAndPassword(auth, email, pass).then(() => {
+                alert("Login Berhasil!");
+                document.getElementById('login-modal').classList.remove('active');
+            }).catch((error) => {
+                if(error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    if(confirm("Akun tidak ditemukan. Buat akun baru?")) {
+                        createUserWithEmailAndPassword(auth, email, pass).then(() => {
+                            alert("Akun Dibuat & Login!");
+                            document.getElementById('login-modal').classList.remove('active');
+                        });
+                    }
+                } else {
+                    alert("Error: " + error.message);
+                }
+            });
+        }
+
+        window.logout = () => { if(confirm("Keluar akun?")) signOut(auth).then(() => location.reload()); }
+
+        onAuthStateChanged(auth, user => {
+            if(user) {
+                document.getElementById('btn-login-head').style.display = 'none';
+                document.getElementById('menu-icon').style.display = 'block';
+                const dName = user.displayName ? user.displayName : user.email.split('@')[0];
+                const dPic = user.photoURL ? user.photoURL : "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+                document.getElementById('user-name').innerText = dName;
+                document.getElementById('user-email').innerText = user.email;
+                document.getElementById('user-pic').src = dPic;
+                document.querySelectorAll('.member-menu').forEach(e => e.style.display = 'block');
+            }
+        });
+    </script>
 </head>
 <body>
 
-<svg viewBox="0 0 600 552">
-  <path d="M300,107.77C284.68,55.67,239.76,0,162.31,0,64.83,0,0,82.08,0,171.71c0,.48,0,.95,0,1.43-.52,19.5,0,217.94,299.87,379.69v0l0,0,.05,0,0,0,0,0v0C600,391.08,600.48,192.64,600,173.14c0-.48,0-.95,0-1.43C600,82.08,535.17,0,437.69,0,360.24,0,315.32,55.67,300,107.77" fill="#ee5282"/>
-</svg>
+    <div class="bg-fixed"></div>
 
-<script src='https://cdn.jsdelivr.net/npm/three@0.136.0/build/three.min.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/three@0.136.0/examples/js/controls/OrbitControls.js'></script>
-<script src='https://unpkg.co/gsap@3/dist/gsap.min.js'></script><script  src="./script.js"></script>
+    <div class="popup-overlay" id="promo-popup">
+        <div class="popup-box">
+            <div class="popup-close" onclick="document.getElementById('promo-popup').style.display='none'"><i class="fa-solid fa-xmark"></i></div>
+            <img src="https://images4.alphacoders.com/133/1338870.png" class="popup-img">
+            <div class="popup-content">
+                <h3 class="popup-title">Welcome Sagato!</h3>
+                <p class="popup-desc">
+                    Top Up Game & Aplikasi Premium Legal 100%.<br>
+                    Diskon Spesial Hari Ini!
+                </p>
+                <button class="popup-btn" onclick="document.getElementById('promo-popup').style.display='none'">Ambil Diskon</button>
+            </div>
+        </div>
+    </div>
 
+    <div class="popup-overlay" id="info-modal" style="display:none;">
+        <div class="popup-box" style="width:80%; max-width:300px;">
+            <div class="popup-close" onclick="document.getElementById('info-modal').style.display='none'"><i class="fa-solid fa-xmark"></i></div>
+            <h3 class="popup-title" id="info-title" style="margin-top:20px; font-size:1.2rem;">Judul</h3>
+            <p class="popup-desc" id="info-desc">Konten</p>
+        </div>
+    </div>
+
+    <div class="overlay-bg" id="overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sb-header">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="sb-avatar" id="user-pic">
+            <div><h4 id="user-name">Tamu</h4><p id="user-email" style="font-size:0.7rem; color:#666;">Belum Login</p></div>
+        </div>
+        <div class="sb-menu">
+            <div class="sb-link" onclick="closeAllModals()"><i class="fa-solid fa-house"></i> Beranda</div>
+            <div class="sb-link member-menu" style="display:none;" onclick="toggleModal('history-modal')"><i class="fa-solid fa-receipt"></i> Riwayat Transaksi</div>
+            <div class="sb-link member-menu" style="display:none;" onclick="toggleModal('settings-modal')"><i class="fa-solid fa-gear"></i> Pengaturan Akun</div>
+            <div class="sb-link member-menu" style="display:none; color:#ff2e2e;" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-box">
+            <i class="fa-solid fa-bars" id="menu-icon" style="font-size:1.2rem; cursor:pointer; display:none; margin-right:10px;" onclick="toggleSidebar()"></i>
+            <div class="logo-text">Sagato<span>Store</span></div>
+        </div>
+        <button id="btn-login-head" class="btn-login" onclick="toggleModal('login-modal')">Masuk</button>
+    </header>
+
+    <div class="search-box">
+        <input type="text" class="search-input" id="search" placeholder="Cari layanan (ML, FF, Netflix...)" onkeyup="filterApps()">
+    </div>
+
+    <div class="banner-wrapper">
+        <div class="slider-container">
+            <div class="slide active" style="background-image: url('https://images4.alphacoders.com/134/1341423.png');">
+                <div class="slide-content"><h2>Layanan Top Up<br>Terpercaya</h2><p>Legal & Aman 100%</p></div>
+            </div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1616530940355-351fabd9524b?q=80&w=800');">
+                <div class="slide-content"><h2>Nonton Film<br>Sepuasnya</h2><p>Netflix, Disney+, Viu Premium</p></div>
+            </div>
+            <div class="slide" style="background-image: url('https://images2.alphacoders.com/110/1109233.jpg');">
+                <div class="slide-content"><h2>Genesis Crystal<br>Bonus 2x</h2><p>Siap Gacha Karakter Favorit</p></div>
+            </div>
+             <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=800');">
+                <div class="slide-content"><h2>Musik Premium<br>Tanpa Iklan</h2><p>Spotify Premium Murah</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="category-scroll">
+        <div class="cat-chip active" onclick="filterCat('all', this)">Semua</div>
+        <div class="cat-chip" onclick="filterCat('game', this)">Game</div>
+        <div class="cat-chip" onclick="filterCat('app', this)">Apps</div>
+        <div class="cat-chip" onclick="filterCat('video', this)">Video</div>
+        <div class="cat-chip" onclick="filterCat('music', this)">Musik</div>
+    </div>
+
+    <div class="grid-container" id="grid-products">
+        </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Tentang</h4>
+                <a onclick="showInfo('Tentang Kami', 'SagatoStore menyediakan layanan top up game dan aplikasi premium legal 100% sejak 2026.')" class="footer-link">Tentang Kami</a>
+                <a href="https://wa.me/6285694861972" class="footer-link">Hubungi Kami</a>
+            </div>
+            <div class="footer-col">
+                <h4>Bantuan</h4>
+                <a onclick="showInfo('Cara Order', '1. Pilih Produk\n2. Masukkan ID/Catatan\n3. Pilih Pembayaran\n4. Lanjut ke WhatsApp')" class="footer-link">Cara Order</a>
+                <a onclick="showInfo('Syarat & Ketentuan', 'Pesanan diproses 1-10 menit. Kesalahan ID bukan tanggung jawab kami.')" class="footer-link">Syarat & Ketentuan</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2026 SagatoStore. All Rights Reserved.</p>
+            <div class="footer-social">
+                <a href="https://instagram.com/sagatostore_id" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/6285694861972" class="float-wa" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <div class="bottom-sheet" id="login-modal">
+        <div class="sheet-header"><div class="sheet-title">Masuk Akun</div><i class="fa-solid fa-xmark" onclick="toggleModal('login-modal')" style="font-size:1.2rem; cursor:pointer;"></i></div>
+        <div class="login-wrapper">
+            <button onclick="loginGoogle()" class="btn-google"><i class="fa-brands fa-google"></i> Masuk dengan Google</button>
+            <div class="divider">ATAU EMAIL</div>
+            <input type="email" id="email-input" class="form-input" placeholder="Email">
+            <input type="password" id="pass-input" class="form-input" placeholder="Password">
+            <button onclick="loginManual()" class="btn-submit" style="margin-top:10px;">Masuk / Daftar</button>
+        </div>
+    </div>
+
+    <div class="bottom-sheet" id="history-modal">
+        <div class="sheet-header"><div class="sheet-title">Riwayat</div><i class="fa-solid fa-xmark" onclick="toggleModal('history-modal')" style="font-size:1.2rem; cursor:pointer;"></i></div>
+        <div class="empty-state"><i class="fa-solid fa-receipt"></i><p>Belum ada transaksi.</p></div>
+    </div>
+    
+    <div class="bottom-sheet" id="settings-modal">
+        <div class="sheet-header"><div class="sheet-title">Pengaturan</div><i class="fa-solid fa-xmark" onclick="toggleModal('settings-modal')" style="font-size:1.2rem; cursor:pointer;"></i></div>
+        <div class="variant-item" onclick="alert('Fitur segera hadir!')"><span>Profil</span> <i class="fa-solid fa-chevron-right"></i></div>
+        <div class="variant-item" onclick="alert('Fitur segera hadir!')"><span>Keamanan</span> <i class="fa-solid fa-chevron-right"></i></div>
+    </div>
+
+    <div class="fullscreen-modal" id="detail-modal">
+        <div class="detail-header"><i class="fa-solid fa-arrow-left" style="font-size:1.2rem; cursor:pointer;" onclick="document.getElementById('detail-modal').style.display='none'"></i><div style="font-weight:700;">Detail Produk</div></div>
+        <div class="detail-content">
+            <div class="detail-hero">
+                <img src="" id="det-img" class="dh-img">
+                <div><h2 id="det-name" style="font-size:1.1rem; margin-bottom:5px;">Nama</h2><p id="det-desc" style="font-size:0.75rem; color:#aaa;">Deskripsi</p></div>
+            </div>
+            <h4 style="margin-bottom:12px; font-size:0.9rem;">Pilih Paket</h4>
+            <div id="variant-list"></div>
+            <h4 style="margin:25px 0 12px; font-size:0.9rem;">Ulasan Pembeli</h4>
+            <div id="review-list"></div>
+        </div>
+    </div>
+
+    <div class="bottom-sheet" id="order-modal">
+        <div class="sheet-header"><div class="sheet-title">Data Pesanan</div><i class="fa-solid fa-xmark" onclick="toggleModal('order-modal')" style="font-size:1.2rem; cursor:pointer;"></i></div>
+        <div class="form-group"><label class="form-label">Item Dipilih</label><input type="text" id="ord-item" class="form-input" readonly style="color:#aaa;"></div>
+        <div class="form-group"><label class="form-label">Jumlah</label><input type="number" id="ord-qty" class="form-input" value="1" onchange="calcTotal()"></div>
+        <div class="form-group"><label class="form-label">Catatan (ID Game / Email / No. HP)</label><input type="text" id="ord-note" class="form-input" placeholder="Contoh: 12345678 (2022)"></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700;"><span>Total:</span> <span id="ord-total" style="color:var(--primary)">Rp 0</span></div>
+        <button class="btn-submit" onclick="toPayment()">Pilih Pembayaran</button>
+    </div>
+
+    <div class="bottom-sheet" id="pay-modal">
+        <div class="sheet-header"><div class="sheet-title">Pilih Pembayaran</div><i class="fa-solid fa-xmark" onclick="toggleModal('pay-modal')" style="font-size:1.2rem; cursor:pointer;"></i></div>
+        <div class="payment-grid">
+            <div class="pay-card" onclick="processWA('QRIS')"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Qris.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('DANA')"><img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('GoPay')"><img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Gopay_logo.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('OVO')"><img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('ShopeePay')"><img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Shopee.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('BCA')"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('BRI')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('Mandiri')"><img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Bank_Mandiri_logo_2016.svg" class="pay-img"></div>
+            <div class="pay-card" onclick="processWA('Alfamart')"><img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Alfamart_logo.svg" class="pay-img"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA PRODUK FIXED (WIKIMEDIA & CLEARBIT - SUPER STABIL) ---
+        const products = [
+            // GAMES (Wikimedia)
+            { id:'ml', name:'Mobile Legends', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/c/cf/Mobile_Legends_Bang_Bang_logo.png', desc: 'Top Up Diamonds Resmi.', variants:[{n:'Weekly Pass', p:27500},{n:'86 Diamonds', p:20000},{n:'172 Diamonds', p:40000}] },
+            { id:'ff', name:'Free Fire', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/a/a2/Garena_Free_Fire_Logo.png', desc: 'Top Up DM Resmi.', variants:[{n:'70 DM', p:9500},{n:'140 DM', p:19000},{n:'355 DM', p:47000}] },
+            { id:'pubg', name:'PUBG Mobile', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/3/32/PUBG_Mobile_Logo.png', desc: 'Top Up UC.', variants:[{n:'60 UC', p:14000},{n:'325 UC', p:70000}] },
+            { id:'genshin', name:'Genshin Impact', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/5/5d/Genshin_Impact_logo.svg', desc: 'Genesis.', variants:[{n:'Welkin', p:75000},{n:'60 Genesis', p:15000}] },
+            { id:'valorant', name:'Valorant', cat:'game', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Valorant_logo_-_pink_color_version.svg/1024px-Valorant_logo_-_pink_color_version.svg.png', desc: 'VP.', variants:[{n:'125 VP', p:15000},{n:'420 VP', p:50000}] },
+            { id:'honkai', name:'Honkai Star Rail', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/8/82/Honkai_Star_Rail_icon.png', desc: 'Oneiric.', variants:[{n:'Express', p:75000}] },
+            { id:'stumble', name:'Stumble Guys', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/2/22/Stumble_Guys_cover_art.jpg', desc: 'Gems.', variants:[{n:'250 Gems', p:12000}] },
+            { id:'codm', name:'COD Mobile', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/1/1f/Call_of_Duty_Mobile_Logo.png', desc: 'CP.', variants:[{n:'53 CP', p:10000}] },
+            { id:'pb', name:'Point Blank', cat:'game', img:'https://upload.wikimedia.org/wikipedia/commons/7/77/Point_Blank_Logo.png', desc: 'Cash.', variants:[{n:'1200 Cash', p:10000}] },
+            { id:'sausage', name:'Sausage Man', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/2/22/Sausage_Man_cover_art.jpg', desc: 'Candy.', variants:[{n:'60 Candy', p:10000}] },
+            { id:'apex', name:'Apex Legends', cat:'game', img:'https://upload.wikimedia.org/wikipedia/commons/d/d8/Apex_legends_logo.svg', desc: 'Gold.', variants:[{n:'100 Gold', p:15000}] },
+            { id:'fifa', name:'FIFA Mobile', cat:'game', img:'https://upload.wikimedia.org/wikipedia/commons/a/aa/EA_Sports_FC_Mobile_logo.svg', desc: 'Points.', variants:[{n:'100 Points', p:15000}] },
+            { id:'minecraft', name:'Minecraft', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png', desc: 'Coins.', variants:[{n:'320 Coins', p:30000}] },
+            { id:'coc', name:'Clash of Clans', cat:'game', img:'https://upload.wikimedia.org/wikipedia/en/5/59/Clash_of_Clans_Logo.png', desc: 'Gems.', variants:[{n:'Gold Pass', p:100000}] },
+            { id:'roblox', name:'Roblox', cat:'game', img:'https://upload.wikimedia.org/wikipedia/commons/c/c7/Roblox_logo.svg', desc: 'Robux.', variants:[{n:'80 Robux', p:15000}] },
+
+            // APPS (Logo Clearbit/Wiki - STABIL)
+            { id:'canva', name:'Canva Pro', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/0/08/Canva_icon_2021.svg', desc: 'Desain.', variants:[{n:'1 Bulan', p:2000},{n:'1 Tahun', p:10000}] },
+            { id:'netflix', name:'Netflix', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/7/75/Netflix_icon.svg', desc: 'Film 4K.', variants:[{n:'Shared', p:25000},{n:'Private', p:120000}] },
+            { id:'spotify', name:'Spotify', cat:'music', img:'https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg', desc: 'Musik.', variants:[{n:'Individu', p:15000},{n:'Fam Plan', p:25000}] },
+            { id:'youtube', name:'YouTube Prem', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg', desc: 'No Ads.', variants:[{n:'1 Bulan', p:5000}] },
+            { id:'capcut', name:'CapCut', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/d/d9/CapCut_logo.svg', desc: 'Edit Video.', variants:[{n:'Pro 1 Bln', p:15000}] },
+            { id:'lightroom', name:'Lightroom', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/b/b6/Adobe_Photoshop_Lightroom_CC_logo.svg', desc: 'Preset Full.', variants:[{n:'Fullpack', p:10000}] },
+            { id:'picsart', name:'PicsArt', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/3/3e/PicsArt-Logo.svg', desc: 'Edit Foto.', variants:[{n:'Fullpack', p:10000}] },
+            { id:'wink', name:'Wink Video', cat:'app', img:'https://logo.clearbit.com/wink.com', desc: 'Retouch.', variants:[{n:'VIP 1 Bln', p:15000}] },
+            { id:'disney', name:'Disney+', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg', desc: 'Film.', variants:[{n:'1 Bulan', p:20000}] },
+            { id:'vidio', name:'Vidio', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/5/50/Vidio_logo_2022.svg', desc: 'Sports.', variants:[{n:'Platinum', p:25000}] },
+            { id:'viu', name:'Viu', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/d/d3/Viu_logo.png', desc: 'Drakor.', variants:[{n:'Private', p:10000}] },
+            { id:'getcontact', name:'GetContact', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/3/3e/Getcontact_Logo.png', desc: 'Cek Nama.', variants:[{n:'Premium', p:15000}] },
+            { id:'tele', name:'Telegram', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg', desc: 'Premium.', variants:[{n:'3 Bulan', p:60000}] },
+            { id:'wetv', name:'WeTV', cat:'video', img:'https://upload.wikimedia.org/wikipedia/en/c/c2/WeTV_logo.png', desc: 'VIP.', variants:[{n:'VIP', p:15000}] },
+            { id:'iqiyi', name:'iQIYI', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/6/64/Iqiyi_logo.svg', desc: 'VIP.', variants:[{n:'VIP', p:15000}] },
+            { id:'bstation', name:'Bstation', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/0/05/Bilibili_logo.svg', desc: 'Premium.', variants:[{n:'Premium', p:12000}] },
+            { id:'hbogo', name:'HBO Go', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/3/3e/HBO_Go_logo.svg', desc: 'Movies.', variants:[{n:'1 Bulan', p:25000}] },
+            { id:'prime', name:'Prime Video', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png', desc: 'Video.', variants:[{n:'Private', p:15000}] },
+            { id:'zoom', name:'Zoom', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/7/7b/Zoom_Communications_Logo.svg', desc: 'Pro.', variants:[{n:'Pro 1 Bln', p:20000}] },
+            { id:'remini', name:'Remini', cat:'app', img:'https://logo.clearbit.com/remini.ai', desc: 'Enhance.', variants:[{n:'Pro', p:15000}] },
+            { id:'alight', name:'Alight Motion', cat:'app', img:'https://seeklogo.com/images/A/alight-motion-logo-116361546E-seeklogo.com.png', desc: 'Pro.', variants:[{n:'1 Tahun', p:5000}] },
+            { id:'duolingo', name:'Duolingo', cat:'app', img:'https://upload.wikimedia.org/wikipedia/commons/1/15/Duolingo_logo_2019.svg', desc: 'Super.', variants:[{n:'1 Bulan', p:10000}] },
+            { id:'vision', name:'Vision+', cat:'video', img:'https://upload.wikimedia.org/wikipedia/commons/3/39/Vision_Plus_logo.png', desc: 'Premium.', variants:[{n:'Premium', p:15000}] }
+        ];
+
+        // RENDER PRODUK
+        function renderProducts(cat='all') {
+            const grid = document.getElementById('grid-products');
+            grid.innerHTML = '';
+            products.forEach(p => {
+                if(cat==='all' || p.cat===cat) {
+                    let imgSource = p.img;
+                    
+                    // FALLBACK LOGIC (Cadangan Terakhir)
+                    let fallback = "https://cdn-icons-png.flaticon.com/512/5692/5692030.png";
+                    if(p.cat === 'game') fallback = "https://cdn-icons-png.flaticon.com/512/686/686589.png";
+                    if(p.cat === 'music') fallback = "https://cdn-icons-png.flaticon.com/512/461/461238.png";
+                    
+                    // Specific Fix for Wink/Remini if clearbit fails (Unlikely)
+                    if(p.id === 'wink') imgSource = "https://logo.clearbit.com/wink.com"; 
+
+                    grid.innerHTML += `
+                    <div class="card" onclick="openDetail('${p.id}')">
+                        <div class="card-img-box">
+                            <img src="${imgSource}" class="card-img" onerror="this.src='${fallback}'">
+                        </div>
+                        <div class="card-name">${p.name}</div>
+                    </div>`;
+                }
+            });
+        }
+
+        // FILTER SEARCH
+        function filterApps() {
+            const val = document.getElementById('search').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(c => {
+                const name = c.querySelector('.card-name').innerText.toLowerCase();
+                if(name.includes(val)) c.style.display = 'flex'; else c.style.display = 'none';
+            });
+        }
+
+        function showInfo(title, desc) {
+            document.getElementById('info-title').innerText = title;
+            document.getElementById('info-desc').innerText = desc;
+            document.getElementById('info-modal').style.display = 'flex';
+        }
+
+        // INIT
+        window.onload = () => {
+            renderProducts();
+            // Slider Animation
+            let slideIndex = 0;
+            const slides = document.querySelectorAll('.slide');
+            setInterval(() => {
+                slides.forEach(s => s.classList.remove('active'));
+                slideIndex++;
+                if(slideIndex >= slides.length) slideIndex = 0;
+                slides[slideIndex].classList.add('active');
+            }, 4000);
+        };
+
+        // --- FUNCTIONS ---
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            const ov = document.getElementById('overlay');
+            ov.style.display = ov.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function filterCat(cat, btn) {
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            renderProducts(cat);
+        }
+
+        // --- ORDER LOGIC ---
+        let currentItem = {};
+
+        function openDetail(id) {
+            const p = products.find(i => i.id === id);
+            if(!p) return;
+            
+            document.getElementById('det-img').src = p.img;
+            document.getElementById('det-name').innerText = p.name;
+            document.getElementById('det-desc').innerText = p.desc;
+
+            const vList = document.getElementById('variant-list');
+            vList.innerHTML = '';
+            p.variants.forEach(v => {
+                vList.innerHTML += `
+                    <div class="variant-item">
+                        <div><div style="font-weight:600; font-size:0.9rem;">${v.n}</div><div style="color:var(--primary); font-weight:700; font-size:0.85rem;">Rp ${v.p.toLocaleString('id-ID')}</div></div>
+                        <button class="buy-btn" onclick="openOrder('${p.name}', '${v.n}', ${v.p})">BELI</button>
+                    </div>
+                `;
+            });
+
+            // Reviews
+            const rList = document.getElementById('review-list');
+            rList.innerHTML = `
+                <div class="review-card"><div class="r-head"><span class="r-name">User123</span> <span class="r-star"><i class="fa-solid fa-star"></i> 5.0</span></div><div class="r-body">Proses cepat, mantap!</div></div>
+                <div class="review-card"><div class="r-head"><span class="r-name">Budi Gaming</span> <span class="r-star"><i class="fa-solid fa-star"></i> 5.0</span></div><div class="r-body">Langganan terus disini.</div></div>
+            `;
+
+            document.getElementById('detail-modal').style.display = 'block';
+        }
+
+        function openOrder(prod, variant, price) {
+            currentItem = { prod, variant, price, qty: 1 };
+            document.getElementById('ord-item').value = `${prod} - ${variant}`;
+            document.getElementById('ord-qty').value = 1;
+            document.getElementById('ord-note').value = '';
+            calcTotal();
+            toggleModal('order-modal');
+        }
+
+        function calcTotal() {
+            const qty = parseInt(document.getElementById('ord-qty').value) || 1;
+            currentItem.qty = qty;
+            document.getElementById('ord-total').innerText = 'Rp ' + (currentItem.price * qty).toLocaleString('id-ID');
+        }
+
+        function toPayment() {
+            const note = document.getElementById('ord-note').value;
+            if(!note) { alert("Isi catatan!"); return; }
+            currentItem.note = note;
+            toggleModal('order-modal'); toggleModal('pay-modal');
+        }
+
+        function processWA(method) {
+            const adminWA = "6285694861972";
+            const total = (currentItem.price * currentItem.qty).toLocaleString('id-ID');
+            const text = `Halo Admin, order:\n📦 ${currentItem.prod}\n🏷️ ${currentItem.variant}\n🔢 ${currentItem.qty}\n📝 ${currentItem.note}\n💰 Rp ${total}\n💳 ${method}`;
+            window.open(`https://wa.me/${adminWA}?text=${encodeURIComponent(text)}`, '_blank');
+            toggleModal('pay-modal'); document.getElementById('detail-modal').style.display = 'none';
+        }
+
+        function toggleModal(id) {
+            const el = document.getElementById(id);
+            if(el.classList.contains('bottom-sheet')) el.classList.toggle('active');
+            else el.style.display = el.style.display === 'flex' ? 'none' : 'flex';
+        }
+        
+        function closeAllModals() {
+            toggleSidebar();
+            document.querySelectorAll('.bottom-sheet').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.fullscreen-modal').forEach(el => el.style.display='none');
+        }
+    </script>
 </body>
 </html>
