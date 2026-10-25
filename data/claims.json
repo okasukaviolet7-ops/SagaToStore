@@ -1,1 +1,98 @@
-
+[
+  {
+    "id": 1,
+    "slug": "spbu-tutup-tiga-hari",
+    "title": "Pesan berantai: seluruh SPBU tutup selama tiga hari mulai besok",
+    "status": "hoax",
+    "publishedAt": "2026-10-22",
+    "category": "Ekonomi",
+    "tags": ["spbu", "bbm", "pesan berantai", "whatsapp"],
+    "summary": "Pesan ini beredar tanpa nama pengirim, tanpa tanggal jelas, dan tanpa rujukan pengumuman resmi.",
+    "analysis": "Penutupan seluruh SPBU secara serentak akan diumumkan lewat kanal resmi operator dan pemerintah. Pesan berantai ini tidak mencantumkan sumber apa pun.",
+    "evidence": [
+      "Tidak ada pengumuman penutupan di situs maupun akun resmi operator SPBU.",
+      "Pesan yang sama pernah beredar dengan jumlah hari dan tanggal yang berbeda-beda."
+    ],
+    "sources": [{ "name": "Pertamina", "url": "https://www.pertamina.com" }]
+  },
+  {
+    "id": 2,
+    "slug": "air-lemon-sembuhkan-kanker",
+    "title": "Air lemon hangat setiap pagi disebut bisa menyembuhkan kanker",
+    "status": "hoax",
+    "publishedAt": "2026-10-19",
+    "category": "Kesehatan",
+    "tags": ["lemon", "kanker", "kesehatan", "obat herbal"],
+    "summary": "Belum ada bukti ilmiah bahwa air lemon menyembuhkan kanker. Pengobatan kanker harus lewat dokter.",
+    "analysis": "Klaim ini mengutip 'penelitian' tanpa menyebut judul, peneliti, atau jurnalnya. Lemon mengandung vitamin C, tetapi itu tidak sama dengan terapi kanker.",
+    "evidence": [
+      "Tidak ditemukan uji klinis yang mendukung klaim tersebut.",
+      "Organisasi kesehatan menyarankan pasien kanker menjalani terapi medis."
+    ],
+    "sources": [{ "name": "WHO", "url": "https://www.who.int" }]
+  },
+  {
+    "id": 3,
+    "slug": "foto-banjir-diklaim-jakarta",
+    "title": "Foto banjir ini diklaim terjadi di Jakarta pekan ini",
+    "status": "disinformasi",
+    "publishedAt": "2026-10-17",
+    "category": "Bencana",
+    "tags": ["banjir", "foto", "jakarta", "konteks keliru"],
+    "summary": "Fotonya asli, tetapi bukan diambil pekan ini dan bukan di Jakarta. Konteksnya dibelokkan.",
+    "analysis": "Pencarian gambar terbalik menunjukkan foto yang sama sudah diunggah beberapa tahun lalu dengan keterangan lokasi yang berbeda.",
+    "evidence": [
+      "Unggahan tertua foto ini lebih lama dari klaim yang beredar.",
+      "Papan nama dan bangunan di latar tidak cocok dengan lokasi yang diklaim."
+    ],
+    "sources": [{ "name": "BNPB", "url": "https://bnpb.go.id" }]
+  },
+  {
+    "id": 4,
+    "slug": "ngecas-semalaman-rusak-baterai",
+    "title": "Mengisi daya ponsel semalaman merusak baterai secara permanen",
+    "status": "disinformasi",
+    "publishedAt": "2026-10-14",
+    "category": "Teknologi",
+    "tags": ["baterai", "ponsel", "pengisian daya", "teknologi"],
+    "summary": "Ponsel modern punya pengaman yang menghentikan pengisian saat penuh, tapi panas berlebih tetap memperpendek umur baterai.",
+    "analysis": "Klaim ini benar untuk ponsel lama, tetapi menyesatkan untuk perangkat sekarang. Risiko utamanya adalah suhu tinggi, bukan lamanya terhubung ke charger.",
+    "evidence": [
+      "Panduan produsen menyebut sistem manajemen baterai membatasi arus saat penuh.",
+      "Suhu tinggi dan sering mengisi sampai 100% mempercepat penurunan kapasitas."
+    ],
+    "sources": []
+  },
+  {
+    "id": 5,
+    "slug": "gempa-tidak-bisa-diprediksi",
+    "title": "Waktu terjadinya gempa bumi belum bisa diprediksi secara pasti",
+    "status": "fakta",
+    "publishedAt": "2026-10-11",
+    "category": "Bencana",
+    "tags": ["gempa", "bmkg", "prediksi", "bencana"],
+    "summary": "Sampai sekarang belum ada teknologi yang mampu memastikan kapan, di mana, dan sebesar apa gempa akan terjadi.",
+    "analysis": "BMKG berulang kali menjelaskan bahwa yang tersedia adalah informasi gempa setelah terjadi dan peta potensi wilayah rawan, bukan ramalan waktu kejadian.",
+    "evidence": [
+      "Edukasi kebencanaan BMKG menyatakan gempa tidak dapat diprediksi waktunya.",
+      "Klaim 'gempa besar akan terjadi tanggal sekian' tidak punya dasar ilmiah."
+    ],
+    "sources": [{ "name": "BMKG", "url": "https://www.bmkg.go.id" }]
+  },
+  {
+    "id": 6,
+    "slug": "otp-jangan-dibagikan",
+    "title": "Kode OTP tidak boleh dibagikan ke siapa pun, termasuk yang mengaku petugas bank",
+    "status": "fakta",
+    "publishedAt": "2026-10-08",
+    "category": "Keamanan Digital",
+    "tags": ["otp", "penipuan", "bank", "keamanan digital"],
+    "summary": "Bank dan layanan resmi tidak pernah meminta OTP lewat telepon atau pesan. Siapa pun yang memintanya patut dicurigai.",
+    "analysis": "OTP berfungsi sebagai kunci sekali pakai atas akunmu. Penipu memakai alasan hadiah, verifikasi, atau 'pembaruan data' untuk meminta kode itu.",
+    "evidence": [
+      "Imbauan bank dan regulator menyebut OTP bersifat rahasia.",
+      "Modus meminta OTP berkedok petugas sering dilaporkan sebagai penipuan."
+    ],
+    "sources": [{ "name": "OJK", "url": "https://www.ojk.go.id" }]
+  }
+]
