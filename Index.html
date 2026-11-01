@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Re:Create AI — Give Waste a New Life</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --green:#236b4b;
+  --light:#e9f3eb;
+  --dark:#183c2c;
+  --cream:#f8f8f1;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--cream);color:#203b2d;
+  font-family:'DM Sans',sans-serif;
+}
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 8%;background:#fff;
+}
+.logo{font:800 24px Outfit;color:var(--green)}
+.logo span{color:#a6b99c}
+nav a{color:#345744;text-decoration:none;font-weight:700}
+.hero{
+  padding:75px 8% 65px;
+  background:linear-gradient(120deg,#e5f0e5,#f8f8f1);
+}
+.tag{
+  display:inline-block;background:#d5e8d8;color:var(--green);
+  padding:8px 15px;border-radius:30px;font-size:12px;font-weight:800;
+}
+h1{
+  font:800 clamp(40px,7vw,70px)/1.05 Outfit;
+  max-width:700px;margin:22px 0;
+}
+h1 span{color:var(--green)}
+.hero p{max-width:520px;line-height:1.8;color:#617467}
+.btn{
+  background:var(--green);color:white;border:0;padding:14px 23px;
+  border-radius:12px;font-weight:700;cursor:pointer;
+}
+.btn:hover{background:var(--dark)}
+section{padding:55px 8%}
+.section-title{font:700 32px Outfit;margin:0 0 10px}
+.muted{color:#718176;line-height:1.7}
+.studio{
+  background:white;border:1px solid #e4eae2;
+  border-radius:22px;padding:25px;margin-top:25px;
+}
+.upload{
+  border:2px dashed #a9c4ae;border-radius:18px;
+  padding:35px 15px;text-align:center;background:#f7faf6;
+  cursor:pointer;
+}
+.upload .emoji{font-size:42px}
+.upload p{color:#728276}
+input[type=file]{display:none}
+#preview{
+  display:none;width:100%;max-height:300px;
+  object-fit:contain;border-radius:15px;margin-top:18px;
+}
+label{display:block;font-weight:700;margin:23px 0 10px}
+select{
+  width:100%;padding:14px;border:1px solid #dce5dc;
+  border-radius:12px;background:white;font:inherit;color:#203b2d;
+}
+#generate{width:100%;margin-top:25px}
+#result{
+  display:none;margin-top:25px;padding:22px;
+  background:var(--light);border-radius:18px;
+}
+#result h3{font:700 24px Outfit}
+.steps{padding-left:22px;line-height:2}
+.cards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:16px;margin-top:25px;
+}
+.card{
+  background:white;padding:22px;border-radius:18px;
+  border:1px solid #e9eee8;
+}
+.card .emoji{font-size:32px}
+.card h3{font:700 19px Outfit}
+footer{
+  background:#183c2c;color:white;text-align:center;
+  padding:30px 15px;line-height:1.8;
+}
+@media(max-width:600px){
+  nav{padding:17px 6%}
+  section{padding:40px 6%}
+  .hero{padding:60px 6%}
+  .studio{padding:17px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Re:<span>Create</span> AI</div>
+  <a href="#studio">Start Creating ↗</a>
+</nav>
+
+<header class="hero">
+  <span class="tag">♻️ CREATIVE UPCYCLING PLATFORM</span>
+  <h1>Don't waste it.<br><span>Recreate it.</span></h1>
+  <p>
+    Turn everyday waste into something extraordinary.
+    Upload your used items, discover creative ideas,
+    and give old things a beautiful new life.
+  </p>
+  <a href="#studio"><button class="btn">Explore Your Ideas →</button></a>
+</header>
+
+<section id="studio">
+  <h2 class="section-title">Create Something New</h2>
+  <p class="muted">Upload your used item and choose what you want to create.</p>
+
+  <div class="studio">
+    <label>1. Upload your used item</label>
+    <label class="upload" for="photo">
+      <div class="emoji">📸</div>
+      <strong>Tap to upload your photo</strong>
+      <p>Choose a photo from your phone</p>
+      <input id="photo" type="file" accept="image/*">
+      <img id="preview" alt="Photo preview">
+    </label>
+
+    <label for="category">2. Choose your creation category</label>
+    <select id="category">
+      <option value="pot">🪴 Plant Pot</option>
+      <option value="clothes">👕 Clothes & Fashion</option>
+      <option value="bag">👜 Eco-Friendly Bags</option>
+    </select>
+
+    <button class="btn" id="generate">✨ Generate My Idea</button>
+
+    <div id="result">
+      <h3 id="resultTitle"></h3>
+      <p id="resultDescription"></p>
+      <h4>Materials you may need</h4>
+      <ul id="materials"></ul>
+      <h4>Step-by-step tutorial</h4>
+      <ol class="steps" id="tutorial"></ol>
+      <p><strong>🌱 Small changes can make a big difference!</strong></p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">What can you create?</h2>
+  <p class="muted">A little creativity can transform everyday objects.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="emoji">🪴</div>
+      <h3>Plant Pots</h3>
+      <p class="muted">Turn suitable containers into decorative plant pots.</p>
+    </div>
+    <div class="card">
+      <div class="emoji">👕</div>
+      <h3>Clothes & Fashion</h3>
+      <p class="muted">Give old fabrics a fresh and creative purpose.</p>
+    </div>
+    <div class="card">
+      <div class="emoji">👜</div>
+      <h3>Eco Bags</h3>
+      <p class="muted">Transform reusable materials into useful bags.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo" style="color:white">Re:Create AI ♻️</div>
+  Give waste a new life. Create a better future.<br>
+  <small>Creative ideas for a more sustainable world.</small>
+</footer>
+
+<script>
+const photo = document.getElementById('photo');
+const preview = document.getElementById('preview');
+const result = document.getElementById('result');
+
+photo.addEventListener('change', () => {
+  const file = photo.files[0];
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    alert('Please select an image.');
+    photo.value = '';
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = 'block';
+});
+
+const ideas = {
+  pot: {
+    title:'🪴 Recycled Plant Pot',
+    description:'Create a decorative plant pot from a suitable used container.',
+    materials:['Clean plastic container','Potting soil','Small plant','Decorative paint (optional)'],
+    steps:[
+      'Choose a clean, sturdy container.',
+      'Ask an adult to help make drainage holes if needed.',
+      'Clean and dry the container.',
+      'Decorate the outside using suitable materials.',
+      'Add potting soil and place your plant.'
+    ]
+  },
+  clothes: {
+    title:'👕 Fabric Upcycling Project',
+    description:'Give old fabric a new purpose through a simple creative project.',
+    materials:['Clean old fabric','Fabric scissors','Needle and thread','Fabric decorations (optional)'],
+    steps:[
+      'Choose clean fabric that is still in good condition.',
+      'Decide what new item you want to make.',
+      'Plan the shape and size.',
+      'Ask an adult to help with cutting and sewing.',
+      'Add decorations and check the seams.'
+    ]
+  },
+  bag: {
+    title:'👜 Reusable Eco Bag',
+    description:'Turn suitable clean fabric into a reusable everyday bag.',
+    materials:['Clean strong fabric','Fabric scissors','Needle and thread','Measuring tape'],
+    steps:[
+      'Choose clean and strong fabric.',
+      'Plan the bag shape and handle size.',
+      'Ask an adult to help cut the fabric.',
+      'Sew the sides and attach the handles securely.',
+      'Check the seams before using the bag.'
+    ]
+  }
+};
+
+document.getElementById('generate').addEventListener('click', () => {
+  if (!photo.files.length) {
+    alert('Please upload a photo first!');
+    return;
+  }
+
+  const idea = ideas[document.getElementById('category').value];
+
+  document.getElementById('resultTitle').textContent = idea.title;
+  document.getElementById('resultDescription').textContent = idea.description;
+
+  const materials = document.getElementById('materials');
+  const tutorial = document.getElementById('tutorial');
+
+  materials.innerHTML = '';
+  tutorial.innerHTML = '';
+
+  idea.materials.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    materials.appendChild(li);
+  });
+
+  idea.steps.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    tutorial.appendChild(li);
+  });
+
+  result.style.display = 'block';
+  result.scrollIntoView({behavior:'smooth'});
+});
+</script>
+
+</body>
+</html>
