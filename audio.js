@@ -1,0 +1,5 @@
+(() => {
+ let ctx=null, muted=localStorage.getItem("astra-muted")==="true";
+ function tone(freq=440,duration=.09,type="sine",volume=.035){if(muted)return;try{ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==="suspended")ctx.resume();const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(freq,ctx.currentTime);g.gain.setValueAtTime(volume,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+duration);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+duration)}catch(e){}}
+ window.AstraAudio={play(kind="click"){const seq={click:[520],summon:[330,520,760],rare:[440,660,880],attack:[180,120],win:[523,659,784],lose:[300,220]}[kind]||[440];seq.forEach((f,i)=>setTimeout(()=>tone(f,.13,i===0?"triangle":"sine",.04),i*100))},toggle(){muted=!muted;localStorage.setItem("astra-muted",muted);return muted},get muted(){return muted}};
+})();
