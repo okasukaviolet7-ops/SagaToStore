@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="SagaToLab — virtual science laboratory">
+  <title>SagaToLab — Explore. Experiment. Discover.</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/laboratory.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" aria-label="SagaToLab Home">
+        <span class="brand-mark">S<span>+</span></span>
+        <span><b>SAGATO</b><small>SCIENCE LAB</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Navigasi utama">
+        <a href="#home" class="nav-link active" data-page="home"><i>⌂</i> Overview</a>
+        <a href="#biology" class="nav-link" data-page="biology"><i>⌬</i> Biology Lab</a>
+        <a href="#chemistry" class="nav-link" data-page="chemistry"><i>⚗</i> Chemistry Lab</a>
+        <a href="#physics" class="nav-link" data-page="physics"><i>↗</i> Physics Lab</a>
+        <a href="#earth" class="nav-link" data-page="earth"><i>◎</i> Earth & Space</a>
+        <a href="#library" class="nav-link" data-page="library"><i>▤</i> Experiment Library</a>
+        <div class="side-label side-label-spaced">PERSONAL</div>
+        <a href="#knowledge" class="nav-link" data-page="knowledge"><i>⌕</i> Knowledge Center</a>
+        <a href="#quiz" class="nav-link" data-page="quiz"><i>✓</i> Quiz & Assessment</a>
+        <a href="#profile" class="nav-link" data-page="profile"><i>◉</i> My Laboratory</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="status-line"><span class="live-dot"></span> SYSTEM ONLINE</div>
+        <div class="sidebar-note">Curiosity is the engine<br>of discovery.</div>
+        <small> SAGATOLAB <span>v1.0.0</span></small>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="menuToggle" aria-label="Buka menu">☰</button>
+        <div class="breadcrumb"><span>WORKSPACE</span><b id="crumb">Overview</b></div>
+        <div class="top-actions">
+          <span class="system-chip"><span class="live-dot"></span> LAB READY</span>
+          <button class="profile-mini" id="profileShortcut"><span class="avatar">O</span><span><b id="topName">Researcher</b><small>Student researcher</small></span></button>
+        </div>
+      </header>
+      <div id="view" class="page-view" tabindex="-1"></div>
+      <footer class="footer"><span>© 2026 SAGATOLAB</span><span>LEARN BY EXPERIMENTING <b>✦</b></span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/simulations.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
