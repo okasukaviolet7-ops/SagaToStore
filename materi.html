@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#29452B">
+  <link rel="icon" type="image/svg+xml" href="assets/logo/saga-mark.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <title>Materi Pembelajaran | SagaToEdu</title>
+  <meta name="description" content="Jelajahi katalog materi SagaToEdu berdasarkan mata pelajaran, tingkat, dan topik.">
+</head>
+<body data-page="materi" class="">
+  <header id="site-header" class="site-header"></header>
+  <main id="main-content"><section class="page-hero compact-hero"><div class="container"><div class="breadcrumb"><a href="index.html">Beranda</a><span>/</span><span>Materi</span></div><div class="page-hero-row"><div><span class="eyebrow">PERPUSTAKAAN PENGETAHUAN</span><h1>Jelajahi dunia <em>ilmu.</em></h1><p>Temukan materi yang kamu butuhkan. Pelajari satu konsep dalam satu waktu, dengan ritmemu sendiri.</p></div><div class="page-hero-icon">📚</div></div></div></section>
+<section class="catalog-section section-pad"><div class="container"><div class="catalog-toolbar"><div class="search-field"><span>⌕</span><input id="material-search" type="search" placeholder="Cari materi, topik, atau pelajaran..." aria-label="Cari materi"></div><div class="filter-group"><label><span>Mata pelajaran</span><select id="material-category"></select></label><label><span>Tingkat</span><select id="material-level"><option value="all">Semua tingkat</option><option value="SMP">SMP</option><option value="SMA">SMA/SMK</option></select></label><label><span>Urutkan</span><select id="material-sort"><option value="newest">Pilihan terbaru</option><option value="az">Nama A–Z</option><option value="time">Durasi tercepat</option></select></label></div></div><div class="catalog-result-row"><p id="material-count">Menyiapkan materi...</p><button class="button button-outline button-small" type="button" id="favorites-filter" aria-pressed="false">☆ Favorit saya</button></div><div class="material-grid" id="materials-grid"><div class="loading-skeleton"></div><div class="loading-skeleton"></div><div class="loading-skeleton"></div></div></div></section></main>
+  <footer id="site-footer" class="site-footer"></footer>
+  <button id="scroll-top" class="scroll-top" type="button" aria-label="Kembali ke atas">↑</button>
+
+  <script defer src="data/content.js"></script>
+  <script defer src="js/storage.js"></script>
+  <script defer src="js/app.js"></script>
+  <script defer src="js/navigation.js"></script>
+  <script defer src="js/auth.js"></script>
+  <script defer src="js/materi.js"></script>
+  <script defer src="js/latihan.js"></script>
+  <script defer src="js/tryout.js"></script>
+  <script defer src="js/dashboard.js"></script>
+  <script defer src="js/profile.js"></script>
+</body>
+</html>
